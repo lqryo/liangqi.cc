@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？ Gradient Descent我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$ 选一个初始的参数$\theta^0$,计算$\theta^0$对L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Backpropagation">
+<meta property="og:url" content="http://yoursite.com/2019/09/04/Backpropagation/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？ Gradient Descent我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$ 选一个初始的参数$\theta^0$,计算$\theta^0$对L">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/13.png">
+<meta property="og:updated_time" content="2019-09-15T15:04:42.757Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Backpropagation">
+<meta name="twitter:description" content="当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？ Gradient Descent我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$ 选一个初始的参数$\theta^0$,计算$\theta^0$对L">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/04/Backpropagation/">
+
+
+
+
+
+  <title>Backpropagation | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/Backpropagation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Backpropagation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-04T19:42:07+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？</p>
+<h1 id="Gradient-Descent"><a href="#Gradient-Descent" class="headerlink" title="Gradient Descent"></a>Gradient Descent</h1><p>我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数<br>$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$</p>
+<p>选一个初始的参数$\theta^0$,计算$\theta^0$对Loss Function的Gradient:$\Delta L(\theta^0)$,其中<br>$$<br>\Delta L(\theta) = \begin{bmatrix}<br>\partial L(\theta)/\partial w_1 \\<br>\partial L(\theta)/\partial w_2 \\<br>\vdots \\<br>\partial L(\theta)/\partial b_1 \\<br>\partial L(\theta)/\partial b_2 \\<br>\vdots<br>\end{bmatrix}<br>$$</p>
+<p>计算出上面的vector以后，我们就可以去更新我们的参数：<br>$$Compute \Delta L(\theta^0)\quad\quad\theta^1 = \theta^0 - \eta \Delta L(\theta^0)$$ $$Compute \Delta L(\theta^1)\quad\quad\theta^2 = \theta^1 - \eta \Delta L(\theta^1)$$ $$\cdots\cdots$$</p>
+<p>一般Neural network的参数非常多，$\Delta L(\theta^0)$可能是一个上百万维的vector</p>
+<p><strong>To compute the gradients efficiently,we use backpropagation</strong></p>
+<h1 id="Chain-Rule"><a href="#Chain-Rule" class="headerlink" title="Chain Rule"></a>Chain Rule</h1><p>要学习backpropagation，首先要知道<strong>Chain Rule</strong></p>
+<ul>
+<li><strong>Case 1</strong></li>
+</ul>
+<p>假设有两个函数$y=g(x)$和$z=h(y)$,如果给$x$一个很小的变化,$y$会跟着有变化，从而影响$z$的变化:<br>$$\Delta x\rightarrow \Delta y\rightarrow \Delta z$$</p>
+<p>如果我们要计算$x$对$z$的微分，可以拆成两项：<br>$$\frac{dz}{dx}=\frac{dz}{dy}\frac{dy}{dx}$$</p>
+<ul>
+<li><strong>Case 2</strong><br>如果有3个函数，$x=g(s)$,$y=h(s)$,$z=k(x,y)$<br><img src="/2019/09/04/Backpropagation/1.png" alt="1"><br>$s$对$z$的微分可以写成：<br>$$\frac{dz}{ds}=\frac{\partial z}{\partial x}\frac{dx}{ds}+\frac{\partial z}{\partial y}\frac{dy}{ds}$$</li>
+</ul>
+<h1 id="Backpropagation"><a href="#Backpropagation" class="headerlink" title="Backpropagation"></a>Backpropagation</h1><p>回到Neural network的Training，我们知道Loss function: $L(\theta)=\sum_{n=1}^NC^n(\theta)$<br><img src="/2019/09/04/Backpropagation/2.png" alt="2"><br>把$L(\theta)$对某一个参数$w$做偏微分：<br>$$\frac{\partial L(\theta)}{\partial w} = \sum_{n=1}^N\frac{\partial C^n(\theta)}{\partial w}$$</p>
+<p>我们下面讨论$\frac{\partial C^n(\theta)}{\partial w}$该如何计算<br><img src="/2019/09/04/Backpropagation/3.png" alt="3"><br>如上图所示的network，我们先只考虑某一个neuron,如下<br><img src="/2019/09/04/Backpropagation/4.png" alt="4"><br>现在我们拿$w$当作例子（$b$也是一样的）<br>$$\frac{\partial C}{\partial w}=\frac{\partial z}{\partial w}\frac{\partial C}{\partial z}$$</p>
+<p>计算$\frac{\partial z}{\partial w}$是比较简单的(<strong>Forward pass</strong>)，而计算$\frac{\partial C}{\partial z}$是比较复杂的(<strong>Backward pass</strong>)。</p>
+<h2 id="Forward-pass"><a href="#Forward-pass" class="headerlink" title="Forward pass"></a>Forward pass</h2><p>$$\frac{\partial z}{\partial w_1} = x_1$$ $$\frac{\partial z}{\partial w_2} = x_2$$<br>对于Forward pass的计算，就是该weight前面接的input的值（The value of the input connected by the weight.）<br><img src="/2019/09/04/Backpropagation/5.png" alt="5"></p>
+<h2 id="Backward-pass"><a href="#Backward-pass" class="headerlink" title="Backward pass"></a>Backward pass</h2><p>Compute $\frac{\partial C}{\partial z}$ for all activation function input z</p>
+<p>我们使用chain rule对$\frac{\partial C}{\partial z}$做拆解,以下图为例<br><img src="/2019/09/04/Backpropagation/6.png" alt="6"><br>$$\frac{\partial C}{\partial z}=\frac{\partial a}{\partial z}\frac{\partial C}{\partial a}$$</p>
+<p>其中$\frac{\partial a}{\partial z}$就是sigmoid function的微分$\sigma^{\prime}(z)$,又有：<br>$$\frac{\partial C}{\partial a}=<br>\frac{\partial z^{\prime}}{\partial a}\frac{\partial C}{\partial z^{\prime}}+<br>\frac{\partial z^{\prime\prime}}{\partial a}\frac{\partial C}{\partial z^{\prime\prime}}$$</p>
+<p>其中：<br>$$\frac{\partial z^{\prime}}{\partial a} = w_3$$ $$\frac{\partial z^{\prime\prime}}{\partial a} = w_4$$</p>
+<p>然而问题是我们不知到$\frac{\partial C}{\partial z^{\prime}}$和$\frac{\partial C}{\partial z^{\prime\prime}}$的值如何计算。我们先假设已经通过某种方法算出了这两项的值，有了这两项以后，就可以算出：<br>$$\frac{\partial C}{\partial z}=\sigma^{\prime}(z)\left[w_3\frac{\partial C}{\partial z^{\prime}}+w_4\frac{\partial C}{\partial z^{\prime\prime}}\right]$$</p>
+<p>我们可以从另外的角度来看待上面的式子。假设有一个特殊的neuron如下(不在原来的network里面),<br><img src="/2019/09/04/Backpropagation/7.png" alt="7"><br>它的两个输入是$\frac{\partial C}{\partial z^{\prime}}$和$\frac{\partial C}{\partial z^{\prime\prime}}$,weight是$w_3$和$w_4$,“sigmoid function”是将输入的值乘上常数$\sigma^{\prime}(z)$</p>
+<p>$\sigma^{\prime}(z)$ is a constant because $z$ is already determined in the forward pass.</p>
+<p>为了计算$\frac{\partial C}{\partial z^{\prime}}$和$\frac{\partial C}{\partial z^{\prime\prime}}$，我们假设下面两个case</p>
+<ol>
+<li><strong>case 1:Output Layer</strong><br>如下图中的两个红色neuron,他们的output就是整个network的output<br><img src="/2019/09/04/Backpropagation/8.png" alt="8"><br>$$<br>\frac{\partial C}{\partial z^{\prime}}=<br>\frac{\partial y_1}{\partial z^{\prime}}\frac{\partial C}{\partial y_1}<br>$$<br>$\frac{\partial y_1}{\partial z^{\prime}}$取决于所定义的”sigmoid function”,$\frac{\partial C}{\partial y_1}$取决于Cost function的定义。<br>同样的可以算出<br>$$<br>\frac{\partial C}{\partial z^{\prime\prime}}=<br>\frac{\partial y_2}{\partial z^{\prime\prime}}\frac{\partial C}{\partial y_2}<br>$$</li>
+</ol>
+<p>这样我们就可以算出蓝色neuron的$\frac{\partial C}{\partial z}$</p>
+<ol start="2">
+<li><strong>case 2:Not output Layer</strong><br>红色的neuron不是整个network的output，例如下图<br><img src="/2019/09/04/Backpropagation/9.png" alt="9"><br>根据前面的推导，如果我们知道$\frac{\partial C}{\partial z_a}$和$\frac{\partial C}{\partial z_b}$,我们就能算出$\frac{\partial C}{\partial z^{\prime}}$,如下<br><img src="/2019/09/04/Backpropagation/10.png" alt="10"></li>
+</ol>
+<p>但是如何计算$\frac{\partial C}{\partial z_a}$和$\frac{\partial C}{\partial z_b}$呢？如果他们不是最后一层的neuron的话，我们再计算他们后面的neuron.(Compute $\frac{\partial C}{\partial z}$ recursively.)</p>
+<p>为了提高计算效率，我们从后往前计算（Compute $\frac{\partial C}{\partial z}$ for all activation function inputs z.Compute $\frac{\partial C}{\partial z}$ from the output layer）,如下<br><img src="/2019/09/04/Backpropagation/11.png" alt="11"><br>我们先算$z_5$、$z_6$的偏微分，然后再计算$z_3$、$z_4$的偏微分，因为前面的微分要依赖后面的微分。计算方式如下图<br><img src="/2019/09/04/Backpropagation/12.png" alt="12"></p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>先做Forward Pass，再做Backward Pass.<br><img src="/2019/09/04/Backpropagation/13.png" alt="13"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/03/Brief Introduction of Deep Learning/" rel="next" title="Brief Introduction of Deep Learning">
+                <i class="fa fa-chevron-left"></i> Brief Introduction of Deep Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/07/Embedded-System-sys-bios01/" rel="prev" title="实时软件组件-RTSC">
+                实时软件组件-RTSC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradient-Descent"><span class="nav-number">1.</span> <span class="nav-text">Gradient Descent</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chain-Rule"><span class="nav-number">2.</span> <span class="nav-text">Chain Rule</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Backpropagation"><span class="nav-number">3.</span> <span class="nav-text">Backpropagation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Forward-pass"><span class="nav-number">3.1.</span> <span class="nav-text">Forward pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Backward-pass"><span class="nav-number">3.2.</span> <span class="nav-text">Backward pass</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">4.</span> <span class="nav-text">Summary</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

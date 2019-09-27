@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Why CNN for ImageCNN常常被用在影像处理上面,为什么不直接用一般的neural network?我们在训练neural network的时候，会期待在network的structrue里面，每一个neuron会代表一个最基本的classifier。举例来说第一层的neuron是最简单的classifier,第二层是复杂一点的classifier，依此类推。 当我们用一般的full">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Convolutional Neural Network">
+<meta property="og:url" content="http://yoursite.com/2019/09/15/Convolutional Neural Network/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="Why CNN for ImageCNN常常被用在影像处理上面,为什么不直接用一般的neural network?我们在训练neural network的时候，会期待在network的structrue里面，每一个neuron会代表一个最基本的classifier。举例来说第一层的neuron是最简单的classifier,第二层是复杂一点的classifier，依此类推。 当我们用一般的full">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/14.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/15.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/16.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/17.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/18.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/19.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/20.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/21.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/22.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/23.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/24.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/25.png">
+<meta property="og:updated_time" content="2019-09-26T15:38:06.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Convolutional Neural Network">
+<meta name="twitter:description" content="Why CNN for ImageCNN常常被用在影像处理上面,为什么不直接用一般的neural network?我们在训练neural network的时候，会期待在network的structrue里面，每一个neuron会代表一个最基本的classifier。举例来说第一层的neuron是最简单的classifier,第二层是复杂一点的classifier，依此类推。 当我们用一般的full">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/15/Convolutional%20Neural%20Network/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/15/Convolutional Neural Network/">
+
+
+
+
+
+  <title>Convolutional Neural Network | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/15/Convolutional Neural Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Convolutional Neural Network</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-15T23:47:08+08:00">
+                2019-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Why-CNN-for-Image"><a href="#Why-CNN-for-Image" class="headerlink" title="Why CNN for Image"></a>Why CNN for Image</h1><p>CNN常常被用在影像处理上面,为什么不直接用一般的neural network?我们在训练neural network的时候，会期待在network的structrue里面，每一个neuron会代表一个最基本的classifier。举例来说第一层的neuron是最简单的classifier,第二层是复杂一点的classifier，依此类推。<br><img src="/2019/09/15/Convolutional Neural Network/1.png" alt="1"></p>
+<p>当我们用一般的fully connected neural network来做影响处理的时候，往往会需要太多的参数。举例来说，假设一张100$\times$100的彩色图片，显然他有100$\times$100$\times$3个pixel,所以input vector是30000维，假设第一个hidden layer有1000个neuron，所以第一层hidden layer的参数就已经有30000$\times$1000了。CNN做的事情其实就是来简化这个neuron network架构（把fully connected里面的一些参数拿掉，就变成CNN）。</p>
+<p>为什么我们可以只用比较少的参数就可以做影像处理这件事情。有如下几个观察：</p>
+<ul>
+<li><p><strong>Property 1:Some patterns are much smaller than the whole image</strong>:A neuron does not have to see the whole image to discover the pattern.对一个neuron来说，假设它知道一个image里面有没有某个pattern出现，其实是不需要看整张iamge,而只用看iamge的一小部分，它就可以决定这件事情。所以每个neuron只用连接到小块的区域，而不需要连接到整张完整的图。</p>
+</li>
+<li><p><strong>Property 2:The same patterns appear in different regions</strong>:同样的Pattern可以出现在图的不同部分，但他们代表的是同样的含义，可以用同样的neuron来侦测出来。<br><img src="/2019/09/15/Convolutional Neural Network/2.png" alt="2"></p>
+</li>
+<li><p><strong>Property 3:Subsampling the pixels will not change the object</strong>:对一张图片可以做subsampling，例如将它的奇数行偶数列的pixel拿掉，变成原来1/4的大小，但这不会改变人对这张image的理解。<br><img src="/2019/09/15/Convolutional Neural Network/3.png" alt="3"></p>
+</li>
+</ul>
+<p>CNN的整个架构如下：<br><img src="/2019/09/15/Convolutional Neural Network/4.png" alt="4"><br>上面提到的Property 1和Property 2用Convolution的layer来处理，Property 3用Max Pooling的layer来处理。</p>
+<h1 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h1><p>如下图，假设现在Nerwork的input是一张6$\times$的黑白图,每个pixel只用0和1来描述。在Convolution layer里面，有一组<strong>filter</strong>，每一个filter其实就是一个matrix（例子中是3$\times$3的matrix），matrix里面每一个element的值就是network的parameter，它们不是靠人事先设计，而是要学习出来。3$\times$3的filter意味着它要侦测3$\times$3的pattern,即它不看整张image,而只看3$\times$3的范围内是否有某个Pattern的出现。<br><img src="/2019/09/15/Convolutional Neural Network/5.png" alt="5"></p>
+<p>Convolution的操作方式：将一个filter放到image的左上角，将image范围内的9个值和filter里的9个值做inner product，得到一个值。之后挪动filter的位置，至于要挪动多少，这个要事先设置参数<strong>stride</strong>来决定（示例中stride=1）,重复做内积和移动filter，知道filter移动到右下角。做完上述事情以后，本来是一个6$\times$6的image，经过convolution就得到一个4$\times$4的matrix。<br><img src="/2019/09/15/Convolutional Neural Network/6.png" alt="6"></p>
+<p>如果我们注意看filter的值，它的斜对角的地方都是1，所以它的工作就是看原image中有没有连续的左上到右下的连续的1出现，如果有的话，就输出值3。原image中出现了两处地方（左上角和左下角），这就表示这个filter要侦测的Pattern出现在了image的左上和左下。这件事情就考虑了Property 2，因为同一个pattern它出现在左上角和左下角的位置，我们都用filter 1就可以侦测出来，并不需要用不同的filter。<br><img src="/2019/09/15/Convolutional Neural Network/7.png" alt="7"></p>
+<p>在一个Convolution的layer里，会有一组filter。比如有一个filter 2，它和前面的filter有不同的参数，它做和filter 1一模一样的事情，这样我们得到另外一个4$\times$4的matrix，所有4$\times$4的matrix合起来就叫做<strong>Feature Map</strong><br><img src="/2019/09/15/Convolutional Neural Network/8.png" alt="8"></p>
+<h2 id="Colorful-image"><a href="#Colorful-image" class="headerlink" title="Colorful image"></a>Colorful image</h2><p>上述例子中的输入是黑白的image，如果是彩色的image呢(RGB)？一个彩色的image，就是3个matrix叠在一起，如下图。要处理彩色的image,这个时候的filter就不是一个matrix，filter也是3个matrix。所以对于彩色的image,input大小是3$\times$6$\times$6,filter的大小是3$\times$3$\times$3。在做convolution的时候，要将image的每个channel合在一起算，即一个filter同时就考虑了不同的channel。<br><img src="/2019/09/15/Convolutional Neural Network/9.png" alt="9"></p>
+<h2 id="Convolution-v-s-Fully-Connected"><a href="#Convolution-v-s-Fully-Connected" class="headerlink" title="Convolution v.s. Fully Connected"></a>Convolution v.s. Fully Connected</h2><p>Convolution与Fully Connected有什么关系，其实Convolution就是一个Fully Connected layer把一些weight拿掉而已，Feature Map就是一个hidden layer的output,如下图，通过减少每个neuron所连接的weight数量以及让neuron来share weight，达到减少参数的目的。<br><img src="/2019/09/15/Convolutional Neural Network/10.png" alt="10"></p>
+<h1 id="Max-Pooling"><a href="#Max-Pooling" class="headerlink" title="Max Pooling"></a>Max Pooling</h1><p>相较于convolution，Max Pooling比较简单，它就是做subsampling。如下图，根据filter 1和filter 2，我们得到两个4$\times$4的matrix。<br><img src="/2019/09/15/Convolutional Neural Network/11.png" alt="11"></p>
+<p>接下来我们将output 4个一组，每组里面可以选平均，也可以选最大值，或者其他方式。我们选最大值，如下：<br><img src="/2019/09/15/Convolutional Neural Network/12.png" alt="12"></p>
+<p>这里有个问题，选取最大值操作放到network里面不是就不能微分了吗？其实是有办法微分的，我们后面会介绍。</p>
+<p>所以我们做完一次Convolution和一个Max Pooling，就把原来6$\times$6的image变成一个2$\times$2的image。至于这个2$\times$2的image，它每一个pixel的深度（每一个pixel用几个value来表示），取决于有多少个filter，每一个filter代表一个channel。<br><img src="/2019/09/15/Convolutional Neural Network/13.png" alt="13"></p>
+<p>上面的操作可以重复很多次，通过一次Convolution和一个Max Pooling会得到一个新的image,它是一个比较小的image，对这个image再做一样的事情，就得到一个更小的image，<br><img src="/2019/09/15/Convolutional Neural Network/14.png" alt="14"></p>
+<p>可能有人会问这样的问题：假设第一个convolution有25个filter，得到25个feature map，第二个convolution有25个filter，那么做完是否会得到25$\times$25个feature map？其实不是这样，第二个convolution做完还是得到25个feature map，第二层的filter在考虑input的时候，是会考虑深度的，并不是每一个channel分开考虑（一次考虑所有的channel）。前面有多少个filter，后面还是会有多少个filter，</p>
+<h1 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h1><p>Flatten就是将feature map拉直，然后丢到一个Fully Connected Feedforward network，然后就结束了。<br><img src="/2019/09/15/Convolutional Neural Network/15.png" alt="15"></p>
+<h1 id="what-does-CNN-learn"><a href="#what-does-CNN-learn" class="headerlink" title="what does CNN learn"></a>what does CNN learn</h1><p>有人觉得CNN就像一个黑盒子，训练完以后我们也不知道得到了什么。如果有一个方法可以让我们轻易的理解CNN为什么做出这样的决策，那么它就不那么intelligent（因为人类可以轻易地理解）。</p>
+<p>但其实还是有很多方法可以分析的，我们来试着分析以下CNN到底学到了什么，以手写数字辨识为例。如下图，要分析第一个input layer的filter是比较不容易的，因为每一个filter是一个$3\times3$的matrix，它对应到$3\times3$范围内的9个pixel,所以只要看filter的值就知道它在detect什么东西，所以第一层的filter是很容易理解的。但是我们没有办法想象在做什么事情的是第二层filter，在第二层有50个$3\times3$的filter，这些filter的input并不是pixel，<strong>而是做完convolution再做max pooling的结果</strong>。所以这个$3\times3$的filter，就算把它的weight拿出来，也不知道它在做什么。另外这个$3\times3$的filter，它考虑的范围并不是9个pixel，而是更大的范围。</p>
+<p><img src="/2019/09/15/Convolutional Neural Network/16.png" alt="16"></p>
+<p>在第二个layer里的filter，每一个filter的输出都是一个matrix。假设我们现在把第k个filter拿出来，它是一个$11\times11$的matrix，里面每一个element记为$a_{ij}^k$,我们定义<strong>Degree of the activation of the k-th filter</strong>，它表示现在input的东西跟第k个activate有多相近。</p>
+<p>$$a^k = \sum_{i=1}^{11}\sum_{j=1}^{11}a_{ij}^k$$<br><img src="/2019/09/15/Convolutional Neural Network/17.png" alt="17"></p>
+<p>我们想知道第k个filter的作用是什么，所以我们想要找一张image，它可以让第k个filter被activate的程度最大。假设input image我们称之为x，现在的问题就是找一个x，它可以让上面定义的$a^k$最大:<br>$$x^{\star}=\mathop{argmax}_{k}a^k$$</p>
+<p>可以用gradient ascent算出$x^{\star}$(因为是求最大值，所以是ascent),就结束了。这相当于是吧x当作我们要找的参数对它去用gradient descent或ascent做update。原来在train这个CNN（或Neural network）的时候，input是固定的，而现在model的参数是固定的，我们要用gradient descent去update这个x。</p>
+<p>对于首先数字辨识，我们得到的结果如下。我们发现没有个filter做的事情就是detect不同角度的线条。<br><img src="/2019/09/15/Convolutional Neural Network/18.png" alt="18"></p>
+<p>我们现在可以full connected layer。做完convolution和Max pooling以后，接下来做flatten，将flatten的结果丢到neural network里面去。我们想知道在这个neural network里面，每一个neuron所做的工作是什么。我们可以如法炮制上面的做法，定义第j个neuron，它的output叫做$a_j$,然后找一张image x,将它丢到neural network里面去，它可以让$a_j$的值被maximize。结果如下，可以发下和上面的filter所观察到的情形是很不一样的。在上面的filter里面我们观察到的是类似纹路的东西，这是因为每个filter考虑的只是一个小小的region，所以它detect的是某一种texture。但现在每一个neuron，在做flatten以后，每一个neuron的工作就是去看整张图，所以每一个neuron可以让它最activate的图并不再是texture的样子，而是一个完整的图形（但也并不是数字）。<br><img src="/2019/09/15/Convolutional Neural Network/19.png" alt="19"></p>
+<p>如果我们考虑的是output呢？手写数字辨识output就是10维,每一维就对应一个数字，我们把某一维拿出来，找一张image，让那个维度的output最大。<br>$$x^{\star} = \mathop{argmax}_xy^i$$</p>
+<p>现在既然每一个output的每一个dimension就对应某一个数字，现在如果找一张图，它可以让对应到数字1的那个output layer的neuron的output最大，那么那一张图显然看起来像是一个数字1。然而实际上我们得到的结果如下：<br><img src="/2019/09/15/Convolutional Neural Network/20.png" alt="20"></p>
+<p>为什么会这样？我们把什么的每一张图再作为CNN的输入，CNN分类的结果确实分别对应了0到9！这个结果其实已经在很多地方都被观察到了。这个neuron network它所学到的东西，跟我们人类是非常不一样的。</p>
+<p>我们有没有办法让这个图看起来更像数字呢？我们知道一张图是不是数字是有一些基本假设的，我们应该对y做一些Regularization，对x做一些constrain。最简单的假设就是：对一个数字来所，只有一整张图的某一个小部分会有笔画，我们对x做一些限制如下，假设image里面的每一个pixel我们用$x_{i,j}$来表示，我们把所有$x_{i,j}$取绝对值加起来，这样做的目的是让有壁画的像素点尽可能少。（下面的式子绝对值是可以微分的，后面会讲。）</p>
+<p>$$x^{\star} = arg \max_{x}(y^i-\sum_{i,j}x_{i,j})$$</p>
+<p>加上上面的constrain，得到的图如下，这样得到的结果比较像数字。<br><img src="/2019/09/15/Convolutional Neural Network/21.png" alt="21"></p>
+<h2 id="Deep-Dream"><a href="#Deep-Dream" class="headerlink" title="Deep Dream"></a>Deep Dream</h2><p>上面的想法其实就是deep dream的精神，deep dream就是说如果给machine一张image,他会在image里面加上它看到的东西。把一张相片丢到CNN里面，然后把它的某一个hidden layer的filter，或是fully connected layer里面某一个hidden layer拿出来，它是一个vector，然后把这个vector里面正的值变得更大，负的值变得更小。然后我们用gradient descent的方法找一张image，让它在这个hidden layer的output是现在所设下的target。这么做的目的是让CNN夸大化它看到的东西（<strong>CNN exaggerates what it sees</strong>）<br><img src="/2019/09/15/Convolutional Neural Network/22.png" alt="22"></p>
+<h2 id="Deep-Style"><a href="#Deep-Style" class="headerlink" title="Deep Style"></a>Deep Style</h2><p>Deep Style是Deep Dream的进阶版本（<strong>Given a photo,make its style like famous paintings</strong>），Deep Style是input一张相片，然后让machine去修改这张图，让它有另外一张图的风格。如下图是让一张图具有呐喊的风格。<br><img src="/2019/09/15/Convolutional Neural Network/23.png" alt="23"></p>
+<p>它的大致做法是把原来的image丢给CNN，然后得到CNN的filter的output，它代表这张image里面里有什么样的content,然后将呐喊这张图也丢到CNN里面，也得到filter的output，但这个时候我们考虑的不是filter output的value是什么，而是在意filter和filter之间output的correlation，这个correlation就代表了一张image的style。接下来，用同一个CNN来找一张image，如下图，这个image它的content像左边这张相片，同时这张image的style像右边这张相片，<br><img src="/2019/09/15/Convolutional Neural Network/24.png" alt="24"></p>
+<h2 id="More-Application"><a href="#More-Application" class="headerlink" title="More Application"></a>More Application</h2><p>CNN不只可以应用到影像处理上，比如还能用到下围棋上面。我们用fully connected network也可以训练机器下围棋，如下图。<br><img src="/2019/09/15/Convolutional Neural Network/25.png" alt="25"><br>但是采用CNN我们可以得到更好的performance。</p>
+<h3 id="Why-CNN-for-playing-Go"><a href="#Why-CNN-for-playing-Go" class="headerlink" title="Why CNN for playing Go"></a>Why CNN for playing Go</h3><p>围棋有一些特性和影像处理是很相似的</p>
+<ul>
+<li>Some patterns are much smaller than the whole image<br>围棋里面一些局部的变化与全局是无关的，比如角上的死活,并不需要看到整个棋盘。Alpha Go uses 5$\times$5 for first layer</li>
+</ul>
+<ul>
+<li><p>The same patterns appear in different region<br>同一种棋形可以出现在棋盘的不同位置。他们代表同样的意义，所以可以用同一个detector来处理这些在不同位置的同样的Pattern。</p>
+</li>
+<li><p>Subsampling the pixels will not change the object<br>Subsampling对于围棋来说不太容易理解，丢掉奇数行偶数列对围棋来说显然不work，会不会在alpha go的CNN架构里面有什么特别的地方呢？其他它的里面确实没有用到Max pooling。</p>
+</li>
+</ul>
+<p>另外CNN也可以用在语音辨识和文字处理上。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.youtube.com/watch?v=M2IebCN9Ht4" target="_blank" rel="noopener">Deep Neural Networks are Easily Fooled</a></li>
+<li><a href="http://deepdreamgenerator.com/" target="_blank" rel="noopener">Deep Dream</a></li>
+<li><a href="https://dreamscopeapp.com/" target="_blank" rel="noopener">Deep Style</a></li>
+<li><a href="https://arxiv.org/abs/1508.06576" target="_blank" rel="noopener">A Neural Algorithm of Artistic Style</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/15/Tips for Deep Learning/" rel="next" title="Tips for Deep Learning">
+                <i class="fa fa-chevron-left"></i> Tips for Deep Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/20/Lecture01/" rel="prev" title="Lecture 01">
+                Lecture 01 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-CNN-for-Image"><span class="nav-number">1.</span> <span class="nav-text">Why CNN for Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Convolution"><span class="nav-number">2.</span> <span class="nav-text">Convolution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Colorful-image"><span class="nav-number">2.1.</span> <span class="nav-text">Colorful image</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convolution-v-s-Fully-Connected"><span class="nav-number">2.2.</span> <span class="nav-text">Convolution v.s. Fully Connected</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Max-Pooling"><span class="nav-number">3.</span> <span class="nav-text">Max Pooling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flatten"><span class="nav-number">4.</span> <span class="nav-text">Flatten</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#what-does-CNN-learn"><span class="nav-number">5.</span> <span class="nav-text">what does CNN learn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Dream"><span class="nav-number">5.1.</span> <span class="nav-text">Deep Dream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Style"><span class="nav-number">5.2.</span> <span class="nav-text">Deep Style</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#More-Application"><span class="nav-number">5.3.</span> <span class="nav-text">More Application</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-CNN-for-playing-Go"><span class="nav-number">5.3.1.</span> <span class="nav-text">Why CNN for playing Go</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

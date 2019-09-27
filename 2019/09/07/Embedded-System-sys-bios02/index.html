@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SYS/BISO,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="RTSC的几个关键词Package 包包，也就是前面RTSC开发流程5个步骤中第3步进行packaging操作所形成的包。包既具有逻辑上的概率也具有物理上的概念。逻辑上讲它是Modules及Interfaces的容器。以数据信号处理函数库这个组件为例，在这个库当中不只一个函数，比如快速傅里叶变换、卷积相关函数等，所以这一切的集合就是包。物理上的概念是，每一个包都要以文件的形式存在我们的文件系统上面">
+<meta name="keywords" content="SYS&#x2F;BISO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XDCTools">
+<meta property="og:url" content="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="RTSC的几个关键词Package 包包，也就是前面RTSC开发流程5个步骤中第3步进行packaging操作所形成的包。包既具有逻辑上的概率也具有物理上的概念。逻辑上讲它是Modules及Interfaces的容器。以数据信号处理函数库这个组件为例，在这个库当中不只一个函数，比如快速傅里叶变换、卷积相关函数等，所以这一切的集合就是包。物理上的概念是，每一个包都要以文件的形式存在我们的文件系统上面">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/2.png">
+<meta property="og:updated_time" content="2019-09-13T08:56:47.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XDCTools">
+<meta name="twitter:description" content="RTSC的几个关键词Package 包包，也就是前面RTSC开发流程5个步骤中第3步进行packaging操作所形成的包。包既具有逻辑上的概率也具有物理上的概念。逻辑上讲它是Modules及Interfaces的容器。以数据信号处理函数库这个组件为例，在这个库当中不只一个函数，比如快速傅里叶变换、卷积相关函数等，所以这一切的集合就是包。物理上的概念是，每一个包都要以文件的形式存在我们的文件系统上面">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/">
+
+
+
+
+
+  <title>XDCTools | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/07/Embedded-System-sys-bios02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XDCTools</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-07T18:17:58+08:00">
+                2019-09-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="RTSC的几个关键词"><a href="#RTSC的几个关键词" class="headerlink" title="RTSC的几个关键词"></a>RTSC的几个关键词</h1><h2 id="Package-包"><a href="#Package-包" class="headerlink" title="Package 包"></a>Package 包</h2><p>包，也就是前面RTSC开发流程5个步骤中第3步进行packaging操作所形成的包。包既具有逻辑上的概率也具有物理上的概念。逻辑上讲它是<strong>Modules及Interfaces</strong>的容器。以数据信号处理函数库这个组件为例，在这个库当中不只一个函数，比如快速傅里叶变换、卷积相关函数等，所以这一切的集合就是包。物理上的概念是，每一个包都要以文件的形式存在我们的文件系统上面，在包当中包含所有我们的头文件、源文件、库文件、脚本以及相关文档等等。从逻辑上讲，package相当于一些语言中namespace(命名空间)的概念。</p>
+<h2 id="Module-模块"><a href="#Module-模块" class="headerlink" title="Module 模块"></a>Module 模块</h2><p>相关常量、类型和函数的集合。在一个包中可能不只一个模块。相当于java或.net语言下的类的概念。</p>
+<h2 id="Interface-接口"><a href="#Interface-接口" class="headerlink" title="Interface 接口"></a>Interface 接口</h2><p>Module模块的最终实现形式。</p>
+<hr>
+<p>我们用一个列子来说明。在TI出一套算法框架（标准）之前，算法的编写比较不统一的，这给我们算法的整合带来许多困难。不统一的意思是：在一个项目中，不同工程师所编写的算法它的调用接口是不一致的。有了TI的算法框架以后，对于算法的调用和整合可以使用统一的一种方式来实现，这样对于我们编写复杂的程序比较方便。这套算法框架叫做<strong>XDAIS算法标准（eXpressDsp Algorithm Interoperability Standard）</strong>，在这个标准之后还扩张了XDM的标准，这是为了简化XDAIS算法的开发，因为XDAIS算法涵盖了算法开发的整套流程，相对比较复杂，XDM相当于XDAIS的上层接口。</p>
+<h1 id="XDCTools"><a href="#XDCTools" class="headerlink" title="XDCTools"></a>XDCTools</h1><p>前面所讲的RTSC,它只是一套标准（或者说框架），它是理论层面的东西。理论上的东西拿到实际上去用，需要有相应工具来实现，这就是XDCTools所要做的事情。这个工具要实现前面所说的RTSC5个步骤中的所有环节。在RTSC开发的一整个流程都可以使用这一个工具来实现。</p>
+<p>XDC从缩写上可以是两个意思，一个是<strong>eXpress Dsp Components</strong>,另一个是<strong>eXpanDed C</strong>(扩展C语言)。这个工具是开源免费的。XDCTools包含以下几个组件：</p>
+<ul>
+<li>xdc</li>
+<li>xdc.tools.cdoc</li>
+<li>xdc.tools.repoman</li>
+<li>xdc.tools.path</li>
+<li>xdc.tools.configuro</li>
+<li>xs<br><img src="/2019/09/07/Embedded-System-sys-bios02/1.png" alt="1"><br>XDCTools这个工具涵盖了组件也就是RTSC中所说的包package整个开发流程（生命周期），以及程序开发的整个流程（生命周期），还有程序在运行过程中分析的整个流程，它是一套比较完善的工具，例如对于package来说，它对包的创建、编译、发布等等相关工具都有提供。而对于运行时来说，一些组件比如Log也是由XDCTools来提供的。</li>
+</ul>
+<h2 id="语言支持"><a href="#语言支持" class="headerlink" title="语言支持"></a>语言支持</h2><p>在现在计算机上使用的语言主要是面向对象的一种编程，而我们在嵌入式平台要想实现组件技术，单单使用C语言在某些特性上无法满足，所以在RTSC上引入了两种描述性的语言，他们是为了补充C语言的功能而引入的。</p>
+<p>在运行的时候，因为是嵌入式系统，它的编程需要C、C++或汇编来编写，所以在运行时使用的语言主要是C语言。而在组件的开发或者程序的开发的时候，使用的语言是<strong>XDCspec</strong>和<strong>XDCscript</strong>。XDCspec主要是对组件的定义和描述时使用的，而XDCscript是对于组件的配置使用的。这三种语言一起被成为eXpanDed C。</p>
+<p><img src="/2019/09/07/Embedded-System-sys-bios02/2.png" alt="2"></p>
+<p>另外，XDCTools只是实现RTSC组件技术的一个工具，并不包含有编译工具链，所以使用它时候我们必须要搭配相应编译工具链。 </p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>RTSC是一种面向嵌入式C语言的组件技术，使用组件技术有很多便利之处，当然使用与否的选择权在你。不过如果要使用SYS/BIOS系统的话，是必须要使用这种组件技术的，而XDCTools就是实现这种技术的一种工具。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://en.wikipedia.org/wiki/XDAIS_algorithms" target="_blank" rel="noopener">XDAIS algorithm</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SYS-BISO/" rel="tag"><i class="fa fa-tag"></i> SYS/BISO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/07/Embedded-System-sys-bios01/" rel="next" title="实时软件组件-RTSC">
+                <i class="fa fa-chevron-left"></i> 实时软件组件-RTSC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/07/Embedded-System-sys-bios03/" rel="prev" title="实时操作系统">
+                实时操作系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RTSC的几个关键词"><span class="nav-number">1.</span> <span class="nav-text">RTSC的几个关键词</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Package-包"><span class="nav-number">1.1.</span> <span class="nav-text">Package 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module-模块"><span class="nav-number">1.2.</span> <span class="nav-text">Module 模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface-接口"><span class="nav-number">1.3.</span> <span class="nav-text">Interface 接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XDCTools"><span class="nav-number">2.</span> <span class="nav-text">XDCTools</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#语言支持"><span class="nav-number">2.1.</span> <span class="nav-text">语言支持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
