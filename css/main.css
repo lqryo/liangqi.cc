@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #9542ff;
+  background: #dfffac;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3049,5 +3049,5 @@ header.post-header {
   text-align: center;
 }
 .main img {
-  max-width: 600px;
+  max-width: 50%;
 }
