@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="traits可以理解为一种人为设计制造的萃取机，设计一个traits就是希望丢给他什么东西，它能萃取出我们想要的特征。我们可以在标准库中看到好几种traits，比如type traits、point traits、iterator traits。这里我们只谈iterator traits。 iterator需要遵循的原则迭代器是算法和容器之间的桥梁，例如让算法知道它要处理的元素范围，算法在运算的过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="迭代器的设计原则和Iterator Traits的作用与设计">
+<meta property="og:url" content="http://yoursite.com/2019/10/04/Lecture10/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="traits可以理解为一种人为设计制造的萃取机，设计一个traits就是希望丢给他什么东西，它能萃取出我们想要的特征。我们可以在标准库中看到好几种traits，比如type traits、point traits、iterator traits。这里我们只谈iterator traits。 iterator需要遵循的原则迭代器是算法和容器之间的桥梁，例如让算法知道它要处理的元素范围，算法在运算的过">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/Lecture10/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/Lecture10/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/Lecture10/3.png">
+<meta property="og:updated_time" content="2019-10-04T14:00:40.386Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="迭代器的设计原则和Iterator Traits的作用与设计">
+<meta name="twitter:description" content="traits可以理解为一种人为设计制造的萃取机，设计一个traits就是希望丢给他什么东西，它能萃取出我们想要的特征。我们可以在标准库中看到好几种traits，比如type traits、point traits、iterator traits。这里我们只谈iterator traits。 iterator需要遵循的原则迭代器是算法和容器之间的桥梁，例如让算法知道它要处理的元素范围，算法在运算的过">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/04/Lecture10/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/04/Lecture10/">
+
+
+
+
+
+  <title>迭代器的设计原则和Iterator Traits的作用与设计 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/Lecture10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">迭代器的设计原则和Iterator Traits的作用与设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T09:39:54+08:00">
+                2019-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>traits</strong>可以理解为一种人为设计制造的萃取机，设计一个traits就是希望丢给他什么东西，它能萃取出我们想要的特征。我们可以在标准库中看到好几种traits，比如type traits、point traits、iterator traits。这里我们只谈iterator traits。</p>
+<h1 id="iterator需要遵循的原则"><a href="#iterator需要遵循的原则" class="headerlink" title="iterator需要遵循的原则"></a>iterator需要遵循的原则</h1><p>迭代器是算法和容器之间的桥梁，例如让算法知道它要处理的元素范围，算法在运算的过程中，很可能需要知道这个iterator有哪些性质。下图是以算法<code>rotate</code>来做例子，如下图：<br><img src="/2019/10/04/Lecture10/1.png" alt="1"></p>
+<p>我们来分析一下在rotate算法里面会需要iterator的哪些属性。图中标记1部分使用的<code>iterator_traits&lt;_Iter&gt;</code>想要知道<code>iterator_category()</code>，即迭代器的分类。所谓迭代器的分类是指iterator的移动性质，有的iterator只能向前移动（++），有的还可以后退（–），有的还可以一次前进某一个值。rotate知道iterator是哪一个分类，以便它能采取最佳的操作方式。标记2和3部分，rotate还想知道iterator的<code>difference_type</code>和<code>value_type</code>，iterator本身所指的那个元素的type就是<code>value_type</code>,比如容器中放入的元素是string，那么value_type就是string。<code>difference_type</code>是用来表示两个iterator之间的距离的type，如果<code>difference_type</code>是unsigned int，那么容器中元素的个数不能超过unsigned int所能表示的最大值。</p>
+<p>另外两种iterator属性<code>reference</code>和<code>pointer</code>在C++标准库中从未被使用过。这5中type我们就称为迭代器的<strong>associated type</strong>。迭代器必须有这5种类型，以便回答算法提问。下面是Gnu C4.9中的代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">List_iterator</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::bidirectional_iterator_tag iterator_category;  <span class="comment">//双向链表</span></span><br><span class="line">    <span class="keyword">typedef</span> _Tp value_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;  <span class="comment">//ptrdiff_t是C++标准库中的定义</span></span><br><span class="line"><span class="comment">//...    </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>算法会对iterator进行提问:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> I&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">algorithm(I first,I last)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    I::iterator_category</span><br><span class="line">    I::pointer</span><br><span class="line">    I::reference</span><br><span class="line">    I::value_type</span><br><span class="line">    I::difference_type</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>既然上面的代码就可以实现迭代器与算法之间的问答，问什么还需要traits呢？试想，如果iterator本身并不是一个class而是一个native pointer呢（它被视为一种退化的iterator）？指针不能够做typedef，它要怎么回答算法的问题呢？这个时候我们就需要设计出traits了。</p>
+<h1 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h1><p>Traits首先要能够区分iterator到底是class还是一个pointer。<br><img src="/2019/10/04/Lecture10/2.png" alt="2"></p>
+<p>它实际的做法如下：<br><img src="/2019/10/04/Lecture10/3.png" alt="3"></p>
+<p>traits通过偏特化来分离class iterators和non-class iterators。<code>value_type</code>的主要目的是用来声明变量，而声明一个无法被赋值的变量没什么用，所以iterator（即便是constant iterator）的value type不应加上const。iterator若是const int*,其value_type应该是int而非const int。</p>
+<p>完整的iterator_traits写法如下（G2.95 <code>&lt;stl_iterator.h&gt;</code>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Iterator</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::iterator_category iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::value_type        value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::difference_type   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::pointer           pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::reference         reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//partial specialization for regular pointers</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;_Tp*&gt; &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp*                        pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp&amp;                        reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;const _Tp*&gt; &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp*                  pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp&amp;                  reference;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>除了iterator traits，在整个标准库中还有其他的东西</p>
+<ul>
+<li>type traits     &lt;../C++/type_traits&gt;</li>
+<li>iterator traits     &lt;../C++/bits/stl_iterator.h&gt;</li>
+<li>char traits     &lt;../C++/bits/char_traits.h&gt;</li>
+<li>allocator traits     &lt;../C++/bits/alloc_traits.h&gt;</li>
+<li>pointer traits     &lt;../C++/bits/ptr_traits.h&gt;</li>
+<li>array traits     &lt;../C++/array&gt;</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/03/Lecture09/" rel="next" title="深度探索list">
+                <i class="fa fa-chevron-left"></i> 深度探索list
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/04/Lecture11/" rel="prev" title="vector深度探索">
+                vector深度探索 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iterator需要遵循的原则"><span class="nav-number">1.</span> <span class="nav-text">iterator需要遵循的原则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Traits"><span class="nav-number">2.</span> <span class="nav-text">Traits</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

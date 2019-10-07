@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="list容器不是最简单的容器，但却是最具代表性的，所以先来研究它。 容器listlist是双向链表。先来看list的源代码（GNU C2.9） 1234567891011template&amp;lt;class T,class Alloc = alloc&amp;gt;class list&amp;#123;protected:    typedef __list_node&amp;lt;T&amp;gt; list_node;pub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度探索list">
+<meta property="og:url" content="http://yoursite.com/2019/10/03/Lecture09/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="list容器不是最简单的容器，但却是最具代表性的，所以先来研究它。 容器listlist是双向链表。先来看list的源代码（GNU C2.9） 1234567891011template&amp;lt;class T,class Alloc = alloc&amp;gt;class list&amp;#123;protected:    typedef __list_node&amp;lt;T&amp;gt; list_node;pub">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/03/Lecture09/6.png">
+<meta property="og:updated_time" content="2019-10-04T13:51:38.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度探索list">
+<meta name="twitter:description" content="list容器不是最简单的容器，但却是最具代表性的，所以先来研究它。 容器listlist是双向链表。先来看list的源代码（GNU C2.9） 1234567891011template&amp;lt;class T,class Alloc = alloc&amp;gt;class list&amp;#123;protected:    typedef __list_node&amp;lt;T&amp;gt; list_node;pub">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/03/Lecture09/2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/03/Lecture09/">
+
+
+
+
+
+  <title>深度探索list | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/Lecture09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深度探索list</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-03T18:29:55+08:00">
+                2019-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>list容器不是最简单的容器，但却是最具代表性的，所以先来研究它。</p>
+<h1 id="容器list"><a href="#容器list" class="headerlink" title="容器list"></a>容器list</h1><p>list是双向链表。先来看list的源代码（GNU C2.9）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Alloc</span> = <span class="title">alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">list</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">typedef</span> __list_node&lt;T&gt; list_node;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> list_node* link_type;</span><br><span class="line">    <span class="keyword">typedef</span> __list_iterator&lt;T,T&amp;,T*&gt; iterator;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    link_type node;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一个list里面需要些什么东西才能去控制一个双向链表。从上面代码中可以看到，整个list中的data只有<code>node</code>，<code>link_type</code>是一个指向<code>list_node</code>的指针（32位系统中一个指针是4个字节），所以list本身要占用4个字节，这对应了上一节的那张图，<code>list_node</code>代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> __<span class="title">list_node</span>&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">void</span>* void_pointer;</span><br><span class="line">    void_pointer prev;</span><br><span class="line">    void_pointer next;</span><br><span class="line">    T data;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><code>data</code>是要放入的元素值，<code>prev</code>和<code>next</code>是指向前后的两根指针。注意<code>prev</code>和<code>next</code>指向的都是void，后面还需要进行类型转换。所以在list里面每一个元素除了自身要占用的内存外，还要多消耗两根指针的内存。</p>
+<h1 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h1><p>下图是双向链表的示意图，空心的气泡代表iterator。由于链表是一个非连续空间，所以iterator不能够是指针，因为它需要去判断下一个元素的位置，它是一个class。<br><img src="/2019/10/03/Lecture09/2.png" alt="2"></p>
+<p>iterator的代码如下(<code>&lt;stl_list.h&gt;</code>)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>, <span class="title">class</span> _<span class="title">Ref</span>, <span class="title">class</span> _<span class="title">Ptr</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> _<span class="title">List_iterator</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Tp&amp;,_Tp*&gt;             iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,<span class="keyword">const</span> _Tp&amp;,<span class="keyword">const</span> _Tp*&gt; const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Ref,_Ptr&gt;             _Self;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> bidirectional_iterator_tag iterator_category;   <span class="comment">//（1）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Tp value_type;     <span class="comment">//（2）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Ptr pointer;       <span class="comment">//（3）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Ref reference;     <span class="comment">//（4）</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_node&lt;_Tp&gt; _Node;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;   <span class="comment">//（5）</span></span><br><span class="line"></span><br><span class="line">  _Node* _M_node;</span><br><span class="line"></span><br><span class="line">  _List_iterator(_Node* __x) : _M_node(__x) &#123;&#125;</span><br><span class="line">  _List_iterator() &#123;&#125;</span><br><span class="line">  _List_iterator(<span class="keyword">const</span> iterator&amp; __x) : _M_node(__x._M_node) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node == __x._M_node; &#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node != __x._M_node; &#125;</span><br><span class="line">  reference <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> (*_M_node)._M_data; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SGI_STL_NO_ARROW_OPERATOR</span></span><br><span class="line">  pointer <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123; <span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*()); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __SGI_STL_NO_ARROW_OPERATOR */</span></span></span><br><span class="line"></span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>++() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_next);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;  <span class="comment">//1.记录原值</span></span><br><span class="line">    ++*<span class="keyword">this</span>;   <span class="comment">//2.进行操作</span></span><br><span class="line">    <span class="keyword">return</span> __tmp;   <span class="comment">//3.返回原值</span></span><br><span class="line">  &#125;</span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>--() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_prev);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>--(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    --*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>首先iterator里面肯定会有大量的操作符存在，并且至少要有注释中的5个typedef。</p>
+<p><code>++</code>操作有前置型（prefix form）和后置型(postfix form)，为了区分，后置型的会有一个参数，但这个参数没有意义（<code>self operator++(int)</code>），前置型没有参数。前置型<code>++</code>的代码比较容易理解。后置型++的代码要注意，里面的有些操作符也许是已经被重载过的。具体如下图：</p>
+<p><img src="/2019/10/03/Lecture09/1.png" alt="1"></p>
+<p>注意前置型与后置型的返回类型也有区别，后置型返回类型带有reference，这里是为了更好地与操作整型的<code>++</code>操作符保持一致。来看下面的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i</span><span class="params">(<span class="number">6</span>)</span></span>;</span><br><span class="line">++++i; <span class="comment">//++(++i)</span></span><br><span class="line">i++++; <span class="comment">//(i++)++   worry</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的代码第3行会报错，C++不允许后置++连续执行2次。所以iterator代码为了阻止后置++执行两次，返回的值不是reference。</p>
+<p>另外对于<code>*</code>和<code>-&gt;</code>的重载说明如下图：<br><img src="/2019/10/03/Lecture09/3.png" alt="3"></p>
+<hr>
+<p>所有容器的iterator都有两大部分，一个是一大堆的typedef（为什么后面后解释），另一个是一大堆的操作符重载。</p>
+<p>从GC2.9到GC4.9,对代码中一些不够好的地方做了修正。如下图：</p>
+<p><img src="/2019/10/03/Lecture09/4.png" alt="4"></p>
+<p>GC2.9与GC4.9的对比如下：<br><img src="/2019/10/03/Lecture09/5.png" alt="5"><br>2.9版链表本身只是一个class，它里面含有的节点是另一个class。GC4.9的类间关系设计过于复杂，没有2.9版简洁。G2.9版List的大小是4个字节，而G4.9版List大小是8个字节，从上面的类图可以看出，这是因为它的data有2个指针。</p>
+<p>另外list虽然是双向，但是实际代码中是将它设计为环状，为了实现前闭后开的要求，有一个节点是空节点。<br><img src="/2019/10/03/Lecture09/6.png" alt="6"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/u012211419/article/details/48344445" target="_blank" rel="noopener">指针大小由谁决定</a></li>
+<li><a href="https://my.oschina.net/flylxl/blog/603114" target="_blank" rel="noopener">C++ 解引用(*)和箭头(-&gt;)运算符的重载</a></li>
+<li><a href="https://blog.csdn.net/lanchunhui/article/details/49557083" target="_blank" rel="noopener">C++ UML类图</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/03/Lecture08/" rel="next" title="容器之间的实现关系与分类">
+                <i class="fa fa-chevron-left"></i> 容器之间的实现关系与分类
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/04/Lecture10/" rel="prev" title="迭代器的设计原则和Iterator Traits的作用与设计">
+                迭代器的设计原则和Iterator Traits的作用与设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#容器list"><span class="nav-number">1.</span> <span class="nav-text">容器list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iterator"><span class="nav-number">2.</span> <span class="nav-text">iterator</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

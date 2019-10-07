@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="不建议直接去使用分配器。 operator new()与malloc()所有的分配动作，最终一层一层下去，都会跑到malloc()函数中去，这个函数是C Runtime library提供的，这个函数再根据它是在linux底下或windows底下去调用不同的操作系统里面的api。malloc()会分配比所要求的更大的内存，因为它会添加一些附加的内容。分配的细节这里不详述。 vc6所附标准库中all">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分配器详解">
+<meta property="og:url" content="http://yoursite.com/2019/10/01/Lecture07/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="不建议直接去使用分配器。 operator new()与malloc()所有的分配动作，最终一层一层下去，都会跑到malloc()函数中去，这个函数是C Runtime library提供的，这个函数再根据它是在linux底下或windows底下去调用不同的操作系统里面的api。malloc()会分配比所要求的更大的内存，因为它会添加一些附加的内容。分配的细节这里不详述。 vc6所附标准库中all">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/01/Lecture07/1.png">
+<meta property="og:updated_time" content="2019-10-04T13:14:57.534Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分配器详解">
+<meta name="twitter:description" content="不建议直接去使用分配器。 operator new()与malloc()所有的分配动作，最终一层一层下去，都会跑到malloc()函数中去，这个函数是C Runtime library提供的，这个函数再根据它是在linux底下或windows底下去调用不同的操作系统里面的api。malloc()会分配比所要求的更大的内存，因为它会添加一些附加的内容。分配的细节这里不详述。 vc6所附标准库中all">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/01/Lecture07/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/01/Lecture07/">
+
+
+
+
+
+  <title>分配器详解 | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/01/Lecture07/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分配器详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-01T13:34:36+08:00">
+                2019-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>不建议直接去使用分配器。</p>
+<h1 id="operator-new-与malloc"><a href="#operator-new-与malloc" class="headerlink" title="operator new()与malloc()"></a>operator new()与malloc()</h1><p>所有的分配动作，最终一层一层下去，都会跑到<code>malloc()</code>函数中去，这个函数是<strong>C Runtime library</strong>提供的，这个函数再根据它是在linux底下或windows底下去调用不同的操作系统里面的api。<code>malloc()</code>会分配比所要求的更大的内存，因为它会添加一些附加的内容。分配的细节这里不详述。</p>
+<p>vc6所附标准库中<code>allocator</code>的实现如下（<code>&lt;xmemory&gt;</code>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">allocator</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> _SIZT size_type;</span><br><span class="line">    <span class="keyword">typedef</span> _PDFT difference_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Ty _FARQ *pointer;</span><br><span class="line">    <span class="keyword">typedef</span> _Ty value_type;</span><br><span class="line">    <span class="function">pointer <span class="title">allocate</span><span class="params">(size_type _N,<span class="keyword">const</span> <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function">        </span>&#123;<span class="keyword">return</span> (_Allocate((difference_type)_N,(pointer)<span class="number">0</span>));&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(<span class="keyword">void</span> _FARQ *_P,size_type)</span></span></span><br><span class="line"><span class="function">        </span>&#123;<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(_P)</span></span>;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>_Allocate()</code>定义如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt;<span class="title">inline</span></span></span><br><span class="line"><span class="class">_<span class="title">Ty</span> _<span class="title">FARQ</span> *_<span class="title">Allocate</span>(_<span class="title">PDFT</span> _<span class="title">N</span>,_<span class="title">Ty</span> _<span class="title">FARQ</span> *)</span></span><br><span class="line"><span class="class">&#123;</span><span class="keyword">if</span> (_N &lt; <span class="number">0</span>) _N = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">return</span> ((_Ty _FARQ *)<span class="keyword">operator</span> <span class="keyword">new</span>((_SIZT)_N * <span class="keyword">sizeof</span>(_Ty)));&#125;</span><br></pre></td></tr></table></figure>
+
+<p>相关宏定义如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _FARQ</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _FARQ</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _PDFT  ptrdiff_t</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _SIZT  size_t</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _POINTER_X(T,A)  T_FARQ * </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _REFERENCE_X(T,A)  T_FARQ &amp;</span></span><br></pre></td></tr></table></figure>
+
+<p>分配器最重要的两个函数是<code>allocate()</code>和<code>deallocate()</code>，而<code>allocate()</code>函数调用了<code>operator new()</code>，<code>operator new()</code>又调用了<code>malloc()</code>。</p>
+<p>VC6的<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallocate()</code>,没有任何特殊设计。所以如果我们在容器中放入100万个元素，每个元素所占的内存很小，前面提到<code>malloc()</code>分配内存会有额外开销，这样会导致额外开销的比例很大，额外的内存开销可能比100万个元素本身所占用的内存还要多！</p>
+<p>使用allocate的代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = allocator&lt;<span class="keyword">int</span>&gt;().allocate(<span class="number">512</span>,(<span class="keyword">int</span>*)<span class="number">0</span>);</span><br><span class="line">allocator&lt;<span class="keyword">int</span>&gt;().deallocate(p,<span class="number">512</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意上面代码中的一个特殊语法：typename后面接一个空的小括号，这样就形成了一个没有名称的临时对象。<code>&lt;xmemory&gt;</code>代码的第8行，<code>allocate</code>的第二个参数没有名称，这里是一个小技巧，通过这个参数让allocate知道每个内存单位是什么类型。</p>
+<p>同样地，Borland C++5的<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallcoate()</code>,没有任何特殊设计。</p>
+<p>Gnu C2.9所附的标准库，其allocator的实现如下(<code>&lt;defalloc.h&gt;</code>)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">T</span>* <span class="title">allocate</span>(<span class="title">ptrdiff_t</span> <span class="title">size</span>, <span class="title">T</span>*) &#123;</span></span><br><span class="line">    set_new_handler(<span class="number">0</span>);</span><br><span class="line">    T* tmp = (T*)(::<span class="keyword">operator</span> <span class="keyword">new</span>((<span class="keyword">size_t</span>)(size * <span class="keyword">sizeof</span>(T))));</span><br><span class="line">    <span class="keyword">if</span> (tmp == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="built_in">cerr</span> &lt;&lt; <span class="string">"out of memory"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">void</span> <span class="title">deallocate</span>(<span class="title">T</span>* <span class="title">buffer</span>) &#123;</span></span><br><span class="line">    ::<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(buffer)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">allocator</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">    <span class="keyword">typedef</span> T* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_pointer;</span><br><span class="line">    <span class="keyword">typedef</span> T&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T&amp; const_reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line">    <span class="function">pointer <span class="title">allocate</span><span class="params">(size_type n)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> ::allocate((difference_type)n, (pointer)<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(pointer p)</span> </span>&#123; ::deallocate(p); &#125;</span><br><span class="line">    <span class="function">pointer <span class="title">address</span><span class="params">(reference x)</span> </span>&#123; <span class="keyword">return</span> (pointer)&amp;x; &#125;</span><br><span class="line">    <span class="function">const_pointer <span class="title">const_address</span><span class="params">(const_reference x)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> (const_pointer)&amp;x; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">init_page_size</span><span class="params">()</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> max(size_type(<span class="number">1</span>), size_type(<span class="number">4096</span>/<span class="keyword">sizeof</span>(T))); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> max(size_type(<span class="number">1</span>), size_type(UINT_MAX/<span class="keyword">sizeof</span>(T))); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">allocator</span>&lt;void&gt; &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">void</span>* pointer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，GNU C和vc、Borland C一样，<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallcoate()</code>,没有任何特殊设计。这样的缺点是可能会带来大比例的额外开销。</p>
+<p>在GNU C2.9的<code>&lt;defalloc.h&gt;</code>文件中有如下说明</p>
+<blockquote>
+<p>Inclusion of this file is DEPRECATED.  This is the original HP default allocator.  It is provided only for backward compatibility. This file WILL BE REMOVED in a future release.<br>DO NOT USE THIS FILE unless you have an old container implementation that requires an allocator with the HP-style interface.  Standard-conforming allocators have a very different interface.  The standard default allocator is declared in the header <code>&lt;memory&gt;</code>.</p>
+</blockquote>
+<p>这说明GNU C自己的容器并没有用到该分配器，而是用的另一个分配器<code>alloc</code>，下图是该分配器的行为模式（<code>&lt;stl_alloc.h&gt;</code>）：<br><img src="/2019/10/01/Lecture07/1.png" alt="1"></p>
+<p>这个特殊的分配器，它的主要诉求是尽量减少<code>malloc()</code>的使用次数。因为malloc会带着overhead的额外开销。那这些额外开销到底是做什么的呢？额外开销里面一个比较重要的内容就是记录内存的大小，这个是必要的，因为用malloc去拿内存的时候，得到一个指针，还的时候还这个指针但不需要指明所还内存的大小（这部分内容称为cookie）。通过overhead的cookie，<code>free()</code>函数就能知道要回收的内存大小。由于<code>malloc()</code>是给各式各样的人使用，要分配的内存有大有小。但是容器元素的大小是一样的，所以似乎不必把这个大小在每个元素都附带着记着。为此，GNU C设计了16条链表，每一条链表负责某一种特定大小的区块，例如第0个链表负责8个字节大小，第7个链表负责56个字节大小，依次类推。所有的容器当需要内存的时候都来跟这个分配器要内存。容器的元素大小会被调整到8的倍数。比如50，会被调整到56，然后分配器判断它由第7个链表来负责，分配器会看这个链表里面有没有分配内存块，如果没有，它才会调用<code>malloc()</code>来申请一大块内存，然后将申请的大块内存做切割分给容器，切出来的内存用单项链表串联起来，这样切出来的内存就不用带cookie。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/colourful_sky/article/details/79495536" target="_blank" rel="noopener">vs与vc版本对应关系</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/01/Lecture06/" rel="next" title="操作符重载与模板">
+                <i class="fa fa-chevron-left"></i> 操作符重载与模板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/03/Lecture08/" rel="prev" title="容器之间的实现关系与分类">
+                容器之间的实现关系与分类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#operator-new-与malloc"><span class="nav-number">1.</span> <span class="nav-text">operator new()与malloc()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">2.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

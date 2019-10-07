@@ -90,7 +90,11 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/2.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/3.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/4.png">
-<meta property="og:updated_time" content="2019-09-27T15:29:31.332Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/15/Tips%20for%20Deep%20Learning/8.png">
+<meta property="og:updated_time" content="2019-09-28T15:39:24.445Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tips for Deep Learning">
 <meta name="twitter:description" content="Recipe of Deep LearningDeep Learning的三个step:step 1: define a set of functionstep 2: goodness of functionstep 3: pick the best function做完以上事情后，会得到一个Neural Network。接下来要做的事情就是，检查这个Neural Network在Training">
@@ -361,7 +365,19 @@
 <p>假设我们在training set上已经得到好的performance了，接下来将network apply到testing set上，如果现在得到的结果不好的话，就是overfitting。过程如下图。<br><img src="/2019/09/15/Tips for Deep Learning/1.png" alt="1"></p>
 <h2 id="Do-not-always-blame-Overfitting"><a href="#Do-not-always-blame-Overfitting" class="headerlink" title="Do not always blame Overfitting"></a>Do not always blame Overfitting</h2><p>不是所有不好的performance就是overfitting，下面是文献中的图，横坐标是model update的次数，我们发现56层的network相比20层的network，它的performance比较差。有人可能会得到结论：56层的参数太多了，这个是overfitting，但是真的是这个吗？<br><img src="/2019/09/15/Tips for Deep Learning/2.png" alt="2"></p>
 <p>在我们得到overfitting的结论之前，先检查一下在training set上的结果，对某些方法来所（比如k nearest neighbor或decision tree）不用检查这些事，但是对neural network来说，是需要检查这些事情的。因为有可能在training data的结果如下图，20层的performance在training data上本来就比56层要好，为什么会这样呢？在做neural network training的时候，有太多太多的问题，可以让training的结果是不好的（比如local minimum的问题），所以可能56层的network卡在了local minimum的地方，从而得到了一个差的参数。这个并不是overfitting，而是根本就没有train好。理论上20层的network可以做到的事情，56层的network一定可以做到。所以56层的network比20层差并不是它能力不够，所以这个应该不是underfitting。<br><img src="/2019/09/15/Tips for Deep Learning/3.png" alt="3"></p>
-<p>所以在deep learning的文献上，如果当你读到一个方法的时候，永远要想一下说，这个方法是要解什么样的问题。因为在training set上有两个问题，一个是training set上的performace不好，一个是testing set上的performance不好。当只有一个方法propose的时候，它往往就是针对这两个问题的其中一个来做处理（例如dropout）<br><img src="/2019/09/15/Tips for Deep Learning/4.png" alt="4"></p>
+<p>所以在deep learning的文献上，如果当你读到一个方法的时候，永远要想一下说，这个方法是要解什么样的问题。因为在training set上有两个问题，一个是training set上的performace不好，一个是testing set上的performance不好。当只有一个方法propose的时候，它往往就是针对这两个问题的其中一个来做处理（例如dropout，dropout是在testing的结果不好的时候才会apply）。<br><img src="/2019/09/15/Tips for Deep Learning/4.png" alt="4"></p>
+<h2 id="Vanishing-Gradient-Problem"><a href="#Vanishing-Gradient-Problem" class="headerlink" title="Vanishing Gradient Problem"></a>Vanishing Gradient Problem</h2><p>如果是在training data上的结果不好，可以考虑是不是在做network架构设计的时候是否设计得当。举例来说，我们可能用的是比较不好的activation function，那么就需要换新的activation function。在1980年代的时候，比较常用的activation function是sigmoid function，如下图，当layer原来越多的时候，accuracy逐渐下降直到崩溃。<br><img src="/2019/09/15/Tips for Deep Learning/5.png" alt="5"></p>
+<p>发生这种现象的一个原因是<strong>Vanishing Gradient Problem</strong>，当network被叠的很深的时候，在靠近input的几个layer，参数对最后loss function的微分会是很小，而在比较靠近output的地方，它的微分值会很大。因此当设定同样的learning rate的时候，会发现靠近input的地方，它的参数update很慢，靠近output的地方，它的参数update是很快的，所以我们会发现在靠近input的参数几乎还是random的时候，output就已经converge了，换句话说，在靠近input的参数还是random的时候，output地方就已经根据这些random的结果，找到了一个local minimum，然后它就converge了，这个时候就会发现参数loss下降的速度变得很慢。<br><img src="/2019/09/15/Tips for Deep Learning/6.png" alt="6"></p>
+<p>为什么会有这个现象发生呢？如果去看backpropagation的式子，会发现用sigmoid function会导致这件事情。但我们现在从直觉上来想为什么这件事情会发生。</p>
+<p>某一个参数$w$对total cost $C$的偏微分$\frac{\partial C}{\partial w}$的意思就是说当把某一个参数做小小的变化的时候，它对cost的影响会是怎样。我们把第一个layer里的某个参数加上$\Delta w$,看看对network的output和它的target之间的loss有什么样的影响。如果$\Delta w$很大，通过sigmoid function的时候，这个output是会变小的。也就是说，改变了某一个参数的weight，对某一个neuron的output的值会有影响。但是这个影响是会衰减的。因为sigmoid functino会把正无穷到负无穷大之间的值都压到0到1之间。也就是说，如果input变化很大，通过sigmoid function以后，它output的变化会是很小的，并且每通过一次sigmoid function，变化就衰减一次。network越深，它衰减的次数就越多，直到最后它对output的影响是非常小的，也造成对cost的变化很小，所以在靠近input的那些weight，它对它这个Gradient的值是小的。<br><img src="/2019/09/15/Tips for Deep Learning/7.png" alt="7"></p>
+<p>要怎么解决上面问题呢？改一下activation function，现在比较常用的activation function是<strong>Rectified Linear Unit(ReLU)</strong>,它的图像如下。<br><img src="/2019/09/15/Tips for Deep Learning/8.png" alt="8"></p>
+<p>选用ReLU有以下几个理由：</p>
+<ul>
+<li><strong>Fast to compute</strong><br>跟sigmoid function比起来，它的运算是快很多的（sigmoid里面还有exponential,那个是很慢的）。</li>
+<li><strong>Biological reason</strong><br>ReLU的想法其实是有一些生物上的理由的。</li>
+<li><strong>Infinite sigmoid with different biases</strong><br>ReLU等同于无穷多个sigmoid function叠加的结果。</li>
+<li><strong>Vanishing gradient problem</strong><br>如下图是一个activation function为ReLU的network，ReLU它作用在两个不同的region，一个是当input&gt;0时，input=output，此时activation function是linear的；另一个是input&lt;0,output=0。对于output是0的network来说，它其实对整个network一点影响也没有，可以把它从整个network里面拿掉。当把output是0的neuron拿掉，剩下的neuron(input=output)都是linear的，整个network，就是一个很瘦长的liear network。这个时候就不会有activation function递减的问题了。</li>
+</ul>
 <hr>
 
       
@@ -478,7 +494,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -489,7 +505,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -533,7 +549,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recipe-of-Deep-Learning"><span class="nav-number">1.</span> <span class="nav-text">Recipe of Deep Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Do-not-always-blame-Overfitting"><span class="nav-number">1.1.</span> <span class="nav-text">Do not always blame Overfitting</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Recipe-of-Deep-Learning"><span class="nav-number">1.</span> <span class="nav-text">Recipe of Deep Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Do-not-always-blame-Overfitting"><span class="nav-number">1.1.</span> <span class="nav-text">Do not always blame Overfitting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vanishing-Gradient-Problem"><span class="nav-number">1.2.</span> <span class="nav-text">Vanishing Gradient Problem</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -776,3 +792,6 @@
 
 </body>
 </html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

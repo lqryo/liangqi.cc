@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Ti毫米波雷达mmWave学习笔记。 FMCW雷达基础知识FMCW(Frequency Modulated Continuous Wave):调频连续波。该雷达主要测量其前方物体的距离(range)、速度(velocity)和到达角(angle)。 本教程将从每个传感器的维度，从第一个模块中的距离开始，然后在接下来的几个模块中，继续讨论速度，然后再第五个模块中，讨论角度估算。 本节主要讨论这些问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Range Estimation">
+<meta property="og:url" content="http://yoursite.com/2019/10/05/Lecture01/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="Ti毫米波雷达mmWave学习笔记。 FMCW雷达基础知识FMCW(Frequency Modulated Continuous Wave):调频连续波。该雷达主要测量其前方物体的距离(range)、速度(velocity)和到达角(angle)。 本教程将从每个传感器的维度，从第一个模块中的距离开始，然后在接下来的几个模块中，继续讨论速度，然后再第五个模块中，讨论角度估算。 本节主要讨论这些问题">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/05/Lecture01/12.png">
+<meta property="og:updated_time" content="2019-10-06T16:12:28.626Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Range Estimation">
+<meta name="twitter:description" content="Ti毫米波雷达mmWave学习笔记。 FMCW雷达基础知识FMCW(Frequency Modulated Continuous Wave):调频连续波。该雷达主要测量其前方物体的距离(range)、速度(velocity)和到达角(angle)。 本教程将从每个传感器的维度，从第一个模块中的距离开始，然后在接下来的几个模块中，继续讨论速度，然后再第五个模块中，讨论角度估算。 本节主要讨论这些问题">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/05/Lecture01/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/05/Lecture01/">
+
+
+
+
+
+  <title>Range Estimation | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/05/Lecture01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Range Estimation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-05T11:19:09+08:00">
+                2019-10-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
+                    <span itemprop="name">Radar</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Ti毫米波雷达mmWave学习笔记。</p>
+<h1 id="FMCW雷达基础知识"><a href="#FMCW雷达基础知识" class="headerlink" title="FMCW雷达基础知识"></a>FMCW雷达基础知识</h1><p><strong>FMCW(Frequency Modulated Continuous Wave)</strong>:调频连续波。该雷达主要测量其前方物体的距离(range)、速度(velocity)和到达角(angle)。</p>
+<p>本教程将从每个传感器的维度，从第一个模块中的距离开始，然后在接下来的几个模块中，继续讨论速度，然后再第五个模块中，讨论角度估算。</p>
+<p>本节主要讨论这些问题：雷达如何估算它与其前方物体的距离？如果有多个物体，并且它们与雷达之间的距离是不同的，又将会怎样？两个物体能够相距多近而仍能够被解析为两个物体？什么可以决定雷达看到的最远距离？</p>
+<p><img src="/2019/10/05/Lecture01/1.png" alt="1"></p>
+<p>FMCW雷达的核心是一种称为<strong>线性调频脉冲（Chrip）</strong>的信号。Chrip是频率随时间以线性方式增长的正弦波，在<strong>振幅-时间图</strong>（A-t图）中，线性调频脉冲可能以频率为fc的正弦波开始，然后其频率逐渐增大，最后以fc+B的频率结束，其中B是线性调频脉冲的带宽。因此线性调频脉冲本质上是一种频率以线性方式进行调制的连续波，所以我们使用术语FMCW。</p>
+<p>如果在<strong>频率-时间图</strong>（f-t图）显示同一线性调频脉冲，线性调频脉冲会是一条具有特定斜率S的直线。S定义线性调频脉冲上升的速率，带宽B和斜率S是用于定义系统性能的重要参数。</p>
+<p><img src="/2019/10/05/Lecture01/2.png" alt="2"></p>
+<h1 id="FMCW雷达工作原理"><a href="#FMCW雷达工作原理" class="headerlink" title="FMCW雷达工作原理"></a>FMCW雷达工作原理</h1><p>下图是一个简化的FMCW雷达框图：<br><img src="/2019/10/05/Lecture01/3.png" alt="3"></p>
+<p>该雷达具有单个<strong>TX天线（TX antenna）</strong>和单个<strong>RX天线(RX antenna)</strong>，雷达的工作原理如下：<br><strong>合成器（synthesizer）</strong>生成一个线性调频脉冲（chrip），TX天线将该线性调频脉冲发射出去，当遇到物体时，该线性调频脉冲会反射回来，RX天线接收反射的线性调频脉冲，RX信号和TX信号混合在一起，最终生成的信号称为IF信号,即<strong>中频（Intermediate Frequency）信号</strong>。</p>
+<h2 id="混频器（mixer）"><a href="#混频器（mixer）" class="headerlink" title="混频器（mixer）"></a>混频器（mixer）</h2><p>先来了解混频器。mixer具有两个输入和一个输出，下面是了解mixer的一种简单方法。如果向mixer的两个输入端口输入两个正弦波，那么mixer的输出是具有以下两条性质的正弦波</p>
+<ul>
+<li><strong>性质1</strong>：输出的瞬时频率等于两个输入正弦波的瞬时频率差值。（Instantaneous frequency equal to the difference of the instantaneous of the two input sinusoids）</li>
+<li><strong>性质2</strong>：输出正弦波的起始相位等于输入正弦波的起始相位差值。（Phase equal to the difference of the phase of the two input sinusoids）</li>
+</ul>
+<p>根据性质1，即使这些正弦波的频率随时间发生变化，任一时刻输出频率也将等于该时刻的输入频率的差值。下面的方程阐释了这两条性质。其中$x_1$和$x_2$是两个输入，而$x_{out}$是mixer的输出。</p>
+<p>$$x_1 = sin[\omega_1t+\phi_1]$$ $$x_2 = sin[\omega_2t+\phi_2]$$ $$x_{out} = sin[(\omega_1 - \omega_2)t + (\phi_1 - \phi_2)]$$</p>
+<p>用f-t图来对mixer进行阐释，如下，有发射（TX chrip）和接受(RX chrip)线性调频脉冲，注意，接收到的线性调频脉冲是TX线性调频脉冲的延迟副本。现在我们假设雷达前方只有一个物体，因此，只有一个RX线性调频脉冲。前面提到，mixer的输出频率是其两个输入即TX线性调频脉冲和RX线性调频脉冲的瞬时频率的差值，那么为了生成IF信号的f-t图，我们需要将RX线从TX线上减去，这两条线之间存在固定的距离，该固定距离由线性调频脉冲的斜率乘以往返延迟给出（$S\tau$）。因此，雷达前方的单个物体可生成一个包含单个频率的IF信号，该频率由S$\tau$给出。$\tau$即从雷达到物体然后又返回的往返延迟,也可以表示为与物体的距离除以光速c然后乘以2。<br><img src="/2019/10/05/Lecture01/4.png" alt="4"></p>
+<p>所以，雷达前方的单个物体可生成具有恒定频率的IF信号，该频率由$S\tau = S2d/c$给出。</p>
+<p>应注意，IF信号仅在RX天线上接收到反射信号开始有效，这一点很重要。因此，如果要使用ADC对该IF信号进行数字化，那么需要确保仅在经过该时间$\tau$之后再接收样本，并且只能持续到TX信号消失之前。另外需要注意的是，往返延迟$\tau$通常是总线性调频脉冲时间的很小一部分。例如，对于最大距离为300米并且线性调频脉冲时间为40微秒的雷达，该$\tau$与Tc的比率仅为5%。</p>
+<h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><p>傅里叶变换是FMCW雷达信号处理的核心，它们用于距离、速度和角度估算。下面简单回顾以下傅里叶变换。</p>
+<p>傅里叶变换将时域信号转换到频域中，因此时域中的单个音调会在频域中产生单个音调（A single tone in the time domin prodeces a single tone in the frequency domanin）。类似的，时域中的两个音调应在频域中产成两个峰值。但情况是否总是如此？在下图中，在观察窗口T内红色音调完成了两个周期，而蓝色音调完成了2.5个周期，红色音调和蓝色音调之间的0.5个周期差值似乎不足以解析频谱中的两个音调。</p>
+<p>现在让观察窗口加倍，从T增加到2T，红色音调和蓝色音调之间差值为一个周期，可以看到现在频谱（frequency spectrum）中解析了这两个音调。所以重点是，观察期越长，解析就越好。一般而言，观察窗口T可以分隔以高于1/T Hz进行分隔的频率分量。</p>
+<p><img src="/2019/10/05/Lecture01/5.png" alt="5"></p>
+<h2 id="多物体情况"><a href="#多物体情况" class="headerlink" title="多物体情况"></a>多物体情况</h2><p>下面有一个雷达，它正在发射单个线性调频脉冲，我们获得了多个从不同物体反射的线性调频脉冲。每个脉冲具有不同的延迟，具体取决于与物体之间的距离。因此，IF信号将具有与其中每个反射相对应的音调。正如我们所了解到的，这些音调的频率与距离成正比（频率小的对应近的物体）。</p>
+<p><img src="/2019/10/05/Lecture01/6.png" alt="6"></p>
+<p>有关该IF信号的傅里叶变换会显示多个峰值，这些峰值的频率与对应物体的距离成正比。</p>
+<p>由于我们现在讨论多个物体，因此下一个问题自然是距离分辨率。也就是说，其中两个物体能够相距多近而仍然能够在IF频谱中解析为两个峰值。</p>
+<p>在下面的示例中，有两个从两个物体反射的线性调频脉冲（chrip），IF信号的对应A-t图显示了两个正弦波，但这些声波的频率非常接近，以至于它们在频谱中显示为单个峰值。<br><img src="/2019/10/05/Lecture01/7.png" alt="7"></p>
+<p>要如何提高雷达的距离分辨率？可以从对傅里叶变换的扼要重述中获得提示，一种方式是通过增大IF信号的长度来扩展两个正弦波的观察窗口，下图就是采用这种方法，线性调频脉冲得到了扩展，从而扩展了IF信号的持续时间,这在频域中解析了两个峰值。注意，增加IF信号的持续时间能够成正比增加线性调频脉冲的宽度，这就提示我们，更大的带宽，可能对应更好的距离分辨率。<br><img src="/2019/10/05/Lecture01/8.png" alt="8"></p>
+<h3 id="雷达分辨率的公式推导"><a href="#雷达分辨率的公式推导" class="headerlink" title="雷达分辨率的公式推导"></a>雷达分辨率的公式推导</h3><p>两个间距为$\Delta d$的物体，其IF频率为$\Delta f$:<br>$$\Delta f = \frac{S2\Delta d}{c}$$</p>
+<p>为了使这两个频率在IF频谱中显示为不同的峰值，该频率间隔$\Delta f$需满足：<br>$$\Delta f &gt; 1/T$$<br>其中$T$为IF信号的持续时间，如果忽略开始的一小部分，即往返延迟产生的$\tau$部分，那么$T$基本上等于线性调频脉冲的持续时间$T_{c}$。<br>$$\frac{S2\Delta d}{c} &gt; \frac{1}{T_{c}} \Rightarrow \Delta d &gt; \frac{c}{2B}$$</p>
+<p>上式表示，只要两个物体之间的距离大于$\frac{c}{2B}$,就可以在IF频谱中分离它们。这里的重点是，距离分辨率仅取决于线性调频脉冲覆盖的带宽B。</p>
+<p>现在有个问题，下面有两个线性调频脉冲，chrip A和chrip B,A的持续时间是B的两倍，但它们具有相同的带宽，这两个线性调频脉冲中哪一个可以提高更好的距离分辨率？根据上面的分析，它们的带宽B相同，因此距离分辨率相同。但是，chrip A具有更长的持续时间，因此具有更长的IF信号观察窗口，凭直觉，傅里叶变换的性质，chrip A的分辨率应该好于chrip B,应该如何解释该矛盾？<br><img src="/2019/10/05/Lecture01/9.png" alt="9"></p>
+<p>IF信号中音调的频率与物体的距离成正比，大多数雷达中会对IF信号进行数字化以供后续处理。那么它首先会进行低通滤波(一种容许低于截止频率的信号通过， 但高于截止频率的信号不能通过的电子滤波装置)，然后由ADC（模数转换）进行数字化，接着被发送到合适的处理器如DSP，DSP可能首先执行傅里叶变换，以估算物体的距离，随后执行其他种类的处理，以估算这些物体的速度和到达角。每当我们要对信号进行数字化时，我们就需要知道目标带宽，以便可以适当地设置低通滤波器(low pass filter)和ADC采样率。假设我们对零到最大距离$d_{max}$之间的物体感兴趣，最大IF信号，IF信号的最大频率将为$\frac{S2d_{max}}{c}$,相应地，目标带宽将从零到该最大IF频率，这意味这低通滤波器的截止频率应高于该IF_max，此外，ADC应该具有高于该同一值的采样率。因此，在这里可以看到，ADC的最大采样率可能会限制雷达可以看到的最大距离。注意，最大IF带宽取决于斜率与最大距离的乘积，因此，如果ADC采样率和IF带宽是传感器的瓶颈，那么始终可以对斜率和最大距离进行折衷。通常，雷达倾向于针对较大的$d_{max}$使用较小的斜率。<br><img src="/2019/10/05/Lecture01/10.png" alt="10"></p>
+<p>回到上面那个问题，chrip A的斜率是B的一半，因此，对于相同的最大距离要求，或对于相同的$d_{max}$，chrip A仅需要一半的IF带宽，这意味这ADC具有较小的采样频率。因此，chrip A具有ADC要求更宽松的优势，而chrip B当然也具有仅需要一半测量时间的优势。这就是需要折衷的地方。</p>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>来回顾下估算物体距离所涉及的一系列事件。首先，合成器生成一个线性调频脉冲(chrip)，该chrip通过TX天线进行发射，到达雷达前方的多个物体后反射回来，接收器看到该chrip的延迟版本，接收的信号和发射的信号在mixer进行混合，产生IF信号，该IF信号包含多个音调，其中每个音调的频率与对应物体的距离成正比。然后，IF信号进行低通滤波并数字化，注意ADC的采样率必须与我们希望看到的最大距离相称，然后对数字化数据进行处理，对该数据执行FFT，频谱中峰值的位置直接对应于物体的距离。注意，这里绘制FFT的x轴上显示的是距离，而不是IF频率，这是可以的。因为IF频率与距离成正比。该FFT称为距离FFT，因为它在距离方面对物体进行解析。</p>
+<p><img src="/2019/10/05/Lecture01/11.png" alt="11"></p>
+<h2 id="Key-concepts-amp-formulas"><a href="#Key-concepts-amp-formulas" class="headerlink" title="Key concepts &amp; formulas"></a>Key concepts &amp; formulas</h2><p>总结以下关键的概念和公式：</p>
+<ul>
+<li><p>An object at a distance $d$ produces an IF frequency of:<br>$$f_{IF} = \frac{S2d}{c}$$</p>
+</li>
+<li><p>Range resolution($d_{res}$) depends on the bandwidth(B):<br>$$d_{res} = \frac{c}{2B}$$</p>
+</li>
+<li><p>The ADC sampling rate $F_s$,limits the max range($d_{max}$) to<br>$$d_{max} = \frac{F_sc}{s}$$</p>
+</li>
+</ul>
+<p>当我们讨论带宽和FMCW雷达是，通常有两种重要的带宽，<strong>射频带宽（RF bandwidth）</strong>和<strong>IF带宽</strong>，应该清晰地区分这两者。射频带宽是线性调频脉冲跨越的带宽，较大的射频带宽可直接转换为较好的距离分辨率。射频带宽的范围通常为几百MHz至几GHz，例如4GHz的射频带宽，可转换为4cm的距离分辨率，400MHz的射频带宽可转换为大约30cm的距离分辨率。较大的IF带宽主要可以使雷达看到较大的距离，还可以实现较快的线性调频脉冲。这里较快的线性调频脉冲是指具有较高斜率的线性调频脉冲。典型雷达的IF带宽处于低MHz范围内。我们可以具有跨越较大带宽的射频的信号，比如4GHz，但你的ADC仅需对几MHz的信号进行采样。</p>
+<h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>这里用一个问题用于引出后续的模块，有两个与雷达的距离相同的物体，此时距离FFT将具有与该距离d相对应并受到这两个物体影响的单个峰值。那么我们如何分离这两个物体呢？事实证明，如果这两个物体具有不同的相对于雷达的速度，那么可以通过进一步的信号分离处理它们。要理解这一点，我们需要实际看看IF信号的相位。</p>
+<p><img src="/2019/10/05/Lecture01/12.png" alt="12"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/04/Lecture13/" rel="next" title="deque、queue和stack深度探索">
+                <i class="fa fa-chevron-left"></i> deque、queue和stack深度探索
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/06/Lecture02/" rel="prev" title="The Phase of the IF Signal">
+                The Phase of the IF Signal <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FMCW雷达基础知识"><span class="nav-number">1.</span> <span class="nav-text">FMCW雷达基础知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FMCW雷达工作原理"><span class="nav-number">2.</span> <span class="nav-text">FMCW雷达工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#混频器（mixer）"><span class="nav-number">2.1.</span> <span class="nav-text">混频器（mixer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#傅里叶变换"><span class="nav-number">2.2.</span> <span class="nav-text">傅里叶变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多物体情况"><span class="nav-number">2.3.</span> <span class="nav-text">多物体情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#雷达分辨率的公式推导"><span class="nav-number">2.3.1.</span> <span class="nav-text">雷达分辨率的公式推导</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-number">3.</span> <span class="nav-text">Summary</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-concepts-amp-formulas"><span class="nav-number">3.1.</span> <span class="nav-text">Key concepts &amp; formulas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Question"><span class="nav-number">3.2.</span> <span class="nav-text">Question</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

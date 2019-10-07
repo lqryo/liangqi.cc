@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这一节将深入探究速度估算问题。在本节中，我们尝试解答以下问题：  有一个雷达，并且雷达前面有一个物体，雷达如何估算物体速度？  如果有多个物体，这些物体与雷达的距离相同，但相对速度速度不同，此时会怎样？  两个等距物体的速度接近到何种程度时，雷达仍然能够分辨？  雷达的最大可测速度是否会存在限制？    和之前一样，我们还是来首先回顾一些傅里叶变换。 傅里叶变换到目前为止，我们已经讨论了连续时间信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Velocity Estimation">
+<meta property="og:url" content="http://yoursite.com/2019/10/06/Lecture03/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="这一节将深入探究速度估算问题。在本节中，我们尝试解答以下问题：  有一个雷达，并且雷达前面有一个物体，雷达如何估算物体速度？  如果有多个物体，这些物体与雷达的距离相同，但相对速度速度不同，此时会怎样？  两个等距物体的速度接近到何种程度时，雷达仍然能够分辨？  雷达的最大可测速度是否会存在限制？    和之前一样，我们还是来首先回顾一些傅里叶变换。 傅里叶变换到目前为止，我们已经讨论了连续时间信">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture03/10.png">
+<meta property="og:updated_time" content="2019-10-07T08:01:25.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Velocity Estimation">
+<meta name="twitter:description" content="这一节将深入探究速度估算问题。在本节中，我们尝试解答以下问题：  有一个雷达，并且雷达前面有一个物体，雷达如何估算物体速度？  如果有多个物体，这些物体与雷达的距离相同，但相对速度速度不同，此时会怎样？  两个等距物体的速度接近到何种程度时，雷达仍然能够分辨？  雷达的最大可测速度是否会存在限制？    和之前一样，我们还是来首先回顾一些傅里叶变换。 傅里叶变换到目前为止，我们已经讨论了连续时间信">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Lecture03/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/06/Lecture03/">
+
+
+
+
+
+  <title>Velocity Estimation | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Velocity Estimation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T13:49:29+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
+                    <span itemprop="name">Radar</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一节将深入探究速度估算问题。在本节中，我们尝试解答以下问题：</p>
+<ul>
+<li><p>有一个雷达，并且雷达前面有一个物体，雷达如何估算物体速度？</p>
+</li>
+<li><p>如果有多个物体，这些物体与雷达的距离相同，但相对速度速度不同，此时会怎样？</p>
+</li>
+<li><p>两个等距物体的速度接近到何种程度时，雷达仍然能够分辨？</p>
+</li>
+<li><p>雷达的最大可测速度是否会存在限制？</p>
+</li>
+</ul>
+<p><img src="/2019/10/06/Lecture03/1.png" alt="1"></p>
+<p>和之前一样，我们还是来首先回顾一些傅里叶变换。</p>
+<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>到目前为止，我们已经讨论了连续时间信号的傅里叶变换。类似的概念同样适用于离散信号。如下图，假设有一个由相量组成离散信号，该相量以每个样本$\omega$弧度的恒定速率旋转，这样一来，在任意两个样本之间，此相量都旋转了$\omega$弧度，这时，我们会用到<strong>离散角频率（discrete angular frequency）</strong>这个术语，或者有时候仅使用“频率”来指代这个$\omega$。注意下面这些相量中的每一相实际上均代表一个复数。因此，该序列的另一种等效表达形式也写在下面。对该序列进行离散傅里叶变换，将在离散频率$\omega_1$下的频域中得到一个单一峰值。</p>
+<p><img src="/2019/10/06/Lecture03/2.png" alt="2"></p>
+<p>现在，这个离散序列包含两相而不是一个相，如下图所示。其中蓝色相量以离散角频率$\omega_1$旋转，红色相量以离散角频率$\omega_2$旋转。这个离散的傅里叶变换实际上分别在离散频率$\omega_1$和$\omega_2$处具有两个峰值。</p>
+<p><img src="/2019/10/06/Lecture03/3.png" alt="3"></p>
+<p>$\omega_1$和$\omega_2$两个频率要相隔多远才能在傅里叶变换中显示为单独的峰值。下图有两个以略微不同的频率$\omega_1$和$\omega_2$旋转的相量，在经过N个样本后，第二个相量比第一个相量多旋转了$\pi$弧度。可以看到，这显然不足以在频域内分辨这两个物体。</p>
+<p><img src="/2019/10/06/Lecture03/4.png" alt="4"></p>
+<p>下图存在同样的两相，但现在的观察时间更长。现在在频域内可以清楚地分辨这两个频率。所以，序列的长度越长，分辨率就越高。一般来说，长度为N的序列，可以分隔被大于每个样本$2\pi /N$弧度分隔的角频率。</p>
+<p><img src="/2019/10/06/Lecture03/5.png" alt="5"></p>
+<p>来比较一下离散和连续分段的分辨标准。</p>
+<p>对于连续信号而言，只要两种频率的间隔差值f大于1/T cycles/sec，其中T是观察窗口，就可以分辨出这两种频率。</p>
+<p>对于离散信号，只要两种离散频率的间隔差值$\omega$大于每个样本$2\pi /N$弧度，就可以分辨出这两种频率。请注意它的单位，即每个样本的弧度数。</p>
+<ul>
+<li><p><strong>Continuous signals</strong>:$\Delta f = \frac{1}{T} cycle/sec$</p>
+</li>
+<li><p><strong>Discrete signals</strong>: $\Delta \omega = \frac{2\pi}{N}radians/sample = \frac{1}{N}cycles/sample$</p>
+</li>
+</ul>
+<p>看一下上面两个等式，可以得出离散和连续情况之间的对应关系。在连续情况下，分辨率与观测时间T表示的长度成反比，而在离散情况下，分辨率与观察样本数N表示的长度成反比。</p>
+<h1 id="速度测量"><a href="#速度测量" class="headerlink" title="速度测量"></a>速度测量</h1><h2 id="单物体速度测量"><a href="#单物体速度测量" class="headerlink" title="单物体速度测量"></a>单物体速度测量</h2><p>现在我们具备了了解FMCW雷达如何测量速度的所有工具。基本思想是：发射两个间隔时间为$T_c$的chrip，与其中每个chrip相对应的距离FFT将在同一个位置具有峰值，但相位不同。这两个峰值的相位之间测量相位差$\omega$将与物体的运动直接对应。</p>
+<p><img src="/2019/10/06/Lecture03/6.png" alt="6"></p>
+<p>使用上图所述的方法时，可测量的最大速度是否存在限制？注意，此方法依赖于相位差的测量，只有当差值介于正负180°时，才可以清楚的测量此值。下面的示意图说明了这一点。例如对第一个图，如果我们对相量在这两个chrip之间的运动进行可视化处理，则对于正速度，额可以可视化逆时针运动的相量。同样，第二个图，对于负速度，可以可视化顺时针运动的相量。如果顺时针或逆时针方向的运动量超过180°，则会产生模糊。例如在第3副图中，不能确定相量是在逆时针方向移动了角度a，还是在顺时针方向上移动了b=360°-a。</p>
+<p><img src="/2019/10/06/Lecture03/7.png" alt="7"></p>
+<p>因此，要清楚地测量速度，两个chrip之间的相位变化必须小于$\pi$,这意味着可以从先前的论述中得到下面这个相位变化表达式：<br>$$\frac{4\pi vT_c}{\lambda}&lt;\pi \Rightarrow v&lt;\frac{\lambda}{4T_c}$$</p>
+<p>此表达式给出了可以通过两个以$T_c$为间隔的chrip测量的最大相对速度。要得到更高的$v_{max}$，chrip必须很密集，</p>
+<h2 id="多物体速度测量"><a href="#多物体速度测量" class="headerlink" title="多物体速度测量"></a>多物体速度测量</h2><p>刚才我们已经了解了如何测量雷达前方单个物体的速度，要明白，只要物体与雷达之间的距离不同，就可以通过这种方法。将该方法应用于雷达前方的多个物体。但如果有多个物体与雷达的距离相同，情况会怎么样？下图示例中，雷达前方有两个物体，它们与雷达的距离相同，但速度不同，相对于雷达的速度分别为$v_1$和$v_2$。我们之前讨论过，与要发射的这两个chrip相对应的距离FFT中，只有一个峰值，但峰值处的相量将具有来自这两个物体的分量。这样一来，我们之前所说的简单相位比较方法就不再适用了，因为此处的相位具有来自这两个物体的速度分量。那么该如解决呢？一种方案是发射一系列等间隔的chrip，而不仅仅是两个chrip，这里假设有N个chrip，根据我们之前的讨论，与其中每个chrip相对应的距离FFT将在完全相同的位置具有峰值。但是，与这些峰值的相量相对应的离散序列将有两个旋转相量，分别以$\omega_1$和$\omega_2$旋转，对应于两个速度$v_1$和$v_2$。因此，这个离散序列上的FFT将显示两个峰值，对应于$\omega_1$和$\omega_2$，测量出$\omega_1$和$\omega_2$后，我们就可以利用前面介绍的表达式反算出速度。</p>
+<p><img src="/2019/10/06/Lecture03/8.png" alt="8"></p>
+<p>来解释几个术语，上图中的FFT是在chrip之间执行的，在文献中通常称为多普勒FFT。这个对其执行多普勒FFT的等间隔chrip脉冲序列称为<strong>帧（frame）</strong>。因此，FMCW雷达的基本传输单位实际上是帧。</p>
+<h2 id="速度分辨率"><a href="#速度分辨率" class="headerlink" title="速度分辨率"></a>速度分辨率</h2><p>多普勒FFT的速度分辨能力如何？换句话说，$v_1$和$v_2$之间的最小间隔应该是多少，才能让它们在多普勒FFT中显示为两个峰值。事实上，推导速度分辨率的表达式的过程非常简单，类似于距离分辨率的推导。</p>
+<p>两个物体角频率间隔为$\Delta \omega$，$T_c$是相邻chrip之间的间隔，根据离散傅里叶变换的特性，我们知道只要两个频率的间隔$\Delta \omega$大于$2\pi /N$,就可以分辨出这两个频率:</p>
+<p>$$\Delta \omega = \frac{4\pi\Delta vT_c}{\lambda}$$ $$\Delta \omega &gt; \frac{2\pi}{N}$$ $$\Rightarrow \Delta v &gt; \frac{\lambda}{2NT_c}$$</p>
+<p>上式我们得到了速度分辨率的表达式，注意在这个式子中，$NT_c$实际上等于总帧的时间。最后我们可以下式：<br>$$v_{res} = \frac{\lambda}{2T_f}$$</p>
+<p>上式基本表明雷达的速度分辨率与帧的时间成反比。</p>
+<p><img src="/2019/10/06/Lecture03/9.png" alt="9"></p>
+<h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><p>下图中两个帧具有相同的帧长度$T_f$，但与雷达A相对应的帧的chrip数是与雷达B相应的帧的两倍。如何评价这两个帧的最大可测速度和速度分辨率？</p>
+<p><img src="/2019/10/06/Lecture03/10.png" alt="10"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/06/Lecture02/" rel="next" title="The Phase of the IF Signal">
+                <i class="fa fa-chevron-left"></i> The Phase of the IF Signal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/06/Lecture04/" rel="prev" title="Some System Design topics">
+                Some System Design topics <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#傅里叶变换"><span class="nav-number">1.</span> <span class="nav-text">傅里叶变换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#速度测量"><span class="nav-number">2.</span> <span class="nav-text">速度测量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单物体速度测量"><span class="nav-number">2.1.</span> <span class="nav-text">单物体速度测量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多物体速度测量"><span class="nav-number">2.2.</span> <span class="nav-text">多物体速度测量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#速度分辨率"><span class="nav-number">2.3.</span> <span class="nav-text">速度分辨率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Question"><span class="nav-number">3.</span> <span class="nav-text">Question</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

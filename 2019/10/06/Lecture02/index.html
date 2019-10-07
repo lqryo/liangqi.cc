@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="如果我们希望了解FMCW雷达响应物体极小位移的能力，那么研究相位就非常重要。雷达正是凭此非常快速且准确地测量物体的速度。这也是在心跳监测和振动检测等应用中使用雷达的基础。 还是先来回顾一下傅里叶变换中的一些相关概念。 傅里叶变换时域中的正弦波会在频域中产生一个尖峰，该尖峰的位置与正弦波的频率相对应。频域中的信号是包含振幅和相位的复数，这一点很中重要。因此，虽然下面的图表示傅里叶变换的振幅，但此处的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Phase of the IF Signal">
+<meta property="og:url" content="http://yoursite.com/2019/10/06/Lecture02/index.html">
+<meta property="og:site_name" content="学习笔记">
+<meta property="og:description" content="如果我们希望了解FMCW雷达响应物体极小位移的能力，那么研究相位就非常重要。雷达正是凭此非常快速且准确地测量物体的速度。这也是在心跳监测和振动检测等应用中使用雷达的基础。 还是先来回顾一下傅里叶变换中的一些相关概念。 傅里叶变换时域中的正弦波会在频域中产生一个尖峰，该尖峰的位置与正弦波的频率相对应。频域中的信号是包含振幅和相位的复数，这一点很中重要。因此，虽然下面的图表示傅里叶变换的振幅，但此处的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Lecture02/11.png">
+<meta property="og:updated_time" content="2019-10-07T07:43:40.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Phase of the IF Signal">
+<meta name="twitter:description" content="如果我们希望了解FMCW雷达响应物体极小位移的能力，那么研究相位就非常重要。雷达正是凭此非常快速且准确地测量物体的速度。这也是在心跳监测和振动检测等应用中使用雷达的基础。 还是先来回顾一下傅里叶变换中的一些相关概念。 傅里叶变换时域中的正弦波会在频域中产生一个尖峰，该尖峰的位置与正弦波的频率相对应。频域中的信号是包含振幅和相位的复数，这一点很中重要。因此，虽然下面的图表示傅里叶变换的振幅，但此处的">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Lecture02/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/06/Lecture02/">
+
+
+
+
+
+  <title>The Phase of the IF Signal | 学习笔记</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">学习笔记</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="学习笔记">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">The Phase of the IF Signal</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T10:55:37+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
+                    <span itemprop="name">Radar</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>如果我们希望了解FMCW雷达响应物体极小位移的能力，那么研究相位就非常重要。雷达正是凭此非常快速且准确地测量物体的速度。这也是在心跳监测和振动检测等应用中使用雷达的基础。</p>
+<p>还是先来回顾一下傅里叶变换中的一些相关概念。</p>
+<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>时域中的正弦波会在频域中产生一个尖峰，该尖峰的位置与正弦波的频率相对应。频域中的信号是包含振幅和相位的复数，这一点很中重要。因此，虽然下面的图表示傅里叶变换的振幅，但此处的每个值实际上是一个包含振幅和相位的复数。</p>
+<p><img src="/2019/10/06/Lecture02/1.png" alt="1"></p>
+<p>回忆一下，一个复数可以在数学上表示为$Ae^{j\theta}$,其中A是振幅，$\theta$是相位。或者还可以将其用图像方式表示为一个<strong>相量（phasor）</strong>,该相量是一个矢量，具有与振幅A相对应的长度以及与相位$\theta$相对应的方向。</p>
+<p><img src="/2019/10/06/Lecture02/2.png" alt="2"></p>
+<p>傅里叶变换的一条重要性质是，峰值的相位对应于正弦波的初始相位。如下图所示：</p>
+<p><img src="/2019/10/06/Lecture02/3.png" alt="3"></p>
+<p>在本模块中，我们将使用A-t图来分析IF信号的相位与到物体距离之间的关系。下图中，顶部的图显示了TX线性调频脉冲的A-t图，中间的图是RX线性调频脉冲，它是TX Chrip的延迟版本。正如我们之前所讲，对于单个物体，IF信号将是一个具有恒定频率的信号。从数学角度，可以将IF信号表示为<br>$$Asin(2\pi ft + \phi_0)$$</p>
+<p>其中相位$\phi_0$正是IF信号在该点c的相位，c的相位即A点处的TX chrip相位与B点处的RX chrip相位之间的差值。现在，如果物体移动一小段距离，从而使往返延迟$\tau$更改$\Delta \tau$，IF信号的相位会发生什么变化？下面蓝色的曲线表示的新RX信号将移动$\Delta \tau$的距离。IF信号也将相应地发生变化。现在，新的IF信号的起始相位，即点F处的IF信号相位将为D处与E处相位的差值。现在，E处的Chrip的相位将与先前B处的相位相同，但D处的TX chrip相位将为先前A处的相位，具有额外的相位偏移$2\pi fc\Delta \tau$。<br><img src="/2019/10/06/Lecture02/4.png" alt="4"></p>
+<p>现在，要更正我们迄今为止对IF信号的理解，对于雷达前方的单个物体，IF信号是频率与物体的距离成正比的音调，它的起始相位具有随物体距离的微小变化$\Delta d$以线性方式变化的性质。</p>
+<p><img src="/2019/10/06/Lecture02/5.png" alt="5"></p>
+<p>我们需要理解，如果物体的位置发生微小变化，该IF信号的频率和相位如何变化。这里的微小是指与雷达的距离分辨率相比是微小的，因此，它必须大约为若干毫米，我们假设它为1mm。下面显示的chrip，它是一个斜率为每毫秒50MHz且持续时间为40微秒的chrip，如果该雷达前方的物体位置改变1mm，会发生什么情况？注意，对于77GHz的雷达，1mm实际对应于波长的1/4。</p>
+<p><img src="/2019/10/06/Lecture02/6.png" alt="6"></p>
+<p>首先，如果该物体的位置改变1mm，IF信号的相位会发生什么情况？直接使用上面的公式，并插入$\Delta d = \lambda /4$,可以得到：<br>$$\Delta \Phi = \frac{4\pi\delta d}{\lambda} = \pi = 180^{\circ}$$</p>
+<p>那么频率会发生什么情况？IF信号的频率会改变$\Delta f$,<br>$$\Delta f = \frac{S2\Delta d}{c} = 333Hz$$</p>
+<p>这可能看起来是一个大数字，但是，在$T_c=40\mu s$的观察窗口中，这仅对应于0.013个周期，该变化在频谱中无法识别。这里的重点是，IF信号的相位对物体距离的微小变化非常敏感。但频率不是这样的，正如我们看到的，频率对此类微小的变化非常不敏感。</p>
+<p>下图是对前面图中所了解的内容巩固。位于特定距离的物体会产生具有特定频率和相位的IF信号。下图左边是与单个物体相对应的IF信号，它的起始相位是0，傅里叶变换会产生单个峰值，该峰值的相位对应于此正弦波的起始相位。</p>
+<p><img src="/2019/10/06/Lecture02/7.png" alt="7"></p>
+<p>现在，如果我们将物体移动一小段距离，会发生什么情况？这会改变起始相位，下图中相位改变了180°，相应的，FFT的峰值，其位置保持不变，但峰值的相位改变了180°。</p>
+<p><img src="/2019/10/06/Lecture02/8.png" alt="8"></p>
+<h1 id="速度测量"><a href="#速度测量" class="headerlink" title="速度测量"></a>速度测量</h1><p>现在我们具备了用于了解FMCW雷达如何测量速度的所有工具。其基本思想是：发射两个间隔时间为$T_c$的chrip，与其中每个chrip对应的距离FFT将在相同的位置具有峰值，但具有不同的相位，这两个峰值的相位之间的测量相位差$\omega$将与物体运动直接对应。注意，如果物体的速度为v，该物体在此时间段$T_c$内移动的距离将为$vT_c$。那么，这就是这里的问题，其中峰值之间的相位差对应于这两个chrip的峰值相位之间的相位差。我们可以估计出速度v:<br>$$\omega = \frac{4\pi vT_c}{\lambda} \Rightarrow v = \frac{\lambda\omega}{4\pi T_c}$$</p>
+<p><img src="/2019/10/06/Lecture02/9.png" alt="9"></p>
+<p>这里的重点是，在两个连续的chrip之间测量的相位差可用于估算物体的速度。</p>
+<h1 id="检测振动物体"><a href="#检测振动物体" class="headerlink" title="检测振动物体"></a>检测振动物体</h1><p>除了速度测量之外，IF信号的相位对微小移动非常敏感的事实也是其他应用的基础，包括电机振动监测、心跳监测等。下图描述了以振荡方式移动的物体随时间演变的过程，物体从中间开始先向左然后向右运动，这可以表示一个正在振荡的物体。我们假设这些移动非常微小，因此物体最大位移$\Delta d$是波长的一小部分（例如1mm）。现在如果将一个雷达放置在该振荡的物体前方并发射一系列等间隔的chrip，会怎么样？</p>
+<p>由于从该物体上进行发射，因此其中的每个TX Chrip会产生一个反射Chrip，并且经处理的IF信号会在距离FFT中产生一个峰值，该峰值的频率不会在chrip直接改变太多，因为$\Delta d$非常小。但峰值的相位将会响应物体的振荡移动，如下图左边所示。相位以特定的值开始，并将物体的移动镜像至左侧，当物体返回时，相位返回到其初始值，然后偏移到另一侧。</p>
+<p><img src="/2019/10/06/Lecture02/10.png" alt="10"></p>
+<p>如果我们按时间顺序绘制测量的峰值相位，如下图所示。通过查看该图可以了解很多信息。最大相位偏移$\Delta \phi$与最大位移$\Delta d$相关，在这里可以估算振动的振幅$\Delta d$。类似地，该图的周期性为我们提供振动的周期。</p>
+<p><img src="/2019/10/06/Lecture02/11.png" alt="11"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>现在我们可以回答上一节末尾所提出的问题，有多个物体，它们具有不同的相对于雷达的速度。不过，在测量时，这些物体到雷达的距离碰巧几乎相同。那么，距离FFT将显示仅有单个与该距离d对应的峰值。我们如何分离这些物体，事实证明可以使用称为<strong>多普勒FFT（Doppler-FFT）</strong>的工具分离具有相同距离但具有不同速度的物体。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/05/Lecture01/" rel="next" title="Range Estimation">
+                <i class="fa fa-chevron-left"></i> Range Estimation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/06/Lecture03/" rel="prev" title="Velocity Estimation">
+                Velocity Estimation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#傅里叶变换"><span class="nav-number">1.</span> <span class="nav-text">傅里叶变换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#速度测量"><span class="nav-number">2.</span> <span class="nav-text">速度测量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检测振动物体"><span class="nav-number">3.</span> <span class="nav-text">检测振动物体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
