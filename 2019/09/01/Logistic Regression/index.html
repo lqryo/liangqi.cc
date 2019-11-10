@@ -83,7 +83,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Logistic Regression">
 <meta property="og:url" content="http://yoursite.com/2019/09/01/Logistic Regression/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:description" content="上一节我们讲到，要做Classification,我们要找的东西就是一个几率$P_{w,b}(C_1|x)$,如果$P_{w,b}(C_1|x)\geq 0.5$,就输出C1,否则就输出C2。如果用Gaussian,$P_{w,b}(C_1|x) = \sigma(z)$,其中:$$\sigma(z) = \frac{1}{1+exp(-z)}$$$$z = {\bf w}\cdot {\bf x">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/09/01/Logistic%20Regression/1.png">
@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/01/Logistic%20Regression/13.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/01/Logistic%20Regression/14.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/01/Logistic%20Regression/15.png">
-<meta property="og:updated_time" content="2019-09-13T01:59:31.496Z">
+<meta property="og:updated_time" content="2019-11-05T03:01:21.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Logistic Regression">
 <meta name="twitter:description" content="上一节我们讲到，要做Classification,我们要找的东西就是一个几率$P_{w,b}(C_1|x)$,如果$P_{w,b}(C_1|x)\geq 0.5$,就输出C1,否则就输出C2。如果用Gaussian,$P_{w,b}(C_1|x) = \sigma(z)$,其中:$$\sigma(z) = \frac{1}{1+exp(-z)}$$$$z = {\bf w}\cdot {\bf x">
@@ -141,7 +141,7 @@
 
 
 
-  <title>Logistic Regression | 学习笔记</title>
+  <title>Logistic Regression | Qi-Liang'blog</title>
   
 
 
@@ -171,7 +171,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -287,7 +287,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -368,12 +368,12 @@
 
       
         <p>上一节我们讲到，要做Classification,我们要找的东西就是一个几率$P_{w,b}(C_1|x)$,如果$P_{w,b}(C_1|x)\geq 0.5$,就输出C1,否则就输出C2。如果用Gaussian,$P_{w,b}(C_1|x) = \sigma(z)$,其中:<br>$$\sigma(z) = \frac{1}{1+exp(-z)}$$<br>$$z = {\bf w}\cdot {\bf x} + b = \sum_i w_ix_i+b$$</p>
-<p>我们的function set就是所有不同的w和b集合起来的函数：<br>$$f_{w,b}(x) = P_{w,b}(C_1|x)$$</p>
+<p>我们的function set就是所有不同的$\bf{w}$和$b$集合起来的函数：<br>$$f_{w,b}(x) = P_{w,b}(C_1|x)$$</p>
 <p>我们用图像的方法来表示如下<br><img src="/2019/09/01/Logistic Regression/1.png" alt="1"><br>以上就是<strong>Logistic Regression</strong></p>
 <h1 id="Logistic-Regression-amp-Linear-Regression"><a href="#Logistic-Regression-amp-Linear-Regression" class="headerlink" title="Logistic Regression &amp; Linear Regression"></a>Logistic Regression &amp; Linear Regression</h1><p>我们来比较一下<strong>Logistic Regression</strong>和<strong>Linear Regression</strong>。我们知道Machine Learning有三个步骤</p>
 <h2 id="Step1-Model-function-set"><a href="#Step1-Model-function-set" class="headerlink" title="Step1 Model(function set)"></a>Step1 Model(function set)</h2><p>两者的function set如下<br><img src="/2019/09/01/Logistic Regression/2.png" alt="2"></p>
 <h2 id="Step2-Goodness-of-a-Function"><a href="#Step2-Goodness-of-a-Function" class="headerlink" title="Step2 Goodness of a Function"></a>Step2 Goodness of a Function</h2><p>我们要决定一个function的好坏。假设有N笔数据$x^1$到$x^N$以及它们对应的分类，假设这些data都是从$f_{w,b}(x)=P_{w,b}(C_1|x)$中产生，<strong>Given a set of w and b,what is its probability of generating the data</strong>?<br><img src="/2019/09/01/Logistic Regression/3.png" alt="3"></p>
-<p>对某一个w和b，产生上面N笔data的几率计算如下：<br>$$L(w,b) = f_{w,b}(x^1)f_{w,b}(x^2)(1-f_{w,b}(x^3))\cdots f_{w,b}(x^N)$$</p>
+<p>对某一个$\bf{w}$和$b$，产生上面N笔data的几率计算如下：<br>$$L(w,b) = f_{w,b}(x^1)f_{w,b}(x^2)(1-f_{w,b}(x^3))\cdots f_{w,b}(x^N)$$</p>
 <p>The most likely $w^{\star}$ and $b^{\star}$ is the one with the largest $L(w,b)$.<br>$$w^{\star},b^{\star} = \mathop{argmax}_{w,b}L(w,b)$$</p>
 <p>我们将上式做一下数学式上的转换,这样可以让计算变得容易点，如下：<br>$$w^{\star},b^{\star} = \mathop{argmax}_{w,b}L(w,b)$$ </p>
 <p>$$\Downarrow$$</p>
@@ -403,9 +403,9 @@
 <li><strong>step3</strong><br>$$<br>\begin{equation}<br>\begin{split}<br>\frac{\partial(f_{w,b}(x)-\hat{y})^2}{\partial w_i} &amp;=2(f_{w,b}(x)-\hat{y})\frac{\partial f_{w,b}(x)}{\partial z}\frac{\partial z}{\partial w_i} \\<br>&amp;= 2(f_{w,b}(x)-\hat{y})f_{w,b}(x)(1-f_{w,b}(x))x_i \\<br>\end{split}<br>\end{equation}<br>$$</li>
 </ol>
 <p>这里我们可以发现一个问题：<br>当$\hat{y}^n=1$,如果$f_{w,b}(x^n)=1$,这时得到的结果是perfect的(close to target),这个时候$\frac{\partial L}{\partial w_i}=0$,这是我们所期望的。<br>而当$\hat{y}^n=1$,如果$f_{w,b}(x^n)=0$,这时得到的结果是不够好的(far from target),然而这个时候却依然有$\frac{\partial L}{\partial w_i}=0$<br>对于$\hat{y}^n=0$依然存在上面问题。<br>如果我们把参数的变化对Total Loss做图的话，选择Cross Entropy跟Square Error的图像如下，其中黑色的是Cross Entropy,红色的是Square Error<br><img src="/2019/09/01/Logistic Regression/7.png" alt="7"><br>可以发现，对于Cross Entropy，距离目标越远，微分值越大，参数update时变化越大，这个是符合我们期望的。<br>对于Square Error，无论是距离目标远或近，微分值都比较小，这样参数update的速度是非常慢的。</p>
-<h1 id="Discriminative-v-s-Generative"><a href="#Discriminative-v-s-Generative" class="headerlink" title="Discriminative v.s. Generative"></a>Discriminative v.s. Generative</h1><p>上面Logistic Regression的方法我们称之为<strong>Discriminative</strong>方法，而上一章所讲的几率模型称为<strong>Generative</strong>方法。<br>在几率模型中，只要我们将covariance matrix设成是共享的，它们两者的Model其实是一模一样的：<br>$$P(C_1|x)=\sigma(wx\cdot +b)$$<br>Discriminative可以直接将w和b找出来，而用Generative方法要先找到$\mu^1$,$\mu^2$$\sigma^{-1}$,然后再计算下面式子<br>$$w^T = (\mu^1-\mu^2)^T\Sigma^{-1}$$</p>
+<h1 id="Discriminative-v-s-Generative"><a href="#Discriminative-v-s-Generative" class="headerlink" title="Discriminative v.s. Generative"></a>Discriminative v.s. Generative</h1><p>上面Logistic Regression的方法我们称之为<strong>Discriminative</strong>方法，而上一章所讲的几率模型称为<strong>Generative</strong>方法。<br>在几率模型中，只要我们将covariance matrix设成是共享的，它们两者的Model其实是一模一样的：<br>$$P(C_1|x)=\sigma(w\cdot x +b)$$<br>Discriminative可以直接将$\bf{w}$和$b$找出来，而用Generative方法要先找到$\mu^1$,$\mu^2$,$\Sigma^{-1}$,然后再计算下面式子<br>$$w^T = (\mu^1-\mu^2)^T\Sigma^{-1}$$</p>
 <p>$$b=-\frac{1}{2}(\mu^1)^T(\Sigma)^{-1}\mu^1+\frac{1}{2}(\mu^2)^T(\Sigma)^{-1}\mu^2+In\frac{N_1}{N_2}$$</p>
-<p>思考一下，用Discriminative和Generative两种方法求得的w和b是相同的吗？答案是不同！<br><strong>The same model(function set),but different function is selected by the same training data.</strong><br>在Discriminative里面，我们没有做对probability distribution做任何的假设，而在Generative里面，我们有对probability distribution做出某些假设（例如Gaussain、Navie Bayes）<br>那么用哪一种方法找到的w和b是比较好的呢？Discriminative的表现常常要比Generative要好。我们用下面的例子来说明<br><img src="/2019/09/01/Logistic Regression/8.png" alt="8"><br>假设我们有一笔training data如上，每一个data有2个feature,总共有$1+3\times 4=13$个data.其中Class1的data两个feature都是1，Class2的training data有3种不同类型。<br>现在如果给我们一个testing data,它的两个feature值都是1，作为人来判断，显然它是属于Class 1的。<br>但是Naive Bayes会怎么认为吗？所谓Naive Bayes即假设所有的feature产生的几率是independent:<br>$$P(x|C_i)=P(x_1|C_i)P(x_2|C_i)$$</p>
+<p>思考一下，用Discriminative和Generative两种方法求得的$\bf{w}$和$b$是相同的吗？答案是不同！<br><strong>The same model(function set),but different function is selected by the same training data.</strong><br>在Discriminative里面，我们没有做对probability distribution做任何的假设，而在Generative里面，我们有对probability distribution做出某些假设（例如Gaussain、Navie Bayes）<br>那么用哪一种方法找到的w和b是比较好的呢？Discriminative的表现常常要比Generative要好。我们用下面的例子来说明<br><img src="/2019/09/01/Logistic Regression/8.png" alt="8"><br>假设我们有一笔training data如上，每一个data有2个feature,总共有$1+3\times 4=13$个data.其中Class1的data两个feature都是1，Class2的training data有3种不同类型。<br>现在如果给我们一个testing data,它的两个feature值都是1，作为人来判断，显然它是属于Class 1的。<br>但是Naive Bayes会怎么认为吗？所谓Naive Bayes即假设所有的feature产生的几率是independent:<br>$$P(x|C_i)=P(x_1|C_i)P(x_2|C_i)$$</p>
 <p>接着我们算Prior:<br>$$P(C_1)=\frac{1}{13}$$ $$P(C_2)=\frac{12}{13}$$</p>
 <p>另外<br>$$P(x_1=1|C_1)=1$$ $$P(x_2=1|C_1)=1$$<br>$$P(x_1=1|C_2)=\frac{1}{3}$$ $$P(x_2=1|C_2)=\frac{1}{3}$$ </p>
 <p>还是给一个两个feature值都是1的Testing data,可以算出它属于Class 1的几率是：<br>$$P(C_1|x)=\frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}=\frac{1\times 1\times \frac{1}{13}}{1\times 1\times \frac{1}{13}+\frac{1}{3}\times \frac{1}{3}\times \frac{12}{13}}&lt;0.5$$ </p>
@@ -423,7 +423,7 @@
 <li>$1&gt;y_i&gt;0$</li>
 <li>$\sum_iy_i=1$</li>
 </ul>
-<p>原来的$z_1$、$z_2$、$z_3$可以是任何值，做完softmax以后，output的值一定是介于1和0之间。softmax会对最大的值做<strong>强化</strong>，使大的值和小的值之间的差距会被拉的更开。$y_i=P(C_i|x)$,即得到input x是属于$C_i$的几率。<br>为什么要用softmax function是可以推导出来的，这里不做探讨(google maximum entropy)。</p>
+<p>原来的$z_1$、$z_2$、$z_3$可以是任何值，做完softmax以后，output的值一定是介于1和0之间。softmax会对最大的值做<strong>强化</strong>，使大的值和小的值之间的差距会被拉的更开。$y_i=P(C_i|x)$,即得到input $x$是属于$C_i$的几率。<br>为什么要用softmax function是可以推导出来的，这里不做探讨(google maximum entropy)。</p>
 <p>总结上面所做的事情，如下<br><img src="/2019/09/01/Logistic Regression/10.png" alt="10"><br>$y$与$\hat{y}$都是一个probability distribution,$\hat{y}$我们可以设成如下<br>$$if\ x\in class1 \quad \quad \hat{y}=\begin{bmatrix}1&amp;0&amp;0\end{bmatrix}^T$$ $$if\ x\in class2 \quad \quad \hat{y}=\begin{bmatrix}0&amp;1&amp;0\end{bmatrix}^T$$ $$if\ x\in class3 \quad \quad \hat{y}=\begin{bmatrix}0&amp;0&amp;1\end{bmatrix}^T$$</p>
 <h1 id="Limitation-of-Logistic-Regression"><a href="#Limitation-of-Logistic-Regression" class="headerlink" title="Limitation of Logistic Regression"></a>Limitation of Logistic Regression</h1><p>Logistic Regression其实是有非常强的限制，假设有下面这个case,<br><img src="/2019/09/01/Logistic Regression/11.png" alt="11"><br>我们用Logistic Regression对上面的class1和class2做分类，发现这件事情是办不到的（即让两个红色点的输出几率大于0.5，而两个蓝色点的几率小于0.5），其原因是Logistic Regression的Boundary就是一条直线,而无论我们怎么去画一条直线，都不能将红色的点划在一边，而蓝色的点划在另一边。<br><img src="/2019/09/01/Logistic Regression/12.png" alt="12"> </p>
 <h2 id="Feature-Transformation"><a href="#Feature-Transformation" class="headerlink" title="Feature Transformation"></a>Feature Transformation</h2><p>为解决上面问题，还是用Logistic Regression,我们可以用<strong>Feature Transformation</strong>。我们可以对不好的feature进行一些转换，使得Logistic Regression变得好处理。<br>我们将$\begin{bmatrix}x_1&amp;x_2\end{bmatrix}^T$转化成$\begin{bmatrix}x_1^{\prime}&amp;x_2^{\prime}\end{bmatrix}^T$</p>
@@ -548,7 +548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -559,7 +559,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -570,7 +570,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

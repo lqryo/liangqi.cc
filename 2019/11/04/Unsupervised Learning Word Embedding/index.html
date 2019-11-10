@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Word Embedding其实是Dimension Reduction的一个非常好的应用。 introduction如果我们今天要用一个vector来表示一个word，会怎么做呢?最典型的做法叫做1-of-N Encoding，每一个word，我们用一个vector来表示，这个vector的dimension就是这个世界上可能有的word数目。每个word对应到其中一维，例如下图中apple就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsupervised Learning —— Word Embedding">
+<meta property="og:url" content="http://yoursite.com/2019/11/04/Unsupervised Learning Word Embedding/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="Word Embedding其实是Dimension Reduction的一个非常好的应用。 introduction如果我们今天要用一个vector来表示一个word，会怎么做呢?最典型的做法叫做1-of-N Encoding，每一个word，我们用一个vector来表示，这个vector的dimension就是这个世界上可能有的word数目。每个word对应到其中一维，例如下图中apple就是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/14.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/15.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/16.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/17.png">
+<meta property="og:updated_time" content="2019-11-05T04:49:18.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsupervised Learning —— Word Embedding">
+<meta name="twitter:description" content="Word Embedding其实是Dimension Reduction的一个非常好的应用。 introduction如果我们今天要用一个vector来表示一个word，会怎么做呢?最典型的做法叫做1-of-N Encoding，每一个word，我们用一个vector来表示，这个vector的dimension就是这个世界上可能有的word数目。每个word对应到其中一维，例如下图中apple就是">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/04/Unsupervised%20Learning%20Word%20Embedding/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/04/Unsupervised Learning Word Embedding/">
+
+
+
+
+
+  <title>Unsupervised Learning —— Word Embedding | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/Unsupervised Learning Word Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unsupervised Learning —— Word Embedding</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-04T19:48:19+08:00">
+                2019-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Word Embedding</strong>其实是Dimension Reduction的一个非常好的应用。</p>
+<h1 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h1><p>如果我们今天要用一个vector来表示一个word，会怎么做呢?最典型的做法叫做<strong>1-of-N Encoding</strong>，每一个word，我们用一个vector来表示，这个vector的dimension就是这个世界上可能有的word数目。每个word对应到其中一维，例如下图中apple就是第一维是1，其他都是0。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/1.png" alt="1"></p>
+<p>如果用这种方式来描述一个word，那么这个vector一点都不informative。每一个word它的vector都是不一样的，所以从这个vector里面，没有办法得到任何咨询。例如没有办法知道dog和cat都是动物这件事。怎么办呢？有一个方法就是建<strong>Word Class</strong>，把有同样性质的word把它们cluster成一群一群的，然后就用那个word所属的class来表示这个word。这就是我们之前做Dimension Reduction的时候讲的clustering的概念。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/2.png" alt="2"></p>
+<p>但是光用class是不够的，我们之前有讲过光做clustering是不够的，因为如果光做clustering的话，我们会少了一些information。比如说上面class 1和class 3都是属于生物，但是在class里面没有办法呈现这一件事。为解决这个问题，我们就需要<strong>word Embedding</strong>。</p>
+<p>word Embedding是把每一个word都project到一个high dimensional的space上面，虽然这里说这个space是high dimensional，但是它远比1-of-N encoding的dimension要低。从1-of-N encoding到Word Embedding，这是Dimension Reduction的process。我们希望在word Embedding的这个图上，我们可以看到的结果是，类似语义的词汇，它们在这个图上是比较接近的。而且在high dimensional space里面，每个dimension可能都有它特别的含义。比如，假设我们现在做完word embedding以后，每一个word的word Embedding的feature vector如下图，那么可能就可以知道，横轴的dimension代表了生物和其他东西之间的差别，纵轴的dimension可能就代表了与运动有关的东西。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/3.png" alt="3"></p>
+<h1 id="word-Embedding"><a href="#word-Embedding" class="headerlink" title="word Embedding"></a>word Embedding</h1><p>怎么做word Embedding呢？word Embedding是一个unsupervised approach，也就是我们通过让machine阅读大量的文章，它就可以知道每一个词汇它的embedding的feature vector应该长什么样子。</p>
+<p>这是一个unsupervised的problem，因为我们要做的事情就是learn一个Neural Network，找一个function，input是一个词汇，output就是那一个词汇所对应的word embedding的那一个vector。而我们手上有的training data就是一大堆文字，即我们只有input没有output。这个问题要怎么解呢？我们之前有讲过一个deep learning base的Dimension Reduction方法叫做<strong>auto-encoder</strong>，learn一个network，让它的输入等于输出，把某一个hidden layer拿出来，就是Dimension Reduction的结果。那么这个地方可以用Auto-encoder吗？</p>
+<p>这里其实没办法用Auto-encoder来解。想想看，如果用1-of-N encoding当作它的input，对1-of-N encoding来说，每个词汇都是independent,把这样子的vector做Auto-encoder，其实没有办法learn出任何informative的information。所以在word enbedding这个task里面用auto-encoder是没有办法的。如果input是1-of-N encoding用Auto-encoder是没有办法的，除非用character的n-gram来描述一个word，或许它可以抓到一个字首、字根的含义。不过基本上大家现在不这么做。</p>
+<p>那要如何找word embedding呢？要如何了解一个词汇的含义呢？要看这个词汇的context。每一个词汇的含义，可以根据它的上下文来得到。</p>
+<ul>
+<li><p>Machine learn the meaning of words from reading a lot of documents without supervision</p>
+</li>
+<li><p>A word can be understood by its context</p>
+</li>
+</ul>
+<h2 id="How-to-exploit-the-context"><a href="#How-to-exploit-the-context" class="headerlink" title="How to exploit the context"></a>How to exploit the context</h2><p>怎么通过上下文来找出word Embedding的vector呢？有两个不同体系的做法。</p>
+<h3 id="Count-based"><a href="#Count-based" class="headerlink" title="Count based"></a>Count based</h3><p><strong>Count based</strong>的方法是说，如果我们现在有两个词汇$w_i$和$w_j$，它们常常在同一篇文章中出现，那么它们的word vector(用$V(w_i)$、$V(w_j)$表示)会比较接近。这种方法一个很有代表性的例子叫做<strong>Glove vector</strong>，参考链接1。</p>
+<p>这个方法的原则是，假设我们知道$V(w_i)$和$V(w_j)$，那么我们可以计算它们的inner product。假设$N_{i,j}$是$w_i$与$w_j$它们co-occur在同样的document里面的次数，那么我们希望为$w_i$找到一组vector，为$w_j$也找到一组vector，然后希望$V(w_i)\cdot V(w_j)$与$N_{i,j}$越接近越好。这和我们之前讲的matrix factorization的概念是一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/4.png" alt="4"></p>
+<h3 id="Prediction-based"><a href="#Prediction-based" class="headerlink" title="Prediction based"></a>Prediction based</h3><p><strong>Prediction based</strong>的想法是，我们来learn一个neural network，它做的事情是prediction。这个neural network做的事情是given前一个word $w_{i-1}$，predict下一个可能出现的word是谁。</p>
+<p>我们知道每一个word，都用1-of-N encoding，可以把它表示成一个feature vector。所以，如果我们要做prediction这件事情的话，我们就是要learn一个neural network，它的input就是$w_{i-1}$的1-of-N encoding的feature vector，它的output就是下一个word $w_i$是某一个word的几率。也就是说，这个model它的output的dimension就是vector的size，假设现在世界上有10万个word,output就是10万维。每一维代表某一个word是会被当作$w_i$的几率。假设这就是一个我们所熟知的multi-layer的perceptron，一个deep neural network。把input feature vector丢进去的时候，它会通过很多hidden layer，然后我们会得到output。接下来，我们把第一个hidden layer的input拿出来（写作$\bf{Z}$），我们用$\bf{Z}$就可以代表一个word。input不同的1-of-N encoding，$\bf{Z}$就会不一样。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/5.png" alt="5"></p>
+<p>为什么用prediction based的方法，就恩可以得到这样的vector呢？prediction based的方法是怎么体现根据一个词汇的上下文来了解一个词汇的含义这件事情呢？</p>
+<p>假设我们的training data里面有一个文章，它里面有下面两句话。在第一个句子里面，蔡英文是$w_{i-1}$，宣誓就职是$w_i$。在另一个句子里面，马英九是$w_{i-1}$，宣誓就职是$w_i$。那我们在训练这个prediction model的时候，不管是input蔡英文还是马英九的1-of-N encoding，都会希望learning出来的结果是宣誓就职的几率比较大。蔡英文和马英九虽让是不同的input，但为了要让最后在output的地方得到一样的output，我们就必须让中间的hidden layer做一些事情，中间的hidden layer必须要学到这两个不同的词汇需要通过参数的转换以后把它们对应到同样的空间。在input进入hidden layer之前，必须把它们对应到接近的空间，这样我们在最后output的时候，它们才能有同样的几率。所以，当我们learn一个prediction model的时候，考虑一个word的context这一件事情，就自动被考虑在prediction model里面。所以把prediction model的第一个hidden layer拿出来，就可以得到我们想要找的这种word embedding的特性。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/6.png" alt="6"></p>
+<h3 id="Prediction-based-——-Sharing-parameters"><a href="#Prediction-based-——-Sharing-parameters" class="headerlink" title="Prediction-based —— Sharing parameters"></a>Prediction-based —— Sharing parameters</h3><p>如果只用$w_{i-1}$去predict$w_i$，好像太弱了。只通过一个词汇去预测下一个词，对人来说也是比较难的。我们可以拓展这个问题，比如希望machine learn的是input前面两个词汇，然后predict下一个word。可以轻易的把这个Model扩展到N个词汇。一般我们如果真得要learn这样的word vector的话，通常input可能至少10个词汇。下面是input 2个word作为例子，可以轻易的将它扩展到10个word。</p>
+<p>要注意的是，本来如果是一般的neural network，就把input $w_{i-2}$和$w_{i-1}$的1-of-N encoding的vector接在一起，变成一个很长的vector，直接丢到neural network里面当作input就可以了。但是实际上你在做的时候，会希望和$w_{i-2}$相连的weight跟$w_{i-1}$相连的weight它们是被tie在一起的，即$w_{i-2}$的第一个dimension跟第一个hidden layer的第一个neuron它们中间连的weight，和$w_{i-1}$的第一个dimension和第一个hidden layer的第一个neuron它们之间连的weight，这两个weight必须是一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/7.png" alt="7"></p>
+<p>这么做的一个显而易见的理由是，如果我们不这么做，把同一个word放在$w_{i-2}$的位置跟放在$w_{i-1}$的位置，通过transform以后，得到的embedding就会不一样。另外一个理由是这样可以减少参数量，因为input这个dimension很大，可能是10万维。</p>
+<p>现在，假设$w_{i-2}$的1-of-N encoding就是$\bf{x_2}$，$w_{i-1}$的1-of-N encoding就是$\bf{x_1}$，它们的长度都是$|V|$。hidden layer的input我们把它写成一个vector $\bf{z}$，$\bf{z}$的长度是$|Z|$，那么有如下的式子</p>
+<p>$$ \bf{z = W_1x_{i-2} + W_2x_{i-1}} $$</p>
+<p>其中$\bf{W_1}$和$\bf{W_2}$都是一个$|Z|\times |V|$的matrix，这里我们强制</p>
+<p>$$\bf{W_1 = W_2 = W}$$</p>
+<p>所以有：</p>
+<p>$$\bf{z = W(x_{i-2} + x_{i-1})}$$</p>
+<p>通过上式我们可以得到一个word的vector。</p>
+<p>这里会有一个问题，就是我们在实作上，怎么让$\bf{W_1}$跟$\bf{W_2}$它们的weight一定都要一样呢？事实上，我们在train CNN的时候，也有一样类似的问题。做法如下，假设我们现在有两个weight $w_i$和$w_j$，希望$w_i$和$w_j$是一样的。首先，给$w_i$和$w_j$一样的initialization，接下来，然后计算：</p>
+<p>$$w_i \leftarrow w_i - \eta \frac{\partial C}{\partial w_i} - \frac{\partial C}{\partial w_j}$$  $$w_j \leftarrow w_j - \eta \frac{\partial C}{\partial w_j} - \frac{\partial C}{\partial w_i}$$</p>
+<p>以上的式子可以确保$w_i$和$w_j$在训练的过程中永远都是tie在一起的。</p>
+<h3 id="Prediction-based-——-Training"><a href="#Prediction-based-——-Training" class="headerlink" title="Prediction based —— Training"></a>Prediction based —— Training</h3><p>要如何训练这个network呢？这个network的训练完全是unsupervised的。也就是说，我们只要collect一大堆文字的data（可通过爬虫获取），然后通过Minimizing cross entropy去train你的model。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/8.png" alt="8"></p>
+<h3 id="Prediction-based-——-Various-Architectures"><a href="#Prediction-based-——-Various-Architectures" class="headerlink" title="Prediction-based —— Various Architectures"></a>Prediction-based —— Various Architectures</h3><p>上面所讲的只是最基本的形态，其实这个prediction based的model可以有种种的变形，它们的performance在不同的task上互有胜负，所以很难说哪一种方法一定是比较好的。</p>
+<ul>
+<li><strong>Continuous bag of word (CBOW) model</strong></li>
+</ul>
+<p>之前所讲的都是拿前面的词汇去predict接下来的词汇，而CBOW是拿某一个词汇的context去predict中间的词汇（用$w_{i-1}$和$w_{i+1}$去predict $w_i$）。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/9.png" alt="9"></p>
+<ul>
+<li><strong>Skip-gram</strong></li>
+</ul>
+<p>Skip-gram是拿$w_i$去predict $w_{i-1}$和$w_{i+1}$。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/10.png" alt="10"></p>
+<p>有人可能会问，这个network它不是deep的啊，它其实就是一个linear的hidden layer，不是deep的，为什么呢？</p>
+<p>propose word vector的作者Tomas Mikolov有自己的解释：首先他并不是第一个propose word vector的人，在他之前其实就有很多人做过word vector，有提出类似的概念。Tomas Mikolov想要verify的最重要的一件事情就是，过去其他人其实就是用deep的，其实这个task不用deep就做得起来，不用deep的好处是减少运算量，可以跑很大量的data。过去确实有人做过word vector这件事，只是结果没有红起来。其实word embedding这个概念在语言界，大概是2010年的时候开始红起来，那个时候它叫做continuous的language model。一开始的时候，也不是用neural network来得到这个word embedding的，因为neural network的运算量很大，而是用其他比较简单的方法来得到word embedding。只是后来大家逐渐发现用neural network得到的结果才是最好的，过去没用neural network的方法逐渐式微，通通都变成neural network based的方法了。</p>
+<hr>
+<p>word vector可以得到一些有趣的特性，如果把同样类型的word vector摆在一起，比如下图中的(Italy-Rome,Germany-Berlin)，会发现它们之间是有某种固定的关系的。或者把同一个动词的三态摆在一起，它们也是有某种固定的关系。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/11.png" alt="11"></p>
+<p>所以从word vector里面，可以发现我们不知道的word与word之间的关系。比如，有人发现如果把word vector两两相减，然后project到一个2维的space上面，会发现在某个区域，某一个word是包含于某一个word之间的关系，如下图：</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/12.png" alt="12"></p>
+<p>所以用word vector的概念，我们可以做一些简单的推论。举例来说，有些word vector的差会很接近，如下</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/13.png" alt="13"></p>
+<p>那如果有人问Rome之于Italy，就好像是Berlin至于什么，机器就可以回答这种问题了。因为由上面的式子我们知道</p>
+<p>$$V(Germany) \approx V(Berlin) - V(Rome) + V(Italy)$$</p>
+<h2 id="Multi-lingual-Embedding"><a href="#Multi-lingual-Embedding" class="headerlink" title="Multi-lingual Embedding"></a>Multi-lingual Embedding</h2><p>word vector还可以做很多其他的事情，比如把不同语言的word vector拉在一起。如果今天有一个中文的corpus和英文的corpus，我们各自分别去train一组word vector，会发现中文和英文的word vector它是完全没有任何关系的，它们每一个dimension对应的含义并没有任何关系，为什么？因为要train word vector的时候，它凭借的就是上下文之间的关系，所以如果corpus里面没有中文英文的句子混杂在一起，那machine就没法判断中英文之间的关系。但是假如我们已经事先知道某几个中文词汇和英文词汇是对应在一起的，先得到一组中文的vector,再得到一组英文的vector，接下来可以再learn一个model，它把中文和英文对应的词汇project在space上的同一个点。做了这个transform以后，接下来又有新的中文和英文词汇，通可以用同样的projection把它们project到同一个space上面，这样就能做到类似自动翻译的效果。</p>
+<h2 id="Multi-domain-Embedding"><a href="#Multi-domain-Embedding" class="headerlink" title="Multi-domain Embedding"></a>Multi-domain Embedding</h2><p>embedding不只限于文字，也可以对影像对embedding。下面是一个例子，如下图，我们先已经找到一组word vector（cat,horse,dog等等）。接下来，要learn一个model，它的input是一张image，output是一个跟word vector一样dimension的vector。假设一些image我们已经知道是属于哪一类了，那可以把它们project到它们所对应到的word vector附近。当又有一个新的image进来，我们就可以通过同样的project，把它project到这个space上以后，神奇的是会发现它可能就在猫的附近，machine就会告诉我们这张image是猫。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/14.png" alt="14"></p>
+<p>在做影像分类的时候，machine其实很难去处理新增加的、它没有办法看过的object。比如我们先定好10个class，那么learn出来的model，就是只能分这10个class。如果今天有一个新的东西不在这10个class里面，那么model是完全无能为力的。但是如果用上面的方法，就算有一张image，是在train的时候没有看过的class，比如cat，但是如果cat的image可以project到cat的vector附近的话，就会知道这张image叫做cat。这就好像是machine先阅读了大量的文章以后，它知道每一个词汇指的是什么意思，接下来在看image的时候，它就可以根据它已经阅读得到的知识，去mapping每一个image所应该对应的东西。这样就算它看到它没有看过的东西，它也可能叫出它的名字。</p>
+<h2 id="Document-Embedding"><a href="#Document-Embedding" class="headerlink" title="Document Embedding"></a>Document Embedding</h2><p>也可以做<strong>Document Embedding</strong>，不只是把一个word变成一个vector，也可以把一个document变成一个vector。</p>
+<p>最简单的方法就是把一个document变成bag-of-word，然后用Auto-encoder就可以learn出这个document的Semantic Embedding。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/15.png" alt="15"></p>
+<p>但是光用bag-of-word来描述一篇document是不够的，因为我们知道词汇的顺序代表了很重要的含义。同样的bag-of-word在语义上可能是完全不一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/16.png" alt="16"></p>
+<p>要解决这个问题，可以参考下面的reference。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/17.png" alt="17"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="https://nlp.stanford.edu/projects/glove/" target="_blank" rel="noopener">GloVe: Global Vectors for Word Representation</a></p>
+</li>
+<li><p><a href="https://www.semanticscholar.org/paper/Efficient-Estimation-of-Word-Representations-in-Mikolov-Chen/330da625c15427c6e42ccfa3b747fb29e5835bf0" target="_blank" rel="noopener">Efficient Estimation of Word Representations in Vector Space</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/30/blog01/" rel="next" title="blog01">
+                <i class="fa fa-chevron-left"></i> blog01
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/05/Unsupervised Learning Neighbor Embedding/" rel="prev" title="Unsupervised Learning —— Neighbor Embedding">
+                Unsupervised Learning —— Neighbor Embedding <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#word-Embedding"><span class="nav-number">2.</span> <span class="nav-text">word Embedding</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-exploit-the-context"><span class="nav-number">2.1.</span> <span class="nav-text">How to exploit the context</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-based"><span class="nav-number">2.1.1.</span> <span class="nav-text">Count based</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction-based"><span class="nav-number">2.1.2.</span> <span class="nav-text">Prediction based</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction-based-——-Sharing-parameters"><span class="nav-number">2.1.3.</span> <span class="nav-text">Prediction-based —— Sharing parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction-based-——-Training"><span class="nav-number">2.1.4.</span> <span class="nav-text">Prediction based —— Training</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction-based-——-Various-Architectures"><span class="nav-number">2.1.5.</span> <span class="nav-text">Prediction-based —— Various Architectures</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-lingual-Embedding"><span class="nav-number">2.2.</span> <span class="nav-text">Multi-lingual Embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-domain-Embedding"><span class="nav-number">2.3.</span> <span class="nav-text">Multi-domain Embedding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Document-Embedding"><span class="nav-number">2.4.</span> <span class="nav-text">Document Embedding</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

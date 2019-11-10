@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Manifold Learning我们知道，data point可能是高维空间里面的一个Manifold，也就是说，Data point其实是分布在一个低维空间里，只是被扭曲的塞到了一个高维空间里面。讲到Manifold的时候，常常举的例子就是“地球”，地球的表面就是一个Manifold，它是一个二维平面，但是被塞到三维空间里面。在一个Manifold里面，只有很近距离的点，Euclidean d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsupervised Learning —— Neighbor Embedding">
+<meta property="og:url" content="http://yoursite.com/2019/11/05/Unsupervised Learning Neighbor Embedding/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="Manifold Learning我们知道，data point可能是高维空间里面的一个Manifold，也就是说，Data point其实是分布在一个低维空间里，只是被扭曲的塞到了一个高维空间里面。讲到Manifold的时候，常常举的例子就是“地球”，地球的表面就是一个Manifold，它是一个二维平面，但是被塞到三维空间里面。在一个Manifold里面，只有很近距离的点，Euclidean d">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/8.png">
+<meta property="og:updated_time" content="2019-11-05T09:27:52.495Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsupervised Learning —— Neighbor Embedding">
+<meta name="twitter:description" content="Manifold Learning我们知道，data point可能是高维空间里面的一个Manifold，也就是说，Data point其实是分布在一个低维空间里，只是被扭曲的塞到了一个高维空间里面。讲到Manifold的时候，常常举的例子就是“地球”，地球的表面就是一个Manifold，它是一个二维平面，但是被塞到三维空间里面。在一个Manifold里面，只有很近距离的点，Euclidean d">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Neighbor%20Embedding/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/05/Unsupervised Learning Neighbor Embedding/">
+
+
+
+
+
+  <title>Unsupervised Learning —— Neighbor Embedding | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/Unsupervised Learning Neighbor Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unsupervised Learning —— Neighbor Embedding</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-05T12:50:31+08:00">
+                2019-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Manifold-Learning"><a href="#Manifold-Learning" class="headerlink" title="Manifold Learning"></a>Manifold Learning</h1><p>我们知道，data point可能是高维空间里面的一个Manifold，也就是说，Data point其实是分布在一个低维空间里，只是被扭曲的塞到了一个高维空间里面。讲到Manifold的时候，常常举的例子就是“地球”，地球的表面就是一个Manifold，它是一个二维平面，但是被塞到三维空间里面。在一个Manifold里面，只有很近距离的点，Euclidean distance才会成立。所以，Manifold Learning要做的事情是把S形展开，把塞在高维空间里面的低维空间摊平，之后我们就可以在这个平面上用Euclidean distance来计算点和点之间的距离。这会对接下来如果要做clustering或者做supervised learning都是会有帮助的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/1.png" alt="1"></p>
+<h1 id="Locally-Linear-Embedding-LLE"><a href="#Locally-Linear-Embedding-LLE" class="headerlink" title="Locally Linear Embedding(LLE)"></a>Locally Linear Embedding(LLE)</h1><p>在原来的空间里面，点的分布如下，对某一个点$x^i$，我们先选出$x^i$的neighbor $x^j$，接下来我们要找$x^i$与$x^j$的关系，它们的关系我们写作$w_{ij}$。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/2.png" alt="2"></p>
+<p>$w_{ij}$是怎么找出来的呢？我们假设每一个$x^i$，都可以用它的neighbor做linear combination以后，组合而成，那么$w_{ij}$就是拿$x^j$去组合$x^i$的时候的linear combination的weight。我们现在要找一组$w_{ij}$，这组$w_{ij}$对$x_i$的所有neighbor $x^j$做weighted sum的时候，他可以跟$x^i$越接近越好,即下面的式子越小越好。</p>
+<p>$$\sum_i||x^i - \sum_jw_{ij}x^j||_2$$</p>
+<p>接下来我们要做dimension reduction，把原来所有的$x^i$和$x^j$转成$z^i$和$z^j$。这里的原则是，从$x^i$和$x^j$转成$z^i$和$z^j$，它们中间的关系$w_{ij}$是不变的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/3.png" alt="3"></p>
+<p>所以LLE做的事情是，首先$w_{ij}$在原来的space上找完以后，就不要去动它。接下来为每一个$x^i$和$x^j$找另外一个vector。我们现在要做dimension reduction，所以新找的vector要比原来的dimension还要小。$z^i$和$z^j$要minimize下面这个function:</p>
+<p>$$\sum_i||z^i - \sum_jw_{ij}z^j||_2$$</p>
+<p>也就是说，原来的$x^j$可以做linear combination产生$x^i$，$z^j$也可以做linear combination产生$z^i$。我们就是要找这组z可以满足$w_{ij}$给我们的constrain。所以上面的式子里面，$w_{ij}$变成已知的，我们要找一组$z$，让$z^j$通过$w_{ij}$做weighted sum以后，它可以跟$z^i$越接近越好。</p>
+<p>注意，LLE并没有一个明确的function来告诉我们怎么做dimension reduction。不像我们在做Auto-Encoder的时候，learn出一个encoder的network，input一个新的datapoint,然后可以找到它dimension的结果。但是LLE里面并没有一个明确的function告诉我们怎么从$x$变到$z$。$z$就是完全凭空找出来的。</p>
+<p>如果用LLE或其他类似的方法有一个好处，就算是原来的$x^i$、$x^j$不知道，只知道$w_{ij}$(不知道$x^i$、$x^j$要用什么vector来描述)，也可以用LLE这种方法。</p>
+<p>LLE需要好好的调一下neighbor的个数，neighbor的数目要刚刚好才会得到好的结果。下面是原始的paper里面的图，可以发现$K$太小和太大,得出的结果都不会太好。为什么$K$太大结果也不太好呢？因为我们之前的假设，就是每一个Euclidean distance只是在很近的距离内，可以被这样想。所以，点和点之间关系，在transform前后可以被keep住，只有在距离很近的时候才能够成立。当$K$很大的时候，会考虑一些距离很远的点，会考虑transform以后relation没有办法keep住的点。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/4.png" alt="4"></p>
+<h1 id="Laplacian-Eigenmaps"><a href="#Laplacian-Eigenmaps" class="headerlink" title="Laplacian Eigenmaps"></a>Laplacian Eigenmaps</h1><p>我们之前在讲semi-supervised learning的时候，有讲过smoothness assumption，如果要比较两个点之间的距离，只算它的Euclidean distance是不够的，而要看它们在high density的region之间的distance。如果两个点之间有high density的connection，那它们才是真正接近的。</p>
+<p>这件事情我们可以用一个Graph来描述，也就是把data point construct成一个graph，算data point两两之间的相似度，如果相似度超过一个threshold，就把它们connect起来。而建一个graph的方法有很多。</p>
+<p>把点变成graph以后，考虑smoothness的距离就可以被这个graph上面的connection来approximate。在之前的semi-supervised learning有讲过，如果$x^1$和$x^2$z在high density的region相近，那他们的label $\hat{y}^1$和$\hat{y}^2$有可能是一样的。同样的道理可以被apply到unsupervised的test上面，如果$x^1$和$x^2$在high density的region是close的，我们希望$z^1$和$z^2$他们也是相近的。找到$z^i$和$z^j$去minimize下面$S$的值。</p>
+<p>$$S = \frac{1}{2}\sum_{i,j}w_{i,j}||(z^i - z^j)||_2$$</p>
+<p>上面的做法是有问题的，因为我们总可以将$z^i$和$z^j$的值通通设为0，所以光有上面的式子是不够的。所以我们需要给$z$一些constrain。</p>
+<p>如果$z$降维以后的空间是$M$维空间，那我们不会希望$z$还分布在一个比$M$还小的dimension里面，即：</p>
+<p>if the dim of $z$ is $M$, $Span\{z^1,z^2,\cdots,z^N\} = R^M$</p>
+<p>有了这个constrain，上面的式子解出来的$z$跟我们前面看到的那个graph laplacian L是有关系的，他其实就是graph laplacian的eigenvector。所以它叫做<strong>Laplacian Eigenmaps</strong>,因为我们找的是laplacian matrix的eigenvetor。</p>
+<p>我们我们先找出$z$以后，再去做cluster（K-means），这一招叫做spectral clustering。</p>
+<h1 id="t-SNE"><a href="#t-SNE" class="headerlink" title="t-SNE"></a>t-SNE</h1><p><strong>t-SNE</strong>是<strong>T-distribution Stochastic Neighbor Embedding</strong>的缩写。前面的方法有一个最大的问题就是，它只假设相近的点应该要是接近的，而没有假设不相近的点要分开(Similar data are close,but different data may collapse)。所以比如说用LLE在MNIST上，会遇到这样的情形：它确实会把相同class的点都聚集在一起（下图中不同的颜色表示不同的digit），但它没有防止不同的class的点不要叠成一团。 </p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/6.png" alt="6"></p>
+<p>做t-SNE一样是要做降维，把原来的data point $x$变成比较low dimension的vector $z$。在原来的$x$这个space上面，我们会计算所有的点的pair $x^i$和$x^j$之间的similarity $S(x^i,x^j)$。接下来，会做一个normalization，我们会计算：</p>
+<p>$$P(x^j|x^i) = \frac{S(x^i,x^j)}{\sum_{k\neq i}S(x^i,x^k)}$$</p>
+<p>另外假设我们今天已经找出了一个low dimension的representation就是$z^i$和$z^j$的话，我们也可以计算是$z^i$和$z^j$之间的similarity $S^{\prime}(z^i,z^j)$,一样计算：</p>
+<p>$$Q(z^j|z^i) = \frac{S^{\prime}(z^i,z^j)}{\sum_{k\neq i}S^{\prime}(z^i,z^k)}$$</p>
+<p>做这个normalization是必要的，因为我们不知道在高维空间算出来的距离$S(x^i,x^j)$与$S^{\prime}(z^i,z^j)$的scale是不是一样的。如果有做normalization，那最后就可以把他们都变成几率，它们的值介于0和1之间，它们的scale会是一样的。</p>
+<p>现在我们还不知道$z^i$和$z^j$的值到底是多少，我们希望找一组$z^i$和$z^j$,让原来根据similarity在$S$这个原来的space算出来的distribution跟在dimension reduction以后的space算出来的distribution越接近越好。可以用<strong>KL divergence</strong>来衡量两个distribution之间的相似度。minimize下面的$L$,用gradient descent。</p>
+<p>$$ L = \sum_iKL\left(P(\star|x^i)||Q(\star|z^i)\right)$$</p>
+<p>有一个问题就是在做t-SNE的时候，会计算所有data point之间的similarity，运算量有点大。一个常见的做法是先做降维，比如原来的dimension很大，我们不会直接从很高的dimension直接做t-SNE,因为这样计算similarity的时间太长。通常会先用PCA做降维，比如降到50维，然后用t-SNE从50维降到2维。</p>
+<p>像上面所讲到的这些方法，比如t-SNE，如果给他一个新的data point，它是没办法做的。它只能够已经先给他一大堆$x$，它帮你把每个$x$的$z$都找出来，但是找完这些$z$以后，在给他一个新的$x$，要再重新跑一边上面一整套演算法，很麻烦。所以一般t-SNE的作用比较不是用在这种training test的这种case上面，通常常用的拿来做visualization。如果已经有一大堆的$x$，它是high dimensional的，而我们想要visualize它们在二维空间的分布上是什么样子，用t-SNE往往可以得到不错的结果。</p>
+<h2 id="t-SNE-——-Similarity-Measure"><a href="#t-SNE-——-Similarity-Measure" class="headerlink" title="t-SNE —— Similarity Measure"></a>t-SNE —— Similarity Measure</h2><p>t-SNE的一个有趣的地方是，t-SNE的similarity的选择是非常神妙的。我们在原来的data point的space上面，similarity选择RDF的function：</p>
+<p>$$ S(x^i,x^j) = exp(-||x^i - x^j||_2) \tag{1}$$</p>
+<p>之前有说如果要在graph上算similarity的话，用这种方法比较好，因为它可以确保只有非常相近的点才有值。因为exp掉的非常快，只要距离一拉开，similarity就会变得很小。</p>
+<p>在t-SNE之前有一个方法叫做SNE，SNE是一个很直觉的想法，在data point原来的space上用式子(1)这个evaluation的measure，当然在新的space上选用同样的measure就好啊：</p>
+<p>$$ S^{\prime}(z^i,z^j) = exp(-||z^i - z^j||_2) $$</p>
+<p>但是t-SNE神妙的地方在于，它在dimension reduction以后的space，它选的measure跟原来的space是不一样的，它在dimension reduction以后选的space是t-distribution的其中一种(t-distribution里面的参数可以调他，可以产生很多种不同的distribution)。t-distribution的其中一种如下:</p>
+<p>$$S^{\prime}(z^i,z^j) = 1/1 + ||z^i - z^j||_2$$</p>
+<p>为什么要这么做呢？这里有一个很直觉的理由，下图中假设横轴代表了在原来space上的Euclidean distance或者是做dimension reduction以后的Euclidean distance，红色的线和蓝色线分别为$S(x^i,x^j)$和$S^{\prime}(z^i,z^j)$,从图中的两个点可以看到，如果本来距离比较近，它们的影响是比较小的，如果距离比较远，那从原来的distribution变到t-distribution以后，会被拉的很远。也就是说，原来在高维空间里面，如果距离很近，做完transform以后他还是很近，如果原来就已经有一段距离了，做完transform后就会被拉得很远。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/7.png" alt="7"></p>
+<p>所以t-SNE画出来的图往往如下，它会把data point聚集成一群一群的。因为data point之间本来只要有一个gap，做完t-SNE以后就会把gap强化，gap会变得特别明显。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/8.png" alt="8"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/04/Unsupervised Learning Word Embedding/" rel="next" title="Unsupervised Learning —— Word Embedding">
+                <i class="fa fa-chevron-left"></i> Unsupervised Learning —— Word Embedding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/05/Unsupervised Learning Auto-encoder/" rel="prev" title="Unsupervised Learning —— Auto-encoder">
+                Unsupervised Learning —— Auto-encoder <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Manifold-Learning"><span class="nav-number">1.</span> <span class="nav-text">Manifold Learning</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locally-Linear-Embedding-LLE"><span class="nav-number">2.</span> <span class="nav-text">Locally Linear Embedding(LLE)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Laplacian-Eigenmaps"><span class="nav-number">3.</span> <span class="nav-text">Laplacian Eigenmaps</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#t-SNE"><span class="nav-number">4.</span> <span class="nav-text">t-SNE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#t-SNE-——-Similarity-Measure"><span class="nav-number">4.1.</span> <span class="nav-text">t-SNE —— Similarity Measure</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

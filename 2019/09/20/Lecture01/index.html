@@ -81,15 +81,20 @@
 
 <meta name="description" content="简介TensorFlow分为CPU和GPU两个版本。TensorFlow是Google的第二代人工智能学习系统，它的底层是C++写的，使用的时候主要用Python，也可以用C++。支持CNN、RNN等算法，可以用于语言识别和图像处理等多个深度学习的领域。它可以在一个或者多个CPU或GPU中运行，它还可以运行在嵌入式系统中比如手机、平板电脑。深度学习框架有很多，Google希望将TensorFlow">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Lecture 01">
+<meta property="og:title" content="Tensorflow介绍与安装">
 <meta property="og:url" content="http://yoursite.com/2019/09/20/Lecture01/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:description" content="简介TensorFlow分为CPU和GPU两个版本。TensorFlow是Google的第二代人工智能学习系统，它的底层是C++写的，使用的时候主要用Python，也可以用C++。支持CNN、RNN等算法，可以用于语言识别和图像处理等多个深度学习的领域。它可以在一个或者多个CPU或GPU中运行，它还可以运行在嵌入式系统中比如手机、平板电脑。深度学习框架有很多，Google希望将TensorFlow">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-21T14:14:08.931Z">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/Lecture01/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/Lecture01/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/Lecture01/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/20/Lecture01/4.png">
+<meta property="og:updated_time" content="2019-10-30T12:28:36.746Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Lecture 01">
+<meta name="twitter:title" content="Tensorflow介绍与安装">
 <meta name="twitter:description" content="简介TensorFlow分为CPU和GPU两个版本。TensorFlow是Google的第二代人工智能学习系统，它的底层是C++写的，使用的时候主要用Python，也可以用C++。支持CNN、RNN等算法，可以用于语言识别和图像处理等多个深度学习的领域。它可以在一个或者多个CPU或GPU中运行，它还可以运行在嵌入式系统中比如手机、平板电脑。深度学习框架有很多，Google希望将TensorFlow">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/20/Lecture01/1.png">
 
 
 
@@ -125,7 +130,7 @@
 
 
 
-  <title>Lecture 01 | 学习笔记</title>
+  <title>Tensorflow介绍与安装 | Qi-Liang'blog</title>
   
 
 
@@ -155,7 +160,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -271,7 +276,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -279,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Lecture 01</h1>
+          <h1 class="post-title" itemprop="name headline">Tensorflow介绍与安装</h1>
         
 
         <div class="post-meta">
@@ -365,8 +370,53 @@
 
 <p><strong>jupyter_notebook_config.py</strong>这个文件如果没有，需要先运行jupyter notebook生成一个配置文件（需要先添加环境变量）</p>
 <p><a href="https://cloud.tencent.com/developer/ask/148499" target="_blank" rel="noopener">https://cloud.tencent.com/developer/ask/148499</a></p>
+<p>双击运行Jupyter，它会打开浏览器，接下来在浏览器上进行编程。</p>
+<h2 id="文件路径的设置"><a href="#文件路径的设置" class="headerlink" title="文件路径的设置"></a>文件路径的设置</h2><p>在路径<code>C:\Users\usename\.jupyter</code>里面找到<code>jupyter_notebook_config.py</code>文件，若没有该文件，运行以下命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+
+<p>而在本人电脑上运行该命令时，产生如下错误。<br><img src="/2019/09/20/Lecture01/1.png" alt="1"></p>
+<p>参考底下的链接2，将<code>D:\develop\Anaconda3\Library\bin</code>添加到环境变量，问题解决。<br><img src="/2019/09/20/Lecture01/2.png" alt="2"></p>
+<p>打开<code>jupyter_notebook_config.py</code>文件，找到如下行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## The directory to use for notebooks and kernels.</span></span><br><span class="line"><span class="comment">#c.NotebookApp.notebook_dir = ''</span></span><br></pre></td></tr></table></figure>
+
+<p><code>c.NotebookApp.notebook_dir</code>的值就是文件存放的路径，编写的文件都会存放在该路径下。这里我将上面代码修改成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## The directory to use for notebooks and kernels.</span></span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">u'E:/GitRep/Tensorflow'</span></span><br></pre></td></tr></table></figure>
+
+<p>改完后再次运行Jupyter Notebook，然而Jupyter Notebook并没有在我们指定的路径下打开：<br><img src="/2019/09/20/Lecture01/3.png" alt="3"></p>
+<p>发现从命令行进入Jupyter Notebook路径正常，而从快捷方式打开Jupyter Notebook就会路径不对。参考底下链接3，更改Jupyter Notebook的属性中的<strong>起始位置</strong>，并且去掉<code>&quot;%USERPROFILE%/&quot;</code>如下<br><img src="/2019/09/20/Lecture01/4.png" alt="4"></p>
+<p>现在从快捷方式打开也能显示正确路径了。我们点击New按钮，选择Python 3就能新建一个python文件。</p>
+<h2 id="Jupyter-Notebook基本操作"><a href="#Jupyter-Notebook基本操作" class="headerlink" title="Jupyter Notebook基本操作"></a>Jupyter Notebook基本操作</h2><p>快捷键</p>
+<ul>
+<li><strong>Shift+Enter</strong>  执行一个语句框中的所有语句</li>
+<li><strong>Tab键</strong>  变量名补全</li>
+</ul>
+<h1 id="Tensorflow的安装"><a href="#Tensorflow的安装" class="headerlink" title="Tensorflow的安装"></a>Tensorflow的安装</h1><h2 id="Windows安装Tensorflow"><a href="#Windows安装Tensorflow" class="headerlink" title="Windows安装Tensorflow"></a>Windows安装Tensorflow</h2><ul>
+<li><p><strong>CPU版本</strong>：管理员方式打开命令提示符，输入命令：<code>pip install tensorflow</code></p>
+</li>
+<li><p><strong>GPU版本</strong>：管理员方式打开命令提示符，输入命令：<code>pip install tensorflow-gpu</code></p>
+</li>
+</ul>
+<p>注意：要安装GPU版本，必须之前有安装CUDA。</p>
+<p>要更新Tensorflow，只需要先将Tensorflow卸载掉，然后重新安装即可：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall tensorflow</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tensorflow-2-0特点"><a href="#Tensorflow-2-0特点" class="headerlink" title="Tensorflow 2.0特点"></a>Tensorflow 2.0特点</h2><p>运行下面代码可以查看tensorflow的安装版本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+
+<p>本人安装的版本为2.0.0。Tensorflow 2.0在2019年1月发布了预览版，Tensorflow2.0专注于简洁性和易用性，相对于1.x版本陡峭的学习曲线（1.x版本API设计过于复杂），2.0使用Keras作为前端API，入门深度学习的难度大大降低，通过清理废弃的API和减少重复来简化API。</p>
+<p>2.0在训练方面，使用Keras和eager execution轻松构建模型。为研究提供强大的实验工具。eager execution是Tensorflow在1.8版之后增加的功能，但是它并不是1.x版本的默认实现，在Tensorflow 2.0里面，它默认使用eager模式即命令行模式，也就是可见即可得。运行一行命令，就能够得到结果。1.0版本并不是运行一行命令就能得到结果，它需要我们去建立一个session，通过session去建立图运算然后得到结果，这是1.0版本非常大的局限性。因为图运算的特点，我们首先要去建立好模型，知道运行session之间，我们都不知道这个模型到底怎么样，它有什么错误，这样会大大降低我们学习的效率。</p>
+<p>在研究方面，2.0也提供了强大的实验工具。我们可以使用<strong>Tf.keras</strong>创建复杂的拓扑，，包括使用残差层、自定义多输入/输出模型以及强制编写的正向传递。轻松创建自定义训练循环。低级TensorFlow API始终可用，并于更高级别的抽象一起工作，以实现完全可定制的逻辑。</p>
+<p>在部署方面，在任意平台上实现稳健的生产环境模型部署。不论是在服务器、边缘设备还是网页上，也不论使用什么语言或平台，TensorFlow总能让你轻易训练和部署模型。TensorFlow之所以能够这么轻松的部署，是因为它可以提供一种模型的保存方法，我们可以在windows上把模型训练好，把模型保存起来，然后将模型部署到网页上或安卓客户端。2.0通过标准化交换格式来改进跨平台和跨语言部署。</p>
+<ul>
+<li><p><strong>tf.keras</strong>:构建和训练模型的核心高级API。在构建模型时，首先就应该想到tf.keras。tf.keras包括两个部分，一个是<strong>单输入但输出Sequential顺序模型</strong>，另一个是<strong>函数式API</strong></p>
+</li>
+<li><p><strong>Eager模式</strong>：直接迭代和直观调试，Eager模式下求解梯度与自定义训练。</p>
+</li>
+</ul>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://www.bilibili.com/video/av35974848?from=search&seid=5108728984359701498" target="_blank" rel="noopener">TensorFlow视频教程</a></li>
+<li><a href="https://www.bilibili.com/video/av62215565/?p=2" target="_blank" rel="noopener">TensorFlow安装</a></li>
+<li><a href="https://blog.csdn.net/qq_27158747/article/details/86006996" target="_blank" rel="noopener">jupyter在windows10下无法打开的解决</a></li>
+<li><a href="https://blog.csdn.net/u014552678/article/details/62046638" target="_blank" rel="noopener">总结：修改Anaconda中的Jupyter Notebook默认工作路径的三种方式</a></li>
 </ol>
 
       
@@ -402,8 +452,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/09/26/why deep/" rel="prev" title="why deep">
-                why deep <i class="fa fa-chevron-right"></i>
+              <a href="/2019/09/26/why deep/" rel="prev" title="Why Deep">
+                Why Deep <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -483,7 +533,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -494,7 +544,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -505,7 +555,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -538,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Anaconda安装"><span class="nav-number">2.</span> <span class="nav-text">Anaconda安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter的使用"><span class="nav-number">3.</span> <span class="nav-text">Jupyter的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Jupyter-Notebook默认工作路径"><span class="nav-number">3.1.</span> <span class="nav-text">修改Jupyter Notebook默认工作路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Anaconda安装"><span class="nav-number">2.</span> <span class="nav-text">Anaconda安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jupyter的使用"><span class="nav-number">3.</span> <span class="nav-text">Jupyter的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Jupyter-Notebook默认工作路径"><span class="nav-number">3.1.</span> <span class="nav-text">修改Jupyter Notebook默认工作路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件路径的设置"><span class="nav-number">3.2.</span> <span class="nav-text">文件路径的设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Jupyter-Notebook基本操作"><span class="nav-number">3.3.</span> <span class="nav-text">Jupyter Notebook基本操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tensorflow的安装"><span class="nav-number">4.</span> <span class="nav-text">Tensorflow的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows安装Tensorflow"><span class="nav-number">4.1.</span> <span class="nav-text">Windows安装Tensorflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensorflow-2-0特点"><span class="nav-number">4.2.</span> <span class="nav-text">Tensorflow 2.0特点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

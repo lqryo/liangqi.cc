@@ -80,12 +80,12 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="学习笔记">
+<meta property="og:title" content="Qi-Liang&#39;blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习笔记">
+<meta name="twitter:title" content="Qi-Liang&#39;blog">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <title>学习笔记</title>
+  <title>Qi-Liang'blog</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -259,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture05/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/Command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -268,7 +268,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/06/Lecture05/" itemprop="url">Angle Estimation</a></h1>
+                <a class="post-title-link" href="/2019/11/10/Command/" itemprop="url">Linux常用命令</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T22:27:01+08:00">
-                2019-10-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T18:39:48+08:00">
+                2019-11-10
               </time>
             
 
@@ -313,19 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Embedded System</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
-                    <span itemprop="name">Radar</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -363,24 +352,28 @@
       
         
           
-            <p>在本节我们要解决下面问题：</p>
+            <h1 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h1><p>查看ubuntu的内核版本和发行版本号，可以采用如下命令</p>
 <ul>
-<li><p>雷达前面有一个物体，它要如何估算物体的到达角？</p>
-</li>
-<li><p>如果在不同的角度存在多个物体，但可能具有相同距离和相同的相对速度，会怎么样？</p>
-</li>
-<li><p>雷达的最大角度视场有哪些决定因素？</p>
-</li>
-<li><p>雷达的角度分辨率取决于什么？</p>
-</li>
+<li><strong>内核版本</strong></li>
 </ul>
-<p><img src="/2019/10/06/Lecture05/1.png" alt="1"></p>
-<h1 id="到达角估计基础"><a href="#到达角估计基础" class="headerlink" title="到达角估计基础"></a>到达角估计基础</h1><p>回忆一下之前的模块内容，IF信号的相位对物体距离的微小变化非常敏感，具体而言，物体距离的微小变化$\Delta d$会导致相位变化$\omega = \frac{4\pi \Delta d}{\lambda}$。</p>
-<p>角度估算利用率类似的概念。角度估算需要至少2个RX天线。这是利用物体相对每个天线的差分距离。那么，发射天线发射一个Chrip，它在物体上进行反射，可以想象一束射线从物体到达第一个RX天线，另一束射线从物体到达第二个RX天线。在该示例中，达到第二个RX天线的射线必须传播稍微远一点的距离，即额外的距离$\Delta d$，才能到达那里。该额外的距离会导致额外的相位$\omega = \frac{2\pi \Delta d}{\lambda}$，这便是该天线处的信号和该天线处的信号之间的相位差。我们可以看到这两个表达式非常类似，实际上，除了因数2之外，它们几乎是相同的。</p>
-<p><img src="/2019/10/06/Lecture05/2.png" alt="2"></p>
-<p>那么这两个表示式为什么具有因数2的差异？下图说明了额外距离与到达角的相关性。假设与两个天线之间的距离d相比，物体足够远，从而可以假设物体到达RX天线的射线是平行的。图中的d指两个连续天线之间的距离，$\theta$是物体相对于雷达的到达角度。$dsin(\theta)$是与第一个天线相比，第二个天线的额外距离。发射器天线发射一个线性调频脉冲帧，每个天线会接收该数据。每个天线会处理该数据，以创建一个2D-FFT矩阵，其中包含与物体的距离和速度相对应的峰值。</p>
-<p><img src="/2019/10/06/Lecture05/3.png" alt="3"></p>
-<p>下图是与该接收器相对应的2D-FFT峰值，以及与该接收器相对应的另一个2D-FFT矩阵。注意，峰值的位置几乎与这两个2D-FFT相同。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangqi@ubuntu:~$ uname -r</span><br><span class="line">4.15.0-66-generic</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>内核信息</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangqi@ubuntu:~$ uname -a</span><br><span class="line">Linux ubuntu 4.15.0-66-generic <span class="comment">#75~16.04.1-Ubuntu SMP Tue Oct 1 14:01:08 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>发行版本</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">liangqi@ubuntu:~$ sudo lsb_release -a</span><br><span class="line">No LSB modules are available.</span><br><span class="line">Distributor ID:	Ubuntu</span><br><span class="line">Description:	Ubuntu 16.04.6 LTS</span><br><span class="line">Release:	16.04</span><br><span class="line">Codename:	xenial</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">liangqi@ubuntu:~$ cat /etc/issue</span><br><span class="line">Ubuntu 16.04.6 LTS \n \l</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>本文的所有命令均是对应上面的Ubuntu版本</p>
+</blockquote>
 
           
         
@@ -429,7 +422,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture04/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/10/basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -438,7 +431,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -448,7 +441,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/06/Lecture04/" itemprop="url">Some System Design topics</a></h1>
+                <a class="post-title-link" href="/2019/11/10/basic/" itemprop="url">basic</a></h1>
         
 
         <div class="post-meta">
@@ -460,751 +453,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T16:08:04+08:00">
-                2019-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Embedded System</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
-                    <span itemprop="name">Radar</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本节对之前的知识加以整合。尝试设计一个发射信号，该信号满足一些有关距离分辨率、最大距离、速度分辨率、最大速度的指定要求，感受一下其中涉及到的一些权衡取舍。</p>
-<p>现在，我们知道可以使用距离FFT来解析处于不同距离的物体。然后通过一个帧中的后续chrip上执行多普勒FFT，来解析相对于雷达可能具有相同距离但是具有不同速度的物体。</p>
-<p>下图是对所学内容的总结：左上角有一个帧，多个chrip在帧中传输，与其中的每个作业对应的ADC样本可以通过存储为矩阵的行实现可视化。因此，这里的每个行都与来自特定chrip的样本对应。然后对每个行执行距离FFT，它可解析测量范围之内的物体。标记2是距离FFT的结果，可以看到，第3个和第8个距离单元中都有物体。注意，x轴实际上是与距离FFT单元对应的频率，但由于距离与IF频率成正比，因此可以等效地将该轴绘制为距离轴。随后会沿着这些距离FFT结果列执行多普勒FFT，这将在速度维度解析物体。标记3是多普勒FFT的结果，可以看到，第3个距离单元有两个具有不同速度的物体，第8个距离单元有3个具有不同速度的物体。重申一下，这里的y轴实际上是多普勒FFT对应的离散角频率，但由于这些离散角频率与速度成正比，因此可以等效地将该轴绘制为速度轴。执行FFT，然后再执行多普勒FFT的整个过程统称为<strong>2D-FFT</strong>。</p>
-<p><img src="/2019/10/06/Lecture04/1.png" alt="1"></p>
-<p>需要注意的一个问题是，大多数FMCW Radar实现中，通常在每个chrip的ADC数据变得可用时以内联方式执行FFT。因此，可以将每个chrip的ADC数据视为在DSP处进行接收，然后DSP执行距离FFT，并将距离FFT存储在某个存储器中，它可以时L3存储器或DDR，具体取决于系统。另一个要注意的问题是，在所有距离FFT都变得可用时才能执行多普勒FFT，与就是说，当所有这些行都被填充时。因此系统中应具有足够的存储器，用于存储与某个帧对应的所有距离FFT的内容。</p>
-<p>我们现在尝试设计一个能够满足特定终端用户要求的FMCW信号。</p>
-<p><img src="/2019/10/06/Lecture04/2.png" alt="1"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/06/Lecture03/" itemprop="url">Velocity Estimation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T13:49:29+08:00">
-                2019-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Embedded System</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
-                    <span itemprop="name">Radar</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这一节将深入探究速度估算问题。在本节中，我们尝试解答以下问题：</p>
-<ul>
-<li><p>有一个雷达，并且雷达前面有一个物体，雷达如何估算物体速度？</p>
-</li>
-<li><p>如果有多个物体，这些物体与雷达的距离相同，但相对速度速度不同，此时会怎样？</p>
-</li>
-<li><p>两个等距物体的速度接近到何种程度时，雷达仍然能够分辨？</p>
-</li>
-<li><p>雷达的最大可测速度是否会存在限制？</p>
-</li>
-</ul>
-<p><img src="/2019/10/06/Lecture03/1.png" alt="1"></p>
-<p>和之前一样，我们还是来首先回顾一些傅里叶变换。</p>
-<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>到目前为止，我们已经讨论了连续时间信号的傅里叶变换。类似的概念同样适用于离散信号。如下图，假设有一个由相量组成离散信号，该相量以每个样本$\omega$弧度的恒定速率旋转，这样一来，在任意两个样本之间，此相量都旋转了$\omega$弧度，这时，我们会用到<strong>离散角频率（discrete angular frequency）</strong>这个术语，或者有时候仅使用“频率”来指代这个$\omega$。注意下面这些相量中的每一相实际上均代表一个复数。因此，该序列的另一种等效表达形式也写在下面。对该序列进行离散傅里叶变换，将在离散频率$\omega_1$下的频域中得到一个单一峰值。</p>
-<p><img src="/2019/10/06/Lecture03/2.png" alt="2"></p>
-<p>现在，这个离散序列包含两相而不是一个相，如下图所示。其中蓝色相量以离散角频率$\omega_1$旋转，红色相量以离散角频率$\omega_2$旋转。这个离散的傅里叶变换实际上分别在离散频率$\omega_1$和$\omega_2$处具有两个峰值。</p>
-<p><img src="/2019/10/06/Lecture03/3.png" alt="3"></p>
-<p>$\omega_1$和$\omega_2$两个频率要相隔多远才能在傅里叶变换中显示为单独的峰值。下图有两个以略微不同的频率$\omega_1$和$\omega_2$旋转的相量，在经过N个样本后，第二个相量比第一个相量多旋转了$\pi$弧度。可以看到，这显然不足以在频域内分辨这两个物体。</p>
-<p><img src="/2019/10/06/Lecture03/4.png" alt="4"></p>
-<p>下图存在同样的两相，但现在的观察时间更长。现在在频域内可以清楚地分辨这两个频率。所以，序列的长度越长，分辨率就越高。一般来说，长度为N的序列，可以分隔被大于每个样本$2\pi /N$弧度分隔的角频率。</p>
-<p><img src="/2019/10/06/Lecture03/5.png" alt="5"></p>
-<p>来比较一下离散和连续分段的分辨标准。</p>
-<p>对于连续信号而言，只要两种频率的间隔差值f大于1/T cycles/sec，其中T是观察窗口，就可以分辨出这两种频率。</p>
-<p>对于离散信号，只要两种离散频率的间隔差值$\omega$大于每个样本$2\pi /N$弧度，就可以分辨出这两种频率。请注意它的单位，即每个样本的弧度数。</p>
-<ul>
-<li><p><strong>Continuous signals</strong>:$\Delta f = \frac{1}{T} cycle/sec$</p>
-</li>
-<li><p><strong>Discrete signals</strong>: $\Delta \omega = \frac{2\pi}{N}radians/sample = \frac{1}{N}cycles/sample$</p>
-</li>
-</ul>
-<p>看一下上面两个等式，可以得出离散和连续情况之间的对应关系。在连续情况下，分辨率与观测时间T表示的长度成反比，而在离散情况下，分辨率与观察样本数N表示的长度成反比。</p>
-<h1 id="速度测量"><a href="#速度测量" class="headerlink" title="速度测量"></a>速度测量</h1><h2 id="单物体速度测量"><a href="#单物体速度测量" class="headerlink" title="单物体速度测量"></a>单物体速度测量</h2><p>现在我们具备了了解FMCW雷达如何测量速度的所有工具。基本思想是：发射两个间隔时间为$T_c$的chrip，与其中每个chrip相对应的距离FFT将在同一个位置具有峰值，但相位不同。这两个峰值的相位之间测量相位差$\omega$将与物体的运动直接对应。</p>
-<p><img src="/2019/10/06/Lecture03/6.png" alt="6"></p>
-<p>使用上图所述的方法时，可测量的最大速度是否存在限制？注意，此方法依赖于相位差的测量，只有当差值介于正负180°时，才可以清楚的测量此值。下面的示意图说明了这一点。例如对第一个图，如果我们对相量在这两个chrip之间的运动进行可视化处理，则对于正速度，额可以可视化逆时针运动的相量。同样，第二个图，对于负速度，可以可视化顺时针运动的相量。如果顺时针或逆时针方向的运动量超过180°，则会产生模糊。例如在第3副图中，不能确定相量是在逆时针方向移动了角度a，还是在顺时针方向上移动了b=360°-a。</p>
-<p><img src="/2019/10/06/Lecture03/7.png" alt="7"></p>
-<p>因此，要清楚地测量速度，两个chrip之间的相位变化必须小于$\pi$,这意味着可以从先前的论述中得到下面这个相位变化表达式：<br>$$\frac{4\pi vT_c}{\lambda}&lt;\pi \Rightarrow v&lt;\frac{\lambda}{4T_c}$$</p>
-<p>此表达式给出了可以通过两个以$T_c$为间隔的chrip测量的最大相对速度。要得到更高的$v_{max}$，chrip必须很密集，</p>
-<h2 id="多物体速度测量"><a href="#多物体速度测量" class="headerlink" title="多物体速度测量"></a>多物体速度测量</h2><p>刚才我们已经了解了如何测量雷达前方单个物体的速度，要明白，只要物体与雷达之间的距离不同，就可以通过这种方法。将该方法应用于雷达前方的多个物体。但如果有多个物体与雷达的距离相同，情况会怎么样？下图示例中，雷达前方有两个物体，它们与雷达的距离相同，但速度不同，相对于雷达的速度分别为$v_1$和$v_2$。我们之前讨论过，与要发射的这两个chrip相对应的距离FFT中，只有一个峰值，但峰值处的相量将具有来自这两个物体的分量。这样一来，我们之前所说的简单相位比较方法就不再适用了，因为此处的相位具有来自这两个物体的速度分量。那么该如解决呢？一种方案是发射一系列等间隔的chrip，而不仅仅是两个chrip，这里假设有N个chrip，根据我们之前的讨论，与其中每个chrip相对应的距离FFT将在完全相同的位置具有峰值。但是，与这些峰值的相量相对应的离散序列将有两个旋转相量，分别以$\omega_1$和$\omega_2$旋转，对应于两个速度$v_1$和$v_2$。因此，这个离散序列上的FFT将显示两个峰值，对应于$\omega_1$和$\omega_2$，测量出$\omega_1$和$\omega_2$后，我们就可以利用前面介绍的表达式反算出速度。</p>
-<p><img src="/2019/10/06/Lecture03/8.png" alt="8"></p>
-<p>来解释几个术语，上图中的FFT是在chrip之间执行的，在文献中通常称为多普勒FFT。这个对其执行多普勒FFT的等间隔chrip脉冲序列称为<strong>帧（frame）</strong>。因此，FMCW雷达的基本传输单位实际上是帧。</p>
-<h2 id="速度分辨率"><a href="#速度分辨率" class="headerlink" title="速度分辨率"></a>速度分辨率</h2><p>多普勒FFT的速度分辨能力如何？换句话说，$v_1$和$v_2$之间的最小间隔应该是多少，才能让它们在多普勒FFT中显示为两个峰值。事实上，推导速度分辨率的表达式的过程非常简单，类似于距离分辨率的推导。</p>
-<p>两个物体角频率间隔为$\Delta \omega$，$T_c$是相邻chrip之间的间隔，根据离散傅里叶变换的特性，我们知道只要两个频率的间隔$\Delta \omega$大于$2\pi /N$,就可以分辨出这两个频率:</p>
-<p>$$\Delta \omega = \frac{4\pi\Delta vT_c}{\lambda}$$ $$\Delta \omega &gt; \frac{2\pi}{N}$$ $$\Rightarrow \Delta v &gt; \frac{\lambda}{2NT_c}$$</p>
-<p>上式我们得到了速度分辨率的表达式，注意在这个式子中，$NT_c$实际上等于总帧的时间。最后我们可以下式：<br>$$v_{res} = \frac{\lambda}{2T_f}$$</p>
-<p>上式基本表明雷达的速度分辨率与帧的时间成反比。</p>
-<p><img src="/2019/10/06/Lecture03/9.png" alt="9"></p>
-<h1 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h1><p>下图中两个帧具有相同的帧长度$T_f$，但与雷达A相对应的帧的chrip数是与雷达B相应的帧的两倍。如何评价这两个帧的最大可测速度和速度分辨率？</p>
-<p><img src="/2019/10/06/Lecture03/10.png" alt="10"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/06/Lecture02/" itemprop="url">The Phase of the IF Signal</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T10:55:37+08:00">
-                2019-10-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Embedded System</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
-                    <span itemprop="name">Radar</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>如果我们希望了解FMCW雷达响应物体极小位移的能力，那么研究相位就非常重要。雷达正是凭此非常快速且准确地测量物体的速度。这也是在心跳监测和振动检测等应用中使用雷达的基础。</p>
-<p>还是先来回顾一下傅里叶变换中的一些相关概念。</p>
-<h1 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h1><p>时域中的正弦波会在频域中产生一个尖峰，该尖峰的位置与正弦波的频率相对应。频域中的信号是包含振幅和相位的复数，这一点很中重要。因此，虽然下面的图表示傅里叶变换的振幅，但此处的每个值实际上是一个包含振幅和相位的复数。</p>
-<p><img src="/2019/10/06/Lecture02/1.png" alt="1"></p>
-<p>回忆一下，一个复数可以在数学上表示为$Ae^{j\theta}$,其中A是振幅，$\theta$是相位。或者还可以将其用图像方式表示为一个<strong>相量（phasor）</strong>,该相量是一个矢量，具有与振幅A相对应的长度以及与相位$\theta$相对应的方向。</p>
-<p><img src="/2019/10/06/Lecture02/2.png" alt="2"></p>
-<p>傅里叶变换的一条重要性质是，峰值的相位对应于正弦波的初始相位。如下图所示：</p>
-<p><img src="/2019/10/06/Lecture02/3.png" alt="3"></p>
-<p>在本模块中，我们将使用A-t图来分析IF信号的相位与到物体距离之间的关系。下图中，顶部的图显示了TX线性调频脉冲的A-t图，中间的图是RX线性调频脉冲，它是TX Chrip的延迟版本。正如我们之前所讲，对于单个物体，IF信号将是一个具有恒定频率的信号。从数学角度，可以将IF信号表示为<br>$$Asin(2\pi ft + \phi_0)$$</p>
-<p>其中相位$\phi_0$正是IF信号在该点c的相位，c的相位即A点处的TX chrip相位与B点处的RX chrip相位之间的差值。现在，如果物体移动一小段距离，从而使往返延迟$\tau$更改$\Delta \tau$，IF信号的相位会发生什么变化？下面蓝色的曲线表示的新RX信号将移动$\Delta \tau$的距离。IF信号也将相应地发生变化。现在，新的IF信号的起始相位，即点F处的IF信号相位将为D处与E处相位的差值。现在，E处的Chrip的相位将与先前B处的相位相同，但D处的TX chrip相位将为先前A处的相位，具有额外的相位偏移$2\pi fc\Delta \tau$。<br><img src="/2019/10/06/Lecture02/4.png" alt="4"></p>
-<p>现在，要更正我们迄今为止对IF信号的理解，对于雷达前方的单个物体，IF信号是频率与物体的距离成正比的音调，它的起始相位具有随物体距离的微小变化$\Delta d$以线性方式变化的性质。</p>
-<p><img src="/2019/10/06/Lecture02/5.png" alt="5"></p>
-<p>我们需要理解，如果物体的位置发生微小变化，该IF信号的频率和相位如何变化。这里的微小是指与雷达的距离分辨率相比是微小的，因此，它必须大约为若干毫米，我们假设它为1mm。下面显示的chrip，它是一个斜率为每毫秒50MHz且持续时间为40微秒的chrip，如果该雷达前方的物体位置改变1mm，会发生什么情况？注意，对于77GHz的雷达，1mm实际对应于波长的1/4。</p>
-<p><img src="/2019/10/06/Lecture02/6.png" alt="6"></p>
-<p>首先，如果该物体的位置改变1mm，IF信号的相位会发生什么情况？直接使用上面的公式，并插入$\Delta d = \lambda /4$,可以得到：<br>$$\Delta \Phi = \frac{4\pi\delta d}{\lambda} = \pi = 180^{\circ}$$</p>
-<p>那么频率会发生什么情况？IF信号的频率会改变$\Delta f$,<br>$$\Delta f = \frac{S2\Delta d}{c} = 333Hz$$</p>
-<p>这可能看起来是一个大数字，但是，在$T_c=40\mu s$的观察窗口中，这仅对应于0.013个周期，该变化在频谱中无法识别。这里的重点是，IF信号的相位对物体距离的微小变化非常敏感。但频率不是这样的，正如我们看到的，频率对此类微小的变化非常不敏感。</p>
-<p>下图是对前面图中所了解的内容巩固。位于特定距离的物体会产生具有特定频率和相位的IF信号。下图左边是与单个物体相对应的IF信号，它的起始相位是0，傅里叶变换会产生单个峰值，该峰值的相位对应于此正弦波的起始相位。</p>
-<p><img src="/2019/10/06/Lecture02/7.png" alt="7"></p>
-<p>现在，如果我们将物体移动一小段距离，会发生什么情况？这会改变起始相位，下图中相位改变了180°，相应的，FFT的峰值，其位置保持不变，但峰值的相位改变了180°。</p>
-<p><img src="/2019/10/06/Lecture02/8.png" alt="8"></p>
-<h1 id="速度测量"><a href="#速度测量" class="headerlink" title="速度测量"></a>速度测量</h1><p>现在我们具备了用于了解FMCW雷达如何测量速度的所有工具。其基本思想是：发射两个间隔时间为$T_c$的chrip，与其中每个chrip对应的距离FFT将在相同的位置具有峰值，但具有不同的相位，这两个峰值的相位之间的测量相位差$\omega$将与物体运动直接对应。注意，如果物体的速度为v，该物体在此时间段$T_c$内移动的距离将为$vT_c$。那么，这就是这里的问题，其中峰值之间的相位差对应于这两个chrip的峰值相位之间的相位差。我们可以估计出速度v:<br>$$\omega = \frac{4\pi vT_c}{\lambda} \Rightarrow v = \frac{\lambda\omega}{4\pi T_c}$$</p>
-<p><img src="/2019/10/06/Lecture02/9.png" alt="9"></p>
-<p>这里的重点是，在两个连续的chrip之间测量的相位差可用于估算物体的速度。</p>
-<h1 id="检测振动物体"><a href="#检测振动物体" class="headerlink" title="检测振动物体"></a>检测振动物体</h1><p>除了速度测量之外，IF信号的相位对微小移动非常敏感的事实也是其他应用的基础，包括电机振动监测、心跳监测等。下图描述了以振荡方式移动的物体随时间演变的过程，物体从中间开始先向左然后向右运动，这可以表示一个正在振荡的物体。我们假设这些移动非常微小，因此物体最大位移$\Delta d$是波长的一小部分（例如1mm）。现在如果将一个雷达放置在该振荡的物体前方并发射一系列等间隔的chrip，会怎么样？</p>
-<p>由于从该物体上进行发射，因此其中的每个TX Chrip会产生一个反射Chrip，并且经处理的IF信号会在距离FFT中产生一个峰值，该峰值的频率不会在chrip直接改变太多，因为$\Delta d$非常小。但峰值的相位将会响应物体的振荡移动，如下图左边所示。相位以特定的值开始，并将物体的移动镜像至左侧，当物体返回时，相位返回到其初始值，然后偏移到另一侧。</p>
-<p><img src="/2019/10/06/Lecture02/10.png" alt="10"></p>
-<p>如果我们按时间顺序绘制测量的峰值相位，如下图所示。通过查看该图可以了解很多信息。最大相位偏移$\Delta \phi$与最大位移$\Delta d$相关，在这里可以估算振动的振幅$\Delta d$。类似地，该图的周期性为我们提供振动的周期。</p>
-<p><img src="/2019/10/06/Lecture02/11.png" alt="11"></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>现在我们可以回答上一节末尾所提出的问题，有多个物体，它们具有不同的相对于雷达的速度。不过，在测量时，这些物体到雷达的距离碰巧几乎相同。那么，距离FFT将显示仅有单个与该距离d对应的峰值。我们如何分离这些物体，事实证明可以使用称为<strong>多普勒FFT（Doppler-FFT）</strong>的工具分离具有相同距离但具有不同速度的物体。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/05/Lecture01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/05/Lecture01/" itemprop="url">Range Estimation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-05T11:19:09+08:00">
-                2019-10-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Embedded System</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
-                    <span itemprop="name">Radar</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Ti毫米波雷达mmWave学习笔记。</p>
-<h1 id="FMCW雷达基础知识"><a href="#FMCW雷达基础知识" class="headerlink" title="FMCW雷达基础知识"></a>FMCW雷达基础知识</h1><p><strong>FMCW(Frequency Modulated Continuous Wave)</strong>:调频连续波。该雷达主要测量其前方物体的距离(range)、速度(velocity)和到达角(angle)。</p>
-<p>本教程将从每个传感器的维度，从第一个模块中的距离开始，然后在接下来的几个模块中，继续讨论速度，然后再第五个模块中，讨论角度估算。</p>
-<p>本节主要讨论这些问题：雷达如何估算它与其前方物体的距离？如果有多个物体，并且它们与雷达之间的距离是不同的，又将会怎样？两个物体能够相距多近而仍能够被解析为两个物体？什么可以决定雷达看到的最远距离？</p>
-<p><img src="/2019/10/05/Lecture01/1.png" alt="1"></p>
-<p>FMCW雷达的核心是一种称为<strong>线性调频脉冲（Chrip）</strong>的信号。Chrip是频率随时间以线性方式增长的正弦波，在<strong>振幅-时间图</strong>（A-t图）中，线性调频脉冲可能以频率为fc的正弦波开始，然后其频率逐渐增大，最后以fc+B的频率结束，其中B是线性调频脉冲的带宽。因此线性调频脉冲本质上是一种频率以线性方式进行调制的连续波，所以我们使用术语FMCW。</p>
-<p>如果在<strong>频率-时间图</strong>（f-t图）显示同一线性调频脉冲，线性调频脉冲会是一条具有特定斜率S的直线。S定义线性调频脉冲上升的速率，带宽B和斜率S是用于定义系统性能的重要参数。</p>
-<p><img src="/2019/10/05/Lecture01/2.png" alt="2"></p>
-<h1 id="FMCW雷达工作原理"><a href="#FMCW雷达工作原理" class="headerlink" title="FMCW雷达工作原理"></a>FMCW雷达工作原理</h1><p>下图是一个简化的FMCW雷达框图：<br><img src="/2019/10/05/Lecture01/3.png" alt="3"></p>
-<p>该雷达具有单个<strong>TX天线（TX antenna）</strong>和单个<strong>RX天线(RX antenna)</strong>，雷达的工作原理如下：<br><strong>合成器（synthesizer）</strong>生成一个线性调频脉冲（chrip），TX天线将该线性调频脉冲发射出去，当遇到物体时，该线性调频脉冲会反射回来，RX天线接收反射的线性调频脉冲，RX信号和TX信号混合在一起，最终生成的信号称为IF信号,即<strong>中频（Intermediate Frequency）信号</strong>。</p>
-<h2 id="混频器（mixer）"><a href="#混频器（mixer）" class="headerlink" title="混频器（mixer）"></a>混频器（mixer）</h2><p>先来了解混频器。mixer具有两个输入和一个输出，下面是了解mixer的一种简单方法。如果向mixer的两个输入端口输入两个正弦波，那么mixer的输出是具有以下两条性质的正弦波</p>
-<ul>
-<li><strong>性质1</strong>：输出的瞬时频率等于两个输入正弦波的瞬时频率差值。（Instantaneous frequency equal to the difference of the instantaneous of the two input sinusoids）</li>
-<li><strong>性质2</strong>：输出正弦波的起始相位等于输入正弦波的起始相位差值。（Phase equal to the difference of the phase of the two input sinusoids）</li>
-</ul>
-<p>根据性质1，即使这些正弦波的频率随时间发生变化，任一时刻输出频率也将等于该时刻的输入频率的差值。下面的方程阐释了这两条性质。其中$x_1$和$x_2$是两个输入，而$x_{out}$是mixer的输出。</p>
-<p>$$x_1 = sin[\omega_1t+\phi_1]$$ $$x_2 = sin[\omega_2t+\phi_2]$$ $$x_{out} = sin[(\omega_1 - \omega_2)t + (\phi_1 - \phi_2)]$$</p>
-<p>用f-t图来对mixer进行阐释，如下，有发射（TX chrip）和接受(RX chrip)线性调频脉冲，注意，接收到的线性调频脉冲是TX线性调频脉冲的延迟副本。现在我们假设雷达前方只有一个物体，因此，只有一个RX线性调频脉冲。前面提到，mixer的输出频率是其两个输入即TX线性调频脉冲和RX线性调频脉冲的瞬时频率的差值，那么为了生成IF信号的f-t图，我们需要将RX线从TX线上减去，这两条线之间存在固定的距离，该固定距离由线性调频脉冲的斜率乘以往返延迟给出（$S\tau$）。因此，雷达前方的单个物体可生成一个包含单个频率的IF信号，该频率由S$\tau$给出。$\tau$即从雷达到物体然后又返回的往返延迟,也可以表示为与物体的距离除以光速c然后乘以2。<br><img src="/2019/10/05/Lecture01/4.png" alt="4"></p>
-<p>所以，雷达前方的单个物体可生成具有恒定频率的IF信号，该频率由$S\tau = S2d/c$给出。</p>
-<p>应注意，IF信号仅在RX天线上接收到反射信号开始有效，这一点很重要。因此，如果要使用ADC对该IF信号进行数字化，那么需要确保仅在经过该时间$\tau$之后再接收样本，并且只能持续到TX信号消失之前。另外需要注意的是，往返延迟$\tau$通常是总线性调频脉冲时间的很小一部分。例如，对于最大距离为300米并且线性调频脉冲时间为40微秒的雷达，该$\tau$与Tc的比率仅为5%。</p>
-<h2 id="傅里叶变换"><a href="#傅里叶变换" class="headerlink" title="傅里叶变换"></a>傅里叶变换</h2><p>傅里叶变换是FMCW雷达信号处理的核心，它们用于距离、速度和角度估算。下面简单回顾以下傅里叶变换。</p>
-<p>傅里叶变换将时域信号转换到频域中，因此时域中的单个音调会在频域中产生单个音调（A single tone in the time domin prodeces a single tone in the frequency domanin）。类似的，时域中的两个音调应在频域中产成两个峰值。但情况是否总是如此？在下图中，在观察窗口T内红色音调完成了两个周期，而蓝色音调完成了2.5个周期，红色音调和蓝色音调之间的0.5个周期差值似乎不足以解析频谱中的两个音调。</p>
-<p>现在让观察窗口加倍，从T增加到2T，红色音调和蓝色音调之间差值为一个周期，可以看到现在频谱（frequency spectrum）中解析了这两个音调。所以重点是，观察期越长，解析就越好。一般而言，观察窗口T可以分隔以高于1/T Hz进行分隔的频率分量。</p>
-<p><img src="/2019/10/05/Lecture01/5.png" alt="5"></p>
-<h2 id="多物体情况"><a href="#多物体情况" class="headerlink" title="多物体情况"></a>多物体情况</h2><p>下面有一个雷达，它正在发射单个线性调频脉冲，我们获得了多个从不同物体反射的线性调频脉冲。每个脉冲具有不同的延迟，具体取决于与物体之间的距离。因此，IF信号将具有与其中每个反射相对应的音调。正如我们所了解到的，这些音调的频率与距离成正比（频率小的对应近的物体）。</p>
-<p><img src="/2019/10/05/Lecture01/6.png" alt="6"></p>
-<p>有关该IF信号的傅里叶变换会显示多个峰值，这些峰值的频率与对应物体的距离成正比。</p>
-<p>由于我们现在讨论多个物体，因此下一个问题自然是距离分辨率。也就是说，其中两个物体能够相距多近而仍然能够在IF频谱中解析为两个峰值。</p>
-<p>在下面的示例中，有两个从两个物体反射的线性调频脉冲（chrip），IF信号的对应A-t图显示了两个正弦波，但这些声波的频率非常接近，以至于它们在频谱中显示为单个峰值。<br><img src="/2019/10/05/Lecture01/7.png" alt="7"></p>
-<p>要如何提高雷达的距离分辨率？可以从对傅里叶变换的扼要重述中获得提示，一种方式是通过增大IF信号的长度来扩展两个正弦波的观察窗口，下图就是采用这种方法，线性调频脉冲得到了扩展，从而扩展了IF信号的持续时间,这在频域中解析了两个峰值。注意，增加IF信号的持续时间能够成正比增加线性调频脉冲的宽度，这就提示我们，更大的带宽，可能对应更好的距离分辨率。<br><img src="/2019/10/05/Lecture01/8.png" alt="8"></p>
-<h3 id="雷达分辨率的公式推导"><a href="#雷达分辨率的公式推导" class="headerlink" title="雷达分辨率的公式推导"></a>雷达分辨率的公式推导</h3><p>两个间距为$\Delta d$的物体，其IF频率为$\Delta f$:<br>$$\Delta f = \frac{S2\Delta d}{c}$$</p>
-<p>为了使这两个频率在IF频谱中显示为不同的峰值，该频率间隔$\Delta f$需满足：<br>$$\Delta f &gt; 1/T$$<br>其中$T$为IF信号的持续时间，如果忽略开始的一小部分，即往返延迟产生的$\tau$部分，那么$T$基本上等于线性调频脉冲的持续时间$T_{c}$。<br>$$\frac{S2\Delta d}{c} &gt; \frac{1}{T_{c}} \Rightarrow \Delta d &gt; \frac{c}{2B}$$</p>
-<p>上式表示，只要两个物体之间的距离大于$\frac{c}{2B}$,就可以在IF频谱中分离它们。这里的重点是，距离分辨率仅取决于线性调频脉冲覆盖的带宽B。</p>
-<p>现在有个问题，下面有两个线性调频脉冲，chrip A和chrip B,A的持续时间是B的两倍，但它们具有相同的带宽，这两个线性调频脉冲中哪一个可以提高更好的距离分辨率？根据上面的分析，它们的带宽B相同，因此距离分辨率相同。但是，chrip A具有更长的持续时间，因此具有更长的IF信号观察窗口，凭直觉，傅里叶变换的性质，chrip A的分辨率应该好于chrip B,应该如何解释该矛盾？<br><img src="/2019/10/05/Lecture01/9.png" alt="9"></p>
-<p>IF信号中音调的频率与物体的距离成正比，大多数雷达中会对IF信号进行数字化以供后续处理。那么它首先会进行低通滤波(一种容许低于截止频率的信号通过， 但高于截止频率的信号不能通过的电子滤波装置)，然后由ADC（模数转换）进行数字化，接着被发送到合适的处理器如DSP，DSP可能首先执行傅里叶变换，以估算物体的距离，随后执行其他种类的处理，以估算这些物体的速度和到达角。每当我们要对信号进行数字化时，我们就需要知道目标带宽，以便可以适当地设置低通滤波器(low pass filter)和ADC采样率。假设我们对零到最大距离$d_{max}$之间的物体感兴趣，最大IF信号，IF信号的最大频率将为$\frac{S2d_{max}}{c}$,相应地，目标带宽将从零到该最大IF频率，这意味这低通滤波器的截止频率应高于该IF_max，此外，ADC应该具有高于该同一值的采样率。因此，在这里可以看到，ADC的最大采样率可能会限制雷达可以看到的最大距离。注意，最大IF带宽取决于斜率与最大距离的乘积，因此，如果ADC采样率和IF带宽是传感器的瓶颈，那么始终可以对斜率和最大距离进行折衷。通常，雷达倾向于针对较大的$d_{max}$使用较小的斜率。<br><img src="/2019/10/05/Lecture01/10.png" alt="10"></p>
-<p>回到上面那个问题，chrip A的斜率是B的一半，因此，对于相同的最大距离要求，或对于相同的$d_{max}$，chrip A仅需要一半的IF带宽，这意味这ADC具有较小的采样频率。因此，chrip A具有ADC要求更宽松的优势，而chrip B当然也具有仅需要一半测量时间的优势。这就是需要折衷的地方。</p>
-<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>来回顾下估算物体距离所涉及的一系列事件。首先，合成器生成一个线性调频脉冲(chrip)，该chrip通过TX天线进行发射，到达雷达前方的多个物体后反射回来，接收器看到该chrip的延迟版本，接收的信号和发射的信号在mixer进行混合，产生IF信号，该IF信号包含多个音调，其中每个音调的频率与对应物体的距离成正比。然后，IF信号进行低通滤波并数字化，注意ADC的采样率必须与我们希望看到的最大距离相称，然后对数字化数据进行处理，对该数据执行FFT，频谱中峰值的位置直接对应于物体的距离。注意，这里绘制FFT的x轴上显示的是距离，而不是IF频率，这是可以的。因为IF频率与距离成正比。该FFT称为距离FFT，因为它在距离方面对物体进行解析。</p>
-<p><img src="/2019/10/05/Lecture01/11.png" alt="11"></p>
-<h2 id="Key-concepts-amp-formulas"><a href="#Key-concepts-amp-formulas" class="headerlink" title="Key concepts &amp; formulas"></a>Key concepts &amp; formulas</h2><p>总结以下关键的概念和公式：</p>
-<ul>
-<li><p>An object at a distance $d$ produces an IF frequency of:<br>$$f_{IF} = \frac{S2d}{c}$$</p>
-</li>
-<li><p>Range resolution($d_{res}$) depends on the bandwidth(B):<br>$$d_{res} = \frac{c}{2B}$$</p>
-</li>
-<li><p>The ADC sampling rate $F_s$,limits the max range($d_{max}$) to<br>$$d_{max} = \frac{F_sc}{s}$$</p>
-</li>
-</ul>
-<p>当我们讨论带宽和FMCW雷达是，通常有两种重要的带宽，<strong>射频带宽（RF bandwidth）</strong>和<strong>IF带宽</strong>，应该清晰地区分这两者。射频带宽是线性调频脉冲跨越的带宽，较大的射频带宽可直接转换为较好的距离分辨率。射频带宽的范围通常为几百MHz至几GHz，例如4GHz的射频带宽，可转换为4cm的距离分辨率，400MHz的射频带宽可转换为大约30cm的距离分辨率。较大的IF带宽主要可以使雷达看到较大的距离，还可以实现较快的线性调频脉冲。这里较快的线性调频脉冲是指具有较高斜率的线性调频脉冲。典型雷达的IF带宽处于低MHz范围内。我们可以具有跨越较大带宽的射频的信号，比如4GHz，但你的ADC仅需对几MHz的信号进行采样。</p>
-<h2 id="Question"><a href="#Question" class="headerlink" title="Question"></a>Question</h2><p>这里用一个问题用于引出后续的模块，有两个与雷达的距离相同的物体，此时距离FFT将具有与该距离d相对应并受到这两个物体影响的单个峰值。那么我们如何分离这两个物体呢？事实证明，如果这两个物体具有不同的相对于雷达的速度，那么可以通过进一步的信号分离处理它们。要理解这一点，我们需要实际看看IF信号的相位。</p>
-<p><img src="/2019/10/05/Lecture01/12.png" alt="12"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/Lecture13/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/04/Lecture13/" itemprop="url">deque、queue和stack深度探索</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T16:55:30+08:00">
-                2019-10-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-10T12:51:52+08:00">
+                2019-11-10
               </time>
             
 
@@ -1237,8 +487,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
+                  <a href="/categories/C/CMake/" itemprop="url" rel="index">
+                    <span itemprop="name">CMake</span>
                   </a>
                 </span>
 
@@ -1276,8 +526,7 @@
       
         
           
-            <h1 id="容器deque"><a href="#容器deque" class="headerlink" title="容器deque"></a>容器deque</h1><p>和vector相比，deque可以向两边扩充元素。下图是它的实现原理。deque其实是一个分段连续的空间，并不是一整块都连续。</p>
-
+            
           
         
       
@@ -1325,7 +574,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/Lecture12/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/09/Unsupervised Learning Deep Generative Model/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -1334,7 +583,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -1344,7 +593,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/04/Lecture12/" itemprop="url">array、forward_list深度探索</a></h1>
+                <a class="post-title-link" href="/2019/11/09/Unsupervised Learning Deep Generative Model/" itemprop="url">Unsupervised Learning —— Deep Generative Model</a></h1>
         
 
         <div class="post-meta">
@@ -1356,8 +605,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T16:20:44+08:00">
-                2019-10-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T10:04:51+08:00">
+                2019-11-09
               </time>
             
 
@@ -1379,19 +628,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
                   </a>
                 </span>
 
@@ -1429,552 +667,1538 @@
       
         
           
-            <h1 id="容器array"><a href="#容器array" class="headerlink" title="容器array"></a>容器array</h1><p><strong>array</strong>本身就是C++语言中已经存在的数组，为什么要将他包装成容器呢？因为变成容器之后，它就要遵循容器的规则，它要提供iterator，而iterator又要提供5中相应的类型（associated type）。如果不这么包装的话，array就被摒弃在整个6大部件的结构之外，它就不能够享受算法、仿函数以及其他等等与它的交互关系。</p>
-<p>下面的代码时TR1（technique report 1）版本，这是一个C++的过渡版本，介于C++1.0和2.0之间。C++1.0就是C++1998，C++2.0就是2011。这个版本的代码比较容易理解。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp, <span class="built_in">std</span>::<span class="keyword">size_t</span> _Nm&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">array</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> _Tp             value_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp*            pointer;</span><br><span class="line">    <span class="keyword">typedef</span> value_type*     iterator;  <span class="comment">//其iterator时native pointer，G2.9 vector也是如此</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//Support for zero-sized arrays mandatory.</span></span><br><span class="line">    value_type _M_instance[_Nm?_Nm:<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> iterator(&amp;_M_instance[<span class="number">0</span>]);&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> iterator(&amp;_M_instance[_Nm]);&#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意array没有构造函数和析构函数，毕竟它不是最高级的容器。</p>
-<p>array在使用时必须要指定大小，因为它是不能扩充的。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">array</span>&lt;<span class="keyword">int</span>,10&gt; myArray;</span><br><span class="line"><span class="keyword">auto</span> ite = myArray.begin();</span><br><span class="line"><span class="comment">//array&lt;int,10&gt;::iterator ite = ...</span></span><br><span class="line">ite += <span class="number">3</span>;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; *ite;</span><br></pre></td></tr></table></figure>
-
-<p>G4.9的array实现如下，同样也是可读性较差<br><img src="/2019/10/04/Lecture12/1.png" alt="1"></p>
-<h1 id="容器forward-list"><a href="#容器forward-list" class="headerlink" title="容器forward_list"></a>容器forward_list</h1><p>forward_list是一个单向链表，前面已经介绍过单向链表，这里不再细讲。<br><img src="/2019/10/04/Lecture12/2.png" alt="2"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/Lecture11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/04/Lecture11/" itemprop="url">vector深度探索</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T12:44:41+08:00">
-                2019-10-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="容器vector"><a href="#容器vector" class="headerlink" title="容器vector"></a>容器vector</h1><p><strong>vector</strong>的实现是一个动态增长的数组（array），当数组用完的时候它会自动扩充。事实上，没有任何东西的内存可以在原地扩充，因为当我们要了一块内存之后，这块内存后面的内存可能已经被使用了。所以array如果要扩充的话，一定要到内存的某一个地方去找，找到另外一个空间，然后把原来的东西搬过去。</p>
-<p>在vector里面，有一些变量记录着这些数组：</p>
-<ul>
-<li><strong>start</strong>: 起点</li>
-<li><strong>finish</strong>: 终点</li>
-<li><strong>end_of_storage</strong>: 整个空间的终点</li>
-</ul>
-<p>虽然标准没有规定，但是各个编译器对于vector扩充都是两倍增长。<br><img src="/2019/10/04/Lecture11/1.png" alt="1"></p>
-<p>vector的代码如下（<code>&lt;stl_vector.h&gt;</code>）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Alloc</span> = <span class="title">alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T    value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type* iterator;   <span class="comment">//T*</span></span><br><span class="line">    <span class="keyword">typedef</span> value_type&amp;  reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span>   size_type;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    iterator start;</span><br><span class="line">    iterator finish;</span><br><span class="line">    iterator end_of_storage;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">iterator <span class="title">begin</span><span class="params">()</span>  </span>&#123;<span class="keyword">return</span> start;&#125;</span><br><span class="line">    <span class="function">iterator <span class="title">end</span><span class="params">()</span>  </span>&#123;<span class="keyword">return</span> finish;&#125; <span class="comment">//容器是一个前闭后开区间</span></span><br><span class="line">    <span class="function">size_type <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> size_type(end()-begin());&#125;</span><br><span class="line">    <span class="function">size_type <span class="title">capacity</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span> size_type(end_of_storage - begin());&#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> begin() == end();&#125;</span><br><span class="line">    reference <span class="keyword">operator</span>[] (size_type n)</span><br><span class="line">     &#123;<span class="keyword">return</span> *(begin() + n);&#125;</span><br><span class="line">    <span class="function">reference <span class="title">front</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> *begin();&#125;</span><br><span class="line">    <span class="function">reference <span class="title">back</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> *(end() - <span class="number">1</span>);&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>从代码可以看出，vector只用靠<strong>start</strong>、<strong>finish</strong>、<strong>end_of_storage</strong>这三根指针就能控制整个容器，因此sizeof(vector)的大小就是12个字节（32位电脑上面）。只要容器带有连续空间的特性，就必须提供<code>[]</code>操作。</p>
-<h2 id="二倍增长"><a href="#二倍增长" class="headerlink" title="二倍增长"></a>二倍增长</h2><p>vector的二倍增长一定是发生在放入元素进去的时候，以<code>push_back()</code>函数为例(GC2.95 <code>&lt;stl_vector.h&gt;</code>)：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">push_back</span><span class="params">(<span class="keyword">const</span> _Tp&amp; __x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (_M_finish != _M_end_of_storage) &#123;  <span class="comment">//还有备用空间</span></span><br><span class="line">    construct(_M_finish, __x);   <span class="comment">//全局函数</span></span><br><span class="line">    ++_M_finish;   <span class="comment">//调整水位高度</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="comment">//已无备用空间</span></span><br><span class="line">    _M_insert_aux(end(), __x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果检测没有额外空间，执行下面代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>, <span class="title">class</span> _<span class="title">Alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">void</span> </span></span><br><span class="line"><span class="class"><span class="title">vector</span>&lt;_Tp, _Alloc&gt;:</span>:_M_insert_aux(iterator __position, <span class="keyword">const</span> _Tp&amp; __x)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (_M_finish != _M_end_of_storage) &#123;</span><br><span class="line">    <span class="comment">//在备用空间起始处构建一个元素，并以vector最后一个元素为其初始值  </span></span><br><span class="line">    construct(_M_finish, *(_M_finish - <span class="number">1</span>));</span><br><span class="line">    ++_M_finish;</span><br><span class="line">    _Tp __x_copy = __x;</span><br><span class="line">    copy_backward(__position, _M_finish - <span class="number">2</span>, _M_finish - <span class="number">1</span>);</span><br><span class="line">    *__position = __x_copy;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123; <span class="comment">//已无备用空间</span></span><br><span class="line">    <span class="keyword">const</span> size_type __old_size = size();</span><br><span class="line">    <span class="keyword">const</span> size_type __len = __old_size != <span class="number">0</span> ? <span class="number">2</span> * __old_size : <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//以上分配原则：如果原大小为0，则分配1（个元素大小）</span></span><br><span class="line">    <span class="comment">//如果原来大小不为0，则分配原大小的2倍</span></span><br><span class="line">    <span class="comment">//前半段用来放置原数据，后半段准备用来放置新数据。</span></span><br><span class="line"></span><br><span class="line">    iterator __new_start = _M_allocate(__len);</span><br><span class="line">    iterator __new_finish = __new_start;</span><br><span class="line">    __STL_TRY &#123;</span><br><span class="line">      <span class="comment">//将原vector的内容拷贝到新vector  </span></span><br><span class="line">      __new_finish = uninitialized_copy(_M_start, __position, __new_start);</span><br><span class="line">      construct(__new_finish, __x);  <span class="comment">//为新元素设初值__x</span></span><br><span class="line">      ++__new_finish;  <span class="comment">//调整水位</span></span><br><span class="line">      <span class="comment">//拷贝安插点后的原内容（因为_M_insert_aux()也可能被insert(p,x)调用）</span></span><br><span class="line">      __new_finish = uninitialized_copy(__position, _M_finish, __new_finish);</span><br><span class="line">    &#125;</span><br><span class="line">    __STL_UNWIND((destroy(__new_start,__new_finish), </span><br><span class="line">                  _M_deallocate(__new_start,__len)));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//解构并释放原vector              </span></span><br><span class="line">    destroy(begin(), end());</span><br><span class="line">    _M_deallocate(_M_start, _M_end_of_storage - _M_start);</span><br><span class="line">    <span class="comment">//调整迭代器，指向新vector</span></span><br><span class="line">    _M_start = __new_start;</span><br><span class="line">    _M_finish = __new_finish;</span><br><span class="line">    _M_end_of_storage = __new_start + __len;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>为什么<code>_M_insert_aux()</code>函数会再检查一次空间是否够用呢？因为<code>_M_insert_aux()</code>除了被<code>push_back()</code>调用外，它还会被其他的函数调用，在其他情况下，<code>_M_insert_aux()</code>的空间检查就比较必要。</p>
-<p>从上面代码可以看出，每次空间成长都有大量元素拷贝动作（拷贝构造函数），原来空间的内容也要删除（析构函数），这是一个大的成本，我们使用vector时需要注意这件事情。</p>
-<h1 id="vector的迭代器"><a href="#vector的迭代器" class="headerlink" title="vector的迭代器"></a>vector的迭代器</h1><p>既然vector是一个连续空间，那么它的迭代器就没有必要设计的太复杂，按理说直接使用指针即可。在GC2.9中也确实是这样实现的。来看一下这个版本中vector的大小是多少。要看大小就要找出它的data，<code>vector&lt;_Tp&gt;</code>中没有data,但是它有父类<code>_Vector_base&lt;_Tp&gt;</code>，所以父类的大小就是它的大小。父类的data只有一个：<code>_Vector_impl</code>,它的类型是<code>_Vector_impl&lt;_Tp&gt;</code>,这个类型里面有3个指针，所以大小是12。（32位系统）。（<code>_Vector_impl&lt;_Tp&gt;</code>的父类<code>std::allocator&lt;_Tp&gt;</code>没有data）。注意<code>_Vector_impl&lt;_Tp&gt;</code>对<code>std::allocator&lt;_Tp&gt;</code>的继承是public，这里值得商榷，因为public继承是代表<strong>is-a</strong>的关系，而这里的继承只是为了让<code>_Vector_impl&lt;_Tp&gt;</code>用到<code>std::allocator&lt;_Tp&gt;</code>这个分配器的功能，所以用private继承会更好。</p>
-<p><img src="/2019/10/04/Lecture11/2.png" alt="2"></p>
-<p>这样的设计非常直观明了，但是在GC4.9版却做了改动，其实功能是一样的。<br><img src="/2019/10/04/Lecture11/3.png" alt="3"></p>
-<p>vector在旧版是一个class，而到新版变成了几个class，iterator也跟着变化。<br><img src="/2019/10/04/Lecture11/4.png" alt="4"></p>
-<p>此时的iterator不再是指针了。GC4.9代码的可读性差了很多，但是和2.9版的实现效果是一样的。这样设计可能是有对未来扩充性的考量。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/Lecture10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/04/Lecture10/" itemprop="url">迭代器的设计原则和Iterator Traits的作用与设计</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T09:39:54+08:00">
-                2019-10-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>traits</strong>可以理解为一种人为设计制造的萃取机，设计一个traits就是希望丢给他什么东西，它能萃取出我们想要的特征。我们可以在标准库中看到好几种traits，比如type traits、point traits、iterator traits。这里我们只谈iterator traits。</p>
-<h1 id="iterator需要遵循的原则"><a href="#iterator需要遵循的原则" class="headerlink" title="iterator需要遵循的原则"></a>iterator需要遵循的原则</h1><p>迭代器是算法和容器之间的桥梁，例如让算法知道它要处理的元素范围，算法在运算的过程中，很可能需要知道这个iterator有哪些性质。下图是以算法<code>rotate</code>来做例子，如下图：<br><img src="/2019/10/04/Lecture10/1.png" alt="1"></p>
-<p>我们来分析一下在rotate算法里面会需要iterator的哪些属性。图中标记1部分使用的<code>iterator_traits&lt;_Iter&gt;</code>想要知道<code>iterator_category()</code>，即迭代器的分类。所谓迭代器的分类是指iterator的移动性质，有的iterator只能向前移动（++），有的还可以后退（–），有的还可以一次前进某一个值。rotate知道iterator是哪一个分类，以便它能采取最佳的操作方式。标记2和3部分，rotate还想知道iterator的<code>difference_type</code>和<code>value_type</code>，iterator本身所指的那个元素的type就是<code>value_type</code>,比如容器中放入的元素是string，那么value_type就是string。<code>difference_type</code>是用来表示两个iterator之间的距离的type，如果<code>difference_type</code>是unsigned int，那么容器中元素的个数不能超过unsigned int所能表示的最大值。</p>
-<p>另外两种iterator属性<code>reference</code>和<code>pointer</code>在C++标准库中从未被使用过。这5中type我们就称为迭代器的<strong>associated type</strong>。迭代器必须有这5种类型，以便回答算法提问。下面是Gnu C4.9中的代码</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">List_iterator</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="built_in">std</span>::bidirectional_iterator_tag iterator_category;  <span class="comment">//双向链表</span></span><br><span class="line">    <span class="keyword">typedef</span> _Tp value_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;  <span class="comment">//ptrdiff_t是C++标准库中的定义</span></span><br><span class="line"><span class="comment">//...    </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>算法会对iterator进行提问:</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> I&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span></span><br><span class="line">algorithm(I first,I last)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    I::iterator_category</span><br><span class="line">    I::pointer</span><br><span class="line">    I::reference</span><br><span class="line">    I::value_type</span><br><span class="line">    I::difference_type</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>既然上面的代码就可以实现迭代器与算法之间的问答，问什么还需要traits呢？试想，如果iterator本身并不是一个class而是一个native pointer呢（它被视为一种退化的iterator）？指针不能够做typedef，它要怎么回答算法的问题呢？这个时候我们就需要设计出traits了。</p>
-<h1 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h1><p>Traits首先要能够区分iterator到底是class还是一个pointer。<br><img src="/2019/10/04/Lecture10/2.png" alt="2"></p>
-<p>它实际的做法如下：<br><img src="/2019/10/04/Lecture10/3.png" alt="3"></p>
-<p>traits通过偏特化来分离class iterators和non-class iterators。<code>value_type</code>的主要目的是用来声明变量，而声明一个无法被赋值的变量没什么用，所以iterator（即便是constant iterator）的value type不应加上const。iterator若是const int*,其value_type应该是int而非const int。</p>
-<p>完整的iterator_traits写法如下（G2.95 <code>&lt;stl_iterator.h&gt;</code>）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Iterator</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::iterator_category iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::value_type        value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::difference_type   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::pointer           pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::reference         reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//partial specialization for regular pointers</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;_Tp*&gt; &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp*                        pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp&amp;                        reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;const _Tp*&gt; &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp*                  pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp&amp;                  reference;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>除了iterator traits，在整个标准库中还有其他的东西</p>
-<ul>
-<li>type traits     &lt;../C++/type_traits&gt;</li>
-<li>iterator traits     &lt;../C++/bits/stl_iterator.h&gt;</li>
-<li>char traits     &lt;../C++/bits/char_traits.h&gt;</li>
-<li>allocator traits     &lt;../C++/bits/alloc_traits.h&gt;</li>
-<li>pointer traits     &lt;../C++/bits/ptr_traits.h&gt;</li>
-<li>array traits     &lt;../C++/array&gt;</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/Lecture09/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/03/Lecture09/" itemprop="url">深度探索list</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-03T18:29:55+08:00">
-                2019-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>list容器不是最简单的容器，但却是最具代表性的，所以先来研究它。</p>
-<h1 id="容器list"><a href="#容器list" class="headerlink" title="容器list"></a>容器list</h1><p>list是双向链表。先来看list的源代码（GNU C2.9）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Alloc</span> = <span class="title">alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">list</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">typedef</span> __list_node&lt;T&gt; list_node;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> list_node* link_type;</span><br><span class="line">    <span class="keyword">typedef</span> __list_iterator&lt;T,T&amp;,T*&gt; iterator;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    link_type node;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>一个list里面需要些什么东西才能去控制一个双向链表。从上面代码中可以看到，整个list中的data只有<code>node</code>，<code>link_type</code>是一个指向<code>list_node</code>的指针（32位系统中一个指针是4个字节），所以list本身要占用4个字节，这对应了上一节的那张图，<code>list_node</code>代码如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> __<span class="title">list_node</span>&#123;</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">void</span>* void_pointer;</span><br><span class="line">    void_pointer prev;</span><br><span class="line">    void_pointer next;</span><br><span class="line">    T data;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p><code>data</code>是要放入的元素值，<code>prev</code>和<code>next</code>是指向前后的两根指针。注意<code>prev</code>和<code>next</code>指向的都是void，后面还需要进行类型转换。所以在list里面每一个元素除了自身要占用的内存外，还要多消耗两根指针的内存。</p>
-<h1 id="iterator"><a href="#iterator" class="headerlink" title="iterator"></a>iterator</h1><p>下图是双向链表的示意图，空心的气泡代表iterator。由于链表是一个非连续空间，所以iterator不能够是指针，因为它需要去判断下一个元素的位置，它是一个class。<br><img src="/2019/10/03/Lecture09/2.png" alt="2"></p>
-<p>iterator的代码如下(<code>&lt;stl_list.h&gt;</code>)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>, <span class="title">class</span> _<span class="title">Ref</span>, <span class="title">class</span> _<span class="title">Ptr</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> _<span class="title">List_iterator</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Tp&amp;,_Tp*&gt;             iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,<span class="keyword">const</span> _Tp&amp;,<span class="keyword">const</span> _Tp*&gt; const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Ref,_Ptr&gt;             _Self;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> bidirectional_iterator_tag iterator_category;   <span class="comment">//（1）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Tp value_type;     <span class="comment">//（2）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Ptr pointer;       <span class="comment">//（3）</span></span><br><span class="line">  <span class="keyword">typedef</span> _Ref reference;     <span class="comment">//（4）</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_node&lt;_Tp&gt; _Node;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;   <span class="comment">//（5）</span></span><br><span class="line"></span><br><span class="line">  _Node* _M_node;</span><br><span class="line"></span><br><span class="line">  _List_iterator(_Node* __x) : _M_node(__x) &#123;&#125;</span><br><span class="line">  _List_iterator() &#123;&#125;</span><br><span class="line">  _List_iterator(<span class="keyword">const</span> iterator&amp; __x) : _M_node(__x._M_node) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node == __x._M_node; &#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node != __x._M_node; &#125;</span><br><span class="line">  reference <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> (*_M_node)._M_data; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SGI_STL_NO_ARROW_OPERATOR</span></span><br><span class="line">  pointer <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123; <span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*()); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __SGI_STL_NO_ARROW_OPERATOR */</span></span></span><br><span class="line"></span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>++() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_next);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;  <span class="comment">//1.记录原值</span></span><br><span class="line">    ++*<span class="keyword">this</span>;   <span class="comment">//2.进行操作</span></span><br><span class="line">    <span class="keyword">return</span> __tmp;   <span class="comment">//3.返回原值</span></span><br><span class="line">  &#125;</span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>--() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_prev);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>--(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    --*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>首先iterator里面肯定会有大量的操作符存在，并且至少要有注释中的5个typedef。</p>
-<p><code>++</code>操作有前置型（prefix form）和后置型(postfix form)，为了区分，后置型的会有一个参数，但这个参数没有意义（<code>self operator++(int)</code>），前置型没有参数。前置型<code>++</code>的代码比较容易理解。后置型++的代码要注意，里面的有些操作符也许是已经被重载过的。具体如下图：</p>
-<p><img src="/2019/10/03/Lecture09/1.png" alt="1"></p>
-<p>注意前置型与后置型的返回类型也有区别，后置型返回类型带有reference，这里是为了更好地与操作整型的<code>++</code>操作符保持一致。来看下面的代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">i</span><span class="params">(<span class="number">6</span>)</span></span>;</span><br><span class="line">++++i; <span class="comment">//++(++i)</span></span><br><span class="line">i++++; <span class="comment">//(i++)++   worry</span></span><br></pre></td></tr></table></figure>
-
-<p>上面的代码第3行会报错，C++不允许后置++连续执行2次。所以iterator代码为了阻止后置++执行两次，返回的值不是reference。</p>
-<p>另外对于<code>*</code>和<code>-&gt;</code>的重载说明如下图：<br><img src="/2019/10/03/Lecture09/3.png" alt="3"></p>
-<hr>
-<p>所有容器的iterator都有两大部分，一个是一大堆的typedef（为什么后面后解释），另一个是一大堆的操作符重载。</p>
-<p>从GC2.9到GC4.9,对代码中一些不够好的地方做了修正。如下图：</p>
-<p><img src="/2019/10/03/Lecture09/4.png" alt="4"></p>
-<p>GC2.9与GC4.9的对比如下：<br><img src="/2019/10/03/Lecture09/5.png" alt="5"><br>2.9版链表本身只是一个class，它里面含有的节点是另一个class。GC4.9的类间关系设计过于复杂，没有2.9版简洁。G2.9版List的大小是4个字节，而G4.9版List大小是8个字节，从上面的类图可以看出，这是因为它的data有2个指针。</p>
-<p>另外list虽然是双向，但是实际代码中是将它设计为环状，为了实现前闭后开的要求，有一个节点是空节点。<br><img src="/2019/10/03/Lecture09/6.png" alt="6"></p>
+            <p>有关generative model，链接1是openAI写的一篇科普文章。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://blog.csdn.net/u012211419/article/details/48344445" target="_blank" rel="noopener">指针大小由谁决定</a></li>
-<li><a href="https://my.oschina.net/flylxl/blog/603114" target="_blank" rel="noopener">C++ 解引用(*)和箭头(-&gt;)运算符的重载</a></li>
-<li><a href="https://blog.csdn.net/lanchunhui/article/details/49557083" target="_blank" rel="noopener">C++ UML类图</a></li>
+<li><a href="https://openai.com/blog/generative-models/" target="_blank" rel="noopener">Generative Models</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/Unsupervised Learning Auto-encoder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/05/Unsupervised Learning Auto-encoder/" itemprop="url">Unsupervised Learning —— Auto-encoder</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-05T17:29:38+08:00">
+                2019-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h1><p>什么是Auto-encoder呢？Auto-encoder的想法是，我们先去找一个encoder，这个encoder可以input一个东西，例如影响辨识，input一张784维的vector表示的digit。这个encoder它可能就是一个neural network，它的output就是一个code，这个code通常远比784维还要小，所以会有类似压缩的效果。这个code代表input这张image的某种compact，某种精简有效的representation。</p>
+<p>现在的问题是，我们做的是unsupervised learning，可以找到一大堆的image当作NN encoder的input，但是我们没有任何的output，即不知道一个image应该变成什么样的code。要learn一个network需要有input和output，所有只有input没办法去learn。</p>
+<p>我们先做另外一件事情，learn一个decoder，这个decoder做的事情是：input一个vector，它就通过这个decoder output一张image。但是我们也没有办法train NN的decoder，因为只有output。这两个network,encoder和decoder，每个我们都无法单独去train。但我们可以把它接起来，然后一起train。也就是说，我们接一个neural network，input一个image，中间变成code，再把code通过decoder变成原来的image，就可以把encoder和decode同时学出来。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/1.png" alt="1"></p>
+<h1 id="Starting-from-PCA"><a href="#Starting-from-PCA" class="headerlink" title="Starting from PCA"></a>Starting from PCA</h1><p>我们之前在PCA里面其实看过非常类似的概念。PCA实际上做的事情是，input一张image $x$(通常我们会把$x$减掉它的平均$\bar{x}$当作input，但这里我们把它省略掉，这样并不会它奇怪，因为通常在做NN的时候，拿到data首先就会做normalize，把它变成mean是0，variance是1，所以就不用再减掉$\bar{x}$了)，$x$乘上一个weight,通过NN的一个layer，得到component的weight $c$，$c$再乘上matrix $W^T$得到$\hat{x}$，$\hat{x}$是根据这些component的weight和component做reconstruction的结果。在PCA里面，我们要做的事情就是minimize input跟reconstruction的结果。如果它它当成neural network来看的话，input $x$就是input layer，output $\hat{x}$就是output layer，中间component weight就是hidden layer，在PCA里面它是linear的。中间的hidden layer我们通常称为<strong>Bottleneck layer</strong>,这么叫是因为我们现在要做dimension reduction,所以component的数目通常会比input的dimension还要小得多，所以如果把它当作一个layer来看的话，它是一个特别窄的layer。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/2.png" alt="2"></p>
+<h2 id="Deep-Auto-encoder"><a href="#Deep-Auto-encoder" class="headerlink" title="Deep Auto-encoder"></a>Deep Auto-encoder</h2><p>PCA是这么做的，其实也可以用gradient decent来做PCA。但PCA只有一个hidden layer，我们想能不能把它变更多的hidden layer？当然可以，就兜一个很深的neural network，它有很多很多的层，同样我们希望input $x$和output $\hat{x}$越接近越好。测试的方法完全没有什么特别，就是backpropagation。注意中间会有个特别窄的layer，这个特别窄的layer它有特别少的neuron，这些layer的output就代表了一组code。从input到Bottleneck layer的部分就是encoder，从Bottleneck layer的output到最后的$\hat{x}$就是decoder。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/3.png" alt="3"></p>
+<p>其实这个deep的auto encoder最早是Hinton提出(链接1),那个时候deep auto-encoder没有那么好train，有可能train之后结果就坏掉了，那个时候需要用RBM做layer-wise的initialization，然后才可能把deep auto-encoder train得比较好一点。如果是按照上面在PCA里面看到的，两边的layer的weight要互为transpose，在train的时候，我们可以做到这件事，只要把两边的weight tie起来，让他们在做training的时候永远保持他们的值是一样的。这样做的好处是现在auto-encoder的参数就少一半，比较不会有overfitting的情形。But symmetric is not necessary，没有什么理由两边的weight一定要互为transpose，所以现在常见的做法就是直接兜个neural network，然后用back propagation直接train下去。</p>
+<p>对手写数字辨识做PCA，把它从784维降到30维，然后再从30维reconstruct回784维。可以看到最后得到的image是比较模糊的。但如果是用deep Auto-encoder的话，把784维先扩展成1000维，再降到500维、250维、30维，最后再重新变为784维。我们发现如果用deep auto-encoder的话，它的结果看起来就非常的好。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/4.png" alt="4"></p>
+<p>如果我们不是把它降到30维，而是降到2维再去visualize的话，会发现，如果是做PCA，在二维的平面上，所有的digit是被混在一起。如下图，不同颜色代表了不同的数字。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/5.png" alt="5"></p>
+<p>但如果是用deep auto-encoder的话，就会发现这些数字是分开的，如下图：</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/6.png" alt="6"></p>
+<h1 id="Auto-encoder-——-Text-Retrieval"><a href="#Auto-encoder-——-Text-Retrieval" class="headerlink" title="Auto-encoder —— Text Retrieval"></a>Auto-encoder —— Text Retrieval</h1><p>Auto-encoder也可以用在文字处理上，比如我们会想要把一篇文章压成一个vector(code)，假设我们现在要做文字搜寻，在文字搜寻里有一种方法叫做<strong>vector space model</strong>,它就是把每篇文章都表示成空间中的一个vector，下图中每一个蓝点就是一篇文章。接下来，假设使用者输入一个查询的词汇，我们把查询的词汇也变成空间中的一个点。接下来就是计算输入的查询词汇跟每篇document之间的inner product或cosine similarity等等。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/7.png" alt="7"></p>
+<p>这个模型要work,取决于现在把一个document变成一个vector表示的好不好。把document表示是vector最trivial的方法叫做bag-of-word，它的vector的size就是lexicon的size，下图是”This is an apple”这个句子的bag-of-word。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/8.png" alt="8"></p>
+<p>有时候我们想要做到更好，会把它乘上inverse document frequency，每一维不只会用词汇在document出现的次数，还会再乘上一个weight，代表那个词汇的重要性。这个重要性可以用不同的方法去衡量，比如<strong>inverse document frequency</strong>。但是用这个模型很weak，它没有办法考虑任何semantic相关的东西，比如它不会知道北京大学指的就是北大，不会知道apple和orange都是水果等等，对它来说每一个词汇都是independent，词汇之间完全没有任何相关性。</p>
+<p>我们可以用auto-encoder让语义这件事情被考虑进来。举例来说，我们learn一个auto-encoder，它的input就是一个document或者query(一段文字)，把一个vector变成一个vector，把这个vector通过一个encoder，把它压成二维，结果如下图。右边每个点代表一个document，不同颜色的点代表不同的类，我们发现同类的document都集中在一起。当我要做搜寻的时候，输入一个查询词，就把query也通过这个encoder，变成一个二维的vector，然后看这个vector落在那个聚类里。auto-encoder的结果是非常惊人的，如果我们用LSA的话，得不到类似的结果。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/9.png" alt="9"></p>
+<h1 id="Auto-encoder-——-Similar-Image-Search"><a href="#Auto-encoder-——-Similar-Image-Search" class="headerlink" title="Auto-encoder —— Similar Image Search"></a>Auto-encoder —— Similar Image Search</h1><p>Auto-encoder也可以用在image的搜寻上面。以图找图，最简单的方式，就是拿一张image的query，计算跟其他database里面的image的相似程度。比如可以算他们在pixel上面的相似程度，得到最像的几张就是要retrieve的结果。如果只是这么做的话，在pixel-wise上做比较，其实得不到太好的结果。我们用Michael Jackson的照片算它和database里面其他image的相似度，找出来最像的照片如下，</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/10.png" alt="10"></p>
+<p>可以用deep auto-encoder把每一张image变成一个code，然后在code上面再去做搜寻。而且，因为今天做这件事情是unsupervised，所以要collect多少data都行。如下图，input一个$32\times 32$image，用RGB表示就是$32\times 32 \times 3$维，最后用一个256维的vector来表示这张image。然后把这个code通过另外一个decoder，再变回原来的image。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/11.png" alt="11"></p>
+<p>reconstruct的结果如下：</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/12.png" alt="12"></p>
+<p>如果不是在Pixel上面算相似度，而是在code上算相似度的话，就会得到比较好的结果。还是用Michael Jackson的image当作input,这次找到的都是人脸。虽然这些image在pixel level上看起来是不像的，但是通过很多hidden layer，把它转换成code的时候，在那个256维的空间是，它们是很像的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/13.png" alt="13"></p>
+<h1 id="Auto-encoder-——-Pre-training-DNN"><a href="#Auto-encoder-——-Pre-training-DNN" class="headerlink" title="Auto-encoder —— Pre-training DNN"></a>Auto-encoder —— Pre-training DNN</h1><p>Auto-encoder还可以用在pre-training上面，我们知道在train一个neural network的时候，有时候会烦恼怎么做参数initialization，有没有一些方法可以让我们找到一组比较好的initialization。这种找比较好的initialization的方法，就叫做pre-training。</p>
+<p>假设现在要做MNIST的recognition，input是784维，output是10维，如下。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/14.png" alt="14"></p>
+<p>在做pre-train的时候，先train一个auto-encoder，如下图，它input 784维，然后中间有个1000维的vector，然后再变回784维，希望input与output越接近越好。但是做这件事情的时候，需要稍微小心一点，因为我们在做auto-encoder的时候会希望code比dimension还要小，如果比dimension还要大，network可能就不会learn了，它只需要把原来的784维记住，放到1000维里面去，然后再解回来，就结束了。它会learn一个接近identity的matrix。所以如果hidden layer比input还要大的时候，需要加一个很强的regularization，比如对这1000维的output做L1的regularization，希望这1000维的output是sparse（这1000维里只有某几维有值，其他都是0）。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/15.png" alt="15"></p>
+<p>那我们现在先learn了一个auto-encoder，learn好以后，我们把784维到1000维的这个weight $W^1$保留下来，然后fix住它，接下来把所有database里面的digit通通变成1000维的vector。接下来，再learn另一个auto-encoder，它把1000维的vector变成1000维的code,然后再转回1000维的vector,learn这样的auto-encoder，让input与output越接近越好。然后把$W^2$也保存下来。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/16.png" alt="16"></p>
+<p>接下来fix住$W^2$的值，再learn第三个auto-encoder，learn好这个auto-encoder，得到它的weight $W^3$，再把$W^3$保留下来。接下来，$W^1$,$W^2$,$W^3$等于是再learn整个neural network的时候的initialization，最后再random initialize最后500到10维的weight，再用back propagation去调一遍，我们称这个步骤为fine tune，因为$W^1$,$W^2$,$W^3$都已经是很好的weight了。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/17.png" alt="17"></p>
+<p>Pre-training在过去如果要learn一个很deep的neural network的话可能是需要的，不过现在training的技术进步后，基本上network不用pre-training。但是pre-training有个妙用就是，如果今天有很多unlabeled data但只有少量labeled data，可以用大量的unlabeled data去把$W^1$,$W^2$,$W^3$先initialize好，那最后的labeled data就只需要稍微调整weight就好。所以pre-training这招在有大量unlabel data的时候还是有用的。</p>
+<h1 id="De-noising-auto-encoder"><a href="#De-noising-auto-encoder" class="headerlink" title="De-noising auto-encoder"></a>De-noising auto-encoder</h1><p>有个方法可以让auto-encoder做的更好，叫<strong>De-noising auto-encoder</strong>，它的概念其实很简单。把原来的input $x$加上一些noise变成$x^{\prime}$，然后把$x^{\prime}$ encode以后变成code $c$，再把$c$ decode回来变成$y$。要注意的是，现在的要让output与加了noise之前的input越接近越好。如果有做这件事情，learn出来的结果会比较robust，因为encoder现在不只learn到encode这件事，还learn到了把杂讯过滤掉这件事。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/18.png" alt="18"></p>
+<p>还有另外一招叫做<strong>Contractive auto-encoder</strong>。我们在learn code的时候，加上一个constrain，这个constrain是当input有变化的时候对这个code的影响是被minimize的。这件事情其实很像de-noising auto-encoder，只是从不同的角度来看。de-noising auto-encoder是说加了noise以后，还要再reconstruct回原来没有noise的结果。Contractive auto-encoder是希望当input变了，也就是加了noise以后，对这个code的影响是小的。它们做的事情其实是很类似的。</p>
+<p>另外还有很多non-linear dimension reduction的方法，比如<strong>Restricted Boltzmann Machine</strong>（它其实不是neural network）和<strong>deep belief network</strong>（不是neural network），它们其实都是graph co-model。</p>
+<h1 id="Auto-encoder-for-CNN"><a href="#Auto-encoder-for-CNN" class="headerlink" title="Auto-encoder for CNN"></a>Auto-encoder for CNN</h1><p>如果我们今天要处理的对象是image的话，我们知道要用CNN。CNN在处理image的时候会有一些convolution layers和pooling layers，用convolution layers和pooling layers交替，让image变得原来越小，最后去做flatten。</p>
+<p>今天如果是做auto-encoder的话，不只要有个encoder，还要有decoder。如果encoder的部分是做convolution与pooling交替操作，理论上decoder应该就是做跟encode相反的事情，如下图。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/19.png" alt="19"></p>
+<p>那么这个unpooling和deconvolution它们是什么呢？</p>
+<h2 id="CNN-Unpooling"><a href="#CNN-Unpooling" class="headerlink" title="CNN - Unpooling"></a>CNN - Unpooling</h2><p>pooling的操作如下，现在得到一个$4\times 4$的matrix，接下来把matrix里面pixel分成4个一组，从每组里面挑一个最大的。当如果要做unpooling的话，要做另一件事情，要记得刚刚在做pooling是从哪里取值，然后再做unpooling的时候，要把原来比较小matrix扩大，比如之前记得在做pooling的时候是从左上角pool值，unpooling的时候就把值放到左上角，其他不零。其实这不是unpooling唯一的做法，在keras里面做法是不一样的，它是直接repeat那些value，也是就不用去记之前pooling的位置。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/20.png" alt="20"></p>
+<h2 id="CNN-Deconvolution"><a href="#CNN-Deconvolution" class="headerlink" title="CNN - Deconvolution"></a>CNN - Deconvolution</h2><p>事实上，Deconvolution就是convolution，我们来解释一下这件事情。我们举一维的convolution（方便起见）当作例子，假设input有5个dimension，filter size为3，我们就把input的3个value分别乘上3个weight，得到一个output，再把这个filter shift一格，把3个value分别乘上3个weight得到下一个output，依次类推，这是convolution的操作。convolution是从3个值变为1个值，deconvolution应该是从1个值变为3个值，那么我们可以让一个值分别乘上3个weight变成3个值，重叠的地方就加起来。事实上，这件事情等同于是在做convolution，相当于input是3个value，我们把它做padding，旁边补零，检查两个方框里面output的5个值，不难发现它们其实是一样的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/21.png" alt="21"></p>
+<p>如果把convolution和deconvolution比较，他们的不同点在哪里？不同点在于它们的weight是相反的，如上图中，最左边是weight顺序是红蓝绿，最右边是绿蓝红。但它们做到operation一样都是convolution。所以在keras里面，根本不需要另外再写一个deconvolution的layer，</p>
+<h1 id="Sequence-to-sequence-Auto-encoder"><a href="#Sequence-to-sequence-Auto-encoder" class="headerlink" title="Sequence-to-sequence Auto-encoder"></a>Sequence-to-sequence Auto-encoder</h1><p>上面的auto-encoder，它的input通通都是fix-length的vector。但是很多东西，本质上不应该把它表示成vector，比如语音。一段声音讯号有长有短，它不是一个vector,一段文章有长有短也不是一个vector。虽然可以用bag-of-word把它变成一个vector，但这个方法会失去词汇和词汇之间的前后关系，这个是不好好。</p>
+<p>具体的<strong>Sequence-to-sequence Auto-encoder</strong>到RNN的时候再讲。</p>
+<h1 id="Other-application"><a href="#Other-application" class="headerlink" title="Other application"></a>Other application</h1><p>我们之前用encoder把原来的image变成小的dimension，但我们同时也train了decoder，这个decoder其实是有妙用的，可以拿decoder来产生新的image。也就是说把learn好的decoder拿出来，然后给他一个random的input number，他的output希望就是一张图。这件事情做起来其实是相当容易的，下面是用MNIST来train的结果，把784维的一个image通过一个hidden layer然后project到二维。再把二维通过一个hidden layer解回原来的image。在encoder部分，二维的vector画出来如下图左边，不同颜色的点代表不同的数字，然后接下来在红色的框框里等间隔的去sample一个二维的vector出来，然后把二维的vector丢到NN decoder里面，让它output一个image出来。这些二维的vector不见得是某个image compress以后的结果，它不见得原来有对应的image，它就是某个二维的vector，然后丢到decoder以后，看看它可以产生什么。我们发现在下图中红色框框内等距离做sample，得到的结果如右边所示，可以看到左上角比较差，因为它在红色方框内其实是没有image（input image的时候不会对应到这里），这个区域的vector sample出来，通过decoder解回来不是image，看起来怪怪的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/22.png" alt="22"></p>
+<p>那我们怎么知道要sample在哪个地方？因为我们必须先观察一下二维vector的分布，才能知道哪边是有值的，这样sample出来才比较有可能是一个image，<br>如果sample出来的是上图蓝色方框区域，那么得到的东西大概率不是一个image。但是要先分析二维的code分布感觉有点麻烦，那要怎么确保我们希望的region里面都是image？有一个很简单的做法就是在code上面加上regularization，在code上面直接加L2的regularization，让所有的node都比较接近0，接下来就在0附近sample，这样就比较有可能sample出来的vector都可以对应到数字。这样做的结果如下图，可以看到train出来的code都会集中在接近0的地方。接下来就以0为中心，然后等距离在红框内sample image，结果如下图右边，从这里可以观察到很多有趣的现象，例如从左到右横轴代表的是有没有圆圈，纵轴可能是表示倾斜程度。所以不只可做encoder，还可以用code来画image，这个image并不是从原来image database sample出来的，它是machine自己画出来的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/23.png" alt="23"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.cs.toronto.edu/~hinton/science.pdf" target="_blank" rel="noopener">Reducing the Dimensionality ofData with Neural Networks</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/Unsupervised Learning Neighbor Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/05/Unsupervised Learning Neighbor Embedding/" itemprop="url">Unsupervised Learning —— Neighbor Embedding</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-05T12:50:31+08:00">
+                2019-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Manifold-Learning"><a href="#Manifold-Learning" class="headerlink" title="Manifold Learning"></a>Manifold Learning</h1><p>我们知道，data point可能是高维空间里面的一个Manifold，也就是说，Data point其实是分布在一个低维空间里，只是被扭曲的塞到了一个高维空间里面。讲到Manifold的时候，常常举的例子就是“地球”，地球的表面就是一个Manifold，它是一个二维平面，但是被塞到三维空间里面。在一个Manifold里面，只有很近距离的点，Euclidean distance才会成立。所以，Manifold Learning要做的事情是把S形展开，把塞在高维空间里面的低维空间摊平，之后我们就可以在这个平面上用Euclidean distance来计算点和点之间的距离。这会对接下来如果要做clustering或者做supervised learning都是会有帮助的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/1.png" alt="1"></p>
+<h1 id="Locally-Linear-Embedding-LLE"><a href="#Locally-Linear-Embedding-LLE" class="headerlink" title="Locally Linear Embedding(LLE)"></a>Locally Linear Embedding(LLE)</h1><p>在原来的空间里面，点的分布如下，对某一个点$x^i$，我们先选出$x^i$的neighbor $x^j$，接下来我们要找$x^i$与$x^j$的关系，它们的关系我们写作$w_{ij}$。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/2.png" alt="2"></p>
+<p>$w_{ij}$是怎么找出来的呢？我们假设每一个$x^i$，都可以用它的neighbor做linear combination以后，组合而成，那么$w_{ij}$就是拿$x^j$去组合$x^i$的时候的linear combination的weight。我们现在要找一组$w_{ij}$，这组$w_{ij}$对$x_i$的所有neighbor $x^j$做weighted sum的时候，他可以跟$x^i$越接近越好,即下面的式子越小越好。</p>
+<p>$$\sum_i||x^i - \sum_jw_{ij}x^j||_2$$</p>
+<p>接下来我们要做dimension reduction，把原来所有的$x^i$和$x^j$转成$z^i$和$z^j$。这里的原则是，从$x^i$和$x^j$转成$z^i$和$z^j$，它们中间的关系$w_{ij}$是不变的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/3.png" alt="3"></p>
+<p>所以LLE做的事情是，首先$w_{ij}$在原来的space上找完以后，就不要去动它。接下来为每一个$x^i$和$x^j$找另外一个vector。我们现在要做dimension reduction，所以新找的vector要比原来的dimension还要小。$z^i$和$z^j$要minimize下面这个function:</p>
+<p>$$\sum_i||z^i - \sum_jw_{ij}z^j||_2$$</p>
+<p>也就是说，原来的$x^j$可以做linear combination产生$x^i$，$z^j$也可以做linear combination产生$z^i$。我们就是要找这组z可以满足$w_{ij}$给我们的constrain。所以上面的式子里面，$w_{ij}$变成已知的，我们要找一组$z$，让$z^j$通过$w_{ij}$做weighted sum以后，它可以跟$z^i$越接近越好。</p>
+<p>注意，LLE并没有一个明确的function来告诉我们怎么做dimension reduction。不像我们在做Auto-Encoder的时候，learn出一个encoder的network，input一个新的datapoint,然后可以找到它dimension的结果。但是LLE里面并没有一个明确的function告诉我们怎么从$x$变到$z$。$z$就是完全凭空找出来的。</p>
+<p>如果用LLE或其他类似的方法有一个好处，就算是原来的$x^i$、$x^j$不知道，只知道$w_{ij}$(不知道$x^i$、$x^j$要用什么vector来描述)，也可以用LLE这种方法。</p>
+<p>LLE需要好好的调一下neighbor的个数，neighbor的数目要刚刚好才会得到好的结果。下面是原始的paper里面的图，可以发现$K$太小和太大,得出的结果都不会太好。为什么$K$太大结果也不太好呢？因为我们之前的假设，就是每一个Euclidean distance只是在很近的距离内，可以被这样想。所以，点和点之间关系，在transform前后可以被keep住，只有在距离很近的时候才能够成立。当$K$很大的时候，会考虑一些距离很远的点，会考虑transform以后relation没有办法keep住的点。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/4.png" alt="4"></p>
+<h1 id="Laplacian-Eigenmaps"><a href="#Laplacian-Eigenmaps" class="headerlink" title="Laplacian Eigenmaps"></a>Laplacian Eigenmaps</h1><p>我们之前在讲semi-supervised learning的时候，有讲过smoothness assumption，如果要比较两个点之间的距离，只算它的Euclidean distance是不够的，而要看它们在high density的region之间的distance。如果两个点之间有high density的connection，那它们才是真正接近的。</p>
+<p>这件事情我们可以用一个Graph来描述，也就是把data point construct成一个graph，算data point两两之间的相似度，如果相似度超过一个threshold，就把它们connect起来。而建一个graph的方法有很多。</p>
+<p>把点变成graph以后，考虑smoothness的距离就可以被这个graph上面的connection来approximate。在之前的semi-supervised learning有讲过，如果$x^1$和$x^2$z在high density的region相近，那他们的label $\hat{y}^1$和$\hat{y}^2$有可能是一样的。同样的道理可以被apply到unsupervised的test上面，如果$x^1$和$x^2$在high density的region是close的，我们希望$z^1$和$z^2$他们也是相近的。找到$z^i$和$z^j$去minimize下面$S$的值。</p>
+<p>$$S = \frac{1}{2}\sum_{i,j}w_{i,j}||(z^i - z^j)||_2$$</p>
+<p>上面的做法是有问题的，因为我们总可以将$z^i$和$z^j$的值通通设为0，所以光有上面的式子是不够的。所以我们需要给$z$一些constrain。</p>
+<p>如果$z$降维以后的空间是$M$维空间，那我们不会希望$z$还分布在一个比$M$还小的dimension里面，即：</p>
+<p>if the dim of $z$ is $M$, $Span\{z^1,z^2,\cdots,z^N\} = R^M$</p>
+<p>有了这个constrain，上面的式子解出来的$z$跟我们前面看到的那个graph laplacian L是有关系的，他其实就是graph laplacian的eigenvector。所以它叫做<strong>Laplacian Eigenmaps</strong>,因为我们找的是laplacian matrix的eigenvetor。</p>
+<p>我们我们先找出$z$以后，再去做cluster（K-means），这一招叫做spectral clustering。</p>
+<h1 id="t-SNE"><a href="#t-SNE" class="headerlink" title="t-SNE"></a>t-SNE</h1><p><strong>t-SNE</strong>是<strong>T-distribution Stochastic Neighbor Embedding</strong>的缩写。前面的方法有一个最大的问题就是，它只假设相近的点应该要是接近的，而没有假设不相近的点要分开(Similar data are close,but different data may collapse)。所以比如说用LLE在MNIST上，会遇到这样的情形：它确实会把相同class的点都聚集在一起（下图中不同的颜色表示不同的digit），但它没有防止不同的class的点不要叠成一团。 </p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/6.png" alt="6"></p>
+<p>做t-SNE一样是要做降维，把原来的data point $x$变成比较low dimension的vector $z$。在原来的$x$这个space上面，我们会计算所有的点的pair $x^i$和$x^j$之间的similarity $S(x^i,x^j)$。接下来，会做一个normalization，我们会计算：</p>
+<p>$$P(x^j|x^i) = \frac{S(x^i,x^j)}{\sum_{k\neq i}S(x^i,x^k)}$$</p>
+<p>另外假设我们今天已经找出了一个low dimension的representation就是$z^i$和$z^j$的话，我们也可以计算是$z^i$和$z^j$之间的similarity $S^{\prime}(z^i,z^j)$,一样计算：</p>
+<p>$$Q(z^j|z^i) = \frac{S^{\prime}(z^i,z^j)}{\sum_{k\neq i}S^{\prime}(z^i,z^k)}$$</p>
+<p>做这个normalization是必要的，因为我们不知道在高维空间算出来的距离$S(x^i,x^j)$与$S^{\prime}(z^i,z^j)$的scale是不是一样的。如果有做normalization，那最后就可以把他们都变成几率，它们的值介于0和1之间，它们的scale会是一样的。</p>
+<p>现在我们还不知道$z^i$和$z^j$的值到底是多少，我们希望找一组$z^i$和$z^j$,让原来根据similarity在$S$这个原来的space算出来的distribution跟在dimension reduction以后的space算出来的distribution越接近越好。可以用<strong>KL divergence</strong>来衡量两个distribution之间的相似度。minimize下面的$L$,用gradient descent。</p>
+<p>$$ L = \sum_iKL\left(P(\star|x^i)||Q(\star|z^i)\right)$$</p>
+<p>有一个问题就是在做t-SNE的时候，会计算所有data point之间的similarity，运算量有点大。一个常见的做法是先做降维，比如原来的dimension很大，我们不会直接从很高的dimension直接做t-SNE,因为这样计算similarity的时间太长。通常会先用PCA做降维，比如降到50维，然后用t-SNE从50维降到2维。</p>
+<p>像上面所讲到的这些方法，比如t-SNE，如果给他一个新的data point，它是没办法做的。它只能够已经先给他一大堆$x$，它帮你把每个$x$的$z$都找出来，但是找完这些$z$以后，在给他一个新的$x$，要再重新跑一边上面一整套演算法，很麻烦。所以一般t-SNE的作用比较不是用在这种training test的这种case上面，通常常用的拿来做visualization。如果已经有一大堆的$x$，它是high dimensional的，而我们想要visualize它们在二维空间的分布上是什么样子，用t-SNE往往可以得到不错的结果。</p>
+<h2 id="t-SNE-——-Similarity-Measure"><a href="#t-SNE-——-Similarity-Measure" class="headerlink" title="t-SNE —— Similarity Measure"></a>t-SNE —— Similarity Measure</h2><p>t-SNE的一个有趣的地方是，t-SNE的similarity的选择是非常神妙的。我们在原来的data point的space上面，similarity选择RDF的function：</p>
+<p>$$ S(x^i,x^j) = exp(-||x^i - x^j||_2) \tag{1}$$</p>
+<p>之前有说如果要在graph上算similarity的话，用这种方法比较好，因为它可以确保只有非常相近的点才有值。因为exp掉的非常快，只要距离一拉开，similarity就会变得很小。</p>
+<p>在t-SNE之前有一个方法叫做SNE，SNE是一个很直觉的想法，在data point原来的space上用式子(1)这个evaluation的measure，当然在新的space上选用同样的measure就好啊：</p>
+<p>$$ S^{\prime}(z^i,z^j) = exp(-||z^i - z^j||_2) $$</p>
+<p>但是t-SNE神妙的地方在于，它在dimension reduction以后的space，它选的measure跟原来的space是不一样的，它在dimension reduction以后选的space是t-distribution的其中一种(t-distribution里面的参数可以调他，可以产生很多种不同的distribution)。t-distribution的其中一种如下:</p>
+<p>$$S^{\prime}(z^i,z^j) = 1/1 + ||z^i - z^j||_2$$</p>
+<p>为什么要这么做呢？这里有一个很直觉的理由，下图中假设横轴代表了在原来space上的Euclidean distance或者是做dimension reduction以后的Euclidean distance，红色的线和蓝色线分别为$S(x^i,x^j)$和$S^{\prime}(z^i,z^j)$,从图中的两个点可以看到，如果本来距离比较近，它们的影响是比较小的，如果距离比较远，那从原来的distribution变到t-distribution以后，会被拉的很远。也就是说，原来在高维空间里面，如果距离很近，做完transform以后他还是很近，如果原来就已经有一段距离了，做完transform后就会被拉得很远。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/7.png" alt="7"></p>
+<p>所以t-SNE画出来的图往往如下，它会把data point聚集成一群一群的。因为data point之间本来只要有一个gap，做完t-SNE以后就会把gap强化，gap会变得特别明显。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Neighbor Embedding/8.png" alt="8"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/Unsupervised Learning Word Embedding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/04/Unsupervised Learning Word Embedding/" itemprop="url">Unsupervised Learning —— Word Embedding</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-04T19:48:19+08:00">
+                2019-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>Word Embedding</strong>其实是Dimension Reduction的一个非常好的应用。</p>
+<h1 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h1><p>如果我们今天要用一个vector来表示一个word，会怎么做呢?最典型的做法叫做<strong>1-of-N Encoding</strong>，每一个word，我们用一个vector来表示，这个vector的dimension就是这个世界上可能有的word数目。每个word对应到其中一维，例如下图中apple就是第一维是1，其他都是0。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/1.png" alt="1"></p>
+<p>如果用这种方式来描述一个word，那么这个vector一点都不informative。每一个word它的vector都是不一样的，所以从这个vector里面，没有办法得到任何咨询。例如没有办法知道dog和cat都是动物这件事。怎么办呢？有一个方法就是建<strong>Word Class</strong>，把有同样性质的word把它们cluster成一群一群的，然后就用那个word所属的class来表示这个word。这就是我们之前做Dimension Reduction的时候讲的clustering的概念。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/2.png" alt="2"></p>
+<p>但是光用class是不够的，我们之前有讲过光做clustering是不够的，因为如果光做clustering的话，我们会少了一些information。比如说上面class 1和class 3都是属于生物，但是在class里面没有办法呈现这一件事。为解决这个问题，我们就需要<strong>word Embedding</strong>。</p>
+<p>word Embedding是把每一个word都project到一个high dimensional的space上面，虽然这里说这个space是high dimensional，但是它远比1-of-N encoding的dimension要低。从1-of-N encoding到Word Embedding，这是Dimension Reduction的process。我们希望在word Embedding的这个图上，我们可以看到的结果是，类似语义的词汇，它们在这个图上是比较接近的。而且在high dimensional space里面，每个dimension可能都有它特别的含义。比如，假设我们现在做完word embedding以后，每一个word的word Embedding的feature vector如下图，那么可能就可以知道，横轴的dimension代表了生物和其他东西之间的差别，纵轴的dimension可能就代表了与运动有关的东西。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/3.png" alt="3"></p>
+<h1 id="word-Embedding"><a href="#word-Embedding" class="headerlink" title="word Embedding"></a>word Embedding</h1><p>怎么做word Embedding呢？word Embedding是一个unsupervised approach，也就是我们通过让machine阅读大量的文章，它就可以知道每一个词汇它的embedding的feature vector应该长什么样子。</p>
+<p>这是一个unsupervised的problem，因为我们要做的事情就是learn一个Neural Network，找一个function，input是一个词汇，output就是那一个词汇所对应的word embedding的那一个vector。而我们手上有的training data就是一大堆文字，即我们只有input没有output。这个问题要怎么解呢？我们之前有讲过一个deep learning base的Dimension Reduction方法叫做<strong>auto-encoder</strong>，learn一个network，让它的输入等于输出，把某一个hidden layer拿出来，就是Dimension Reduction的结果。那么这个地方可以用Auto-encoder吗？</p>
+<p>这里其实没办法用Auto-encoder来解。想想看，如果用1-of-N encoding当作它的input，对1-of-N encoding来说，每个词汇都是independent,把这样子的vector做Auto-encoder，其实没有办法learn出任何informative的information。所以在word enbedding这个task里面用auto-encoder是没有办法的。如果input是1-of-N encoding用Auto-encoder是没有办法的，除非用character的n-gram来描述一个word，或许它可以抓到一个字首、字根的含义。不过基本上大家现在不这么做。</p>
+<p>那要如何找word embedding呢？要如何了解一个词汇的含义呢？要看这个词汇的context。每一个词汇的含义，可以根据它的上下文来得到。</p>
+<ul>
+<li><p>Machine learn the meaning of words from reading a lot of documents without supervision</p>
+</li>
+<li><p>A word can be understood by its context</p>
+</li>
+</ul>
+<h2 id="How-to-exploit-the-context"><a href="#How-to-exploit-the-context" class="headerlink" title="How to exploit the context"></a>How to exploit the context</h2><p>怎么通过上下文来找出word Embedding的vector呢？有两个不同体系的做法。</p>
+<h3 id="Count-based"><a href="#Count-based" class="headerlink" title="Count based"></a>Count based</h3><p><strong>Count based</strong>的方法是说，如果我们现在有两个词汇$w_i$和$w_j$，它们常常在同一篇文章中出现，那么它们的word vector(用$V(w_i)$、$V(w_j)$表示)会比较接近。这种方法一个很有代表性的例子叫做<strong>Glove vector</strong>，参考链接1。</p>
+<p>这个方法的原则是，假设我们知道$V(w_i)$和$V(w_j)$，那么我们可以计算它们的inner product。假设$N_{i,j}$是$w_i$与$w_j$它们co-occur在同样的document里面的次数，那么我们希望为$w_i$找到一组vector，为$w_j$也找到一组vector，然后希望$V(w_i)\cdot V(w_j)$与$N_{i,j}$越接近越好。这和我们之前讲的matrix factorization的概念是一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/4.png" alt="4"></p>
+<h3 id="Prediction-based"><a href="#Prediction-based" class="headerlink" title="Prediction based"></a>Prediction based</h3><p><strong>Prediction based</strong>的想法是，我们来learn一个neural network，它做的事情是prediction。这个neural network做的事情是given前一个word $w_{i-1}$，predict下一个可能出现的word是谁。</p>
+<p>我们知道每一个word，都用1-of-N encoding，可以把它表示成一个feature vector。所以，如果我们要做prediction这件事情的话，我们就是要learn一个neural network，它的input就是$w_{i-1}$的1-of-N encoding的feature vector，它的output就是下一个word $w_i$是某一个word的几率。也就是说，这个model它的output的dimension就是vector的size，假设现在世界上有10万个word,output就是10万维。每一维代表某一个word是会被当作$w_i$的几率。假设这就是一个我们所熟知的multi-layer的perceptron，一个deep neural network。把input feature vector丢进去的时候，它会通过很多hidden layer，然后我们会得到output。接下来，我们把第一个hidden layer的input拿出来（写作$\bf{Z}$），我们用$\bf{Z}$就可以代表一个word。input不同的1-of-N encoding，$\bf{Z}$就会不一样。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/5.png" alt="5"></p>
+<p>为什么用prediction based的方法，就恩可以得到这样的vector呢？prediction based的方法是怎么体现根据一个词汇的上下文来了解一个词汇的含义这件事情呢？</p>
+<p>假设我们的training data里面有一个文章，它里面有下面两句话。在第一个句子里面，蔡英文是$w_{i-1}$，宣誓就职是$w_i$。在另一个句子里面，马英九是$w_{i-1}$，宣誓就职是$w_i$。那我们在训练这个prediction model的时候，不管是input蔡英文还是马英九的1-of-N encoding，都会希望learning出来的结果是宣誓就职的几率比较大。蔡英文和马英九虽让是不同的input，但为了要让最后在output的地方得到一样的output，我们就必须让中间的hidden layer做一些事情，中间的hidden layer必须要学到这两个不同的词汇需要通过参数的转换以后把它们对应到同样的空间。在input进入hidden layer之前，必须把它们对应到接近的空间，这样我们在最后output的时候，它们才能有同样的几率。所以，当我们learn一个prediction model的时候，考虑一个word的context这一件事情，就自动被考虑在prediction model里面。所以把prediction model的第一个hidden layer拿出来，就可以得到我们想要找的这种word embedding的特性。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/6.png" alt="6"></p>
+<h3 id="Prediction-based-——-Sharing-parameters"><a href="#Prediction-based-——-Sharing-parameters" class="headerlink" title="Prediction-based —— Sharing parameters"></a>Prediction-based —— Sharing parameters</h3><p>如果只用$w_{i-1}$去predict$w_i$，好像太弱了。只通过一个词汇去预测下一个词，对人来说也是比较难的。我们可以拓展这个问题，比如希望machine learn的是input前面两个词汇，然后predict下一个word。可以轻易的把这个Model扩展到N个词汇。一般我们如果真得要learn这样的word vector的话，通常input可能至少10个词汇。下面是input 2个word作为例子，可以轻易的将它扩展到10个word。</p>
+<p>要注意的是，本来如果是一般的neural network，就把input $w_{i-2}$和$w_{i-1}$的1-of-N encoding的vector接在一起，变成一个很长的vector，直接丢到neural network里面当作input就可以了。但是实际上你在做的时候，会希望和$w_{i-2}$相连的weight跟$w_{i-1}$相连的weight它们是被tie在一起的，即$w_{i-2}$的第一个dimension跟第一个hidden layer的第一个neuron它们中间连的weight，和$w_{i-1}$的第一个dimension和第一个hidden layer的第一个neuron它们之间连的weight，这两个weight必须是一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/7.png" alt="7"></p>
+<p>这么做的一个显而易见的理由是，如果我们不这么做，把同一个word放在$w_{i-2}$的位置跟放在$w_{i-1}$的位置，通过transform以后，得到的embedding就会不一样。另外一个理由是这样可以减少参数量，因为input这个dimension很大，可能是10万维。</p>
+<p>现在，假设$w_{i-2}$的1-of-N encoding就是$\bf{x_2}$，$w_{i-1}$的1-of-N encoding就是$\bf{x_1}$，它们的长度都是$|V|$。hidden layer的input我们把它写成一个vector $\bf{z}$，$\bf{z}$的长度是$|Z|$，那么有如下的式子</p>
+<p>$$ \bf{z = W_1x_{i-2} + W_2x_{i-1}} $$</p>
+<p>其中$\bf{W_1}$和$\bf{W_2}$都是一个$|Z|\times |V|$的matrix，这里我们强制</p>
+<p>$$\bf{W_1 = W_2 = W}$$</p>
+<p>所以有：</p>
+<p>$$\bf{z = W(x_{i-2} + x_{i-1})}$$</p>
+<p>通过上式我们可以得到一个word的vector。</p>
+<p>这里会有一个问题，就是我们在实作上，怎么让$\bf{W_1}$跟$\bf{W_2}$它们的weight一定都要一样呢？事实上，我们在train CNN的时候，也有一样类似的问题。做法如下，假设我们现在有两个weight $w_i$和$w_j$，希望$w_i$和$w_j$是一样的。首先，给$w_i$和$w_j$一样的initialization，接下来，然后计算：</p>
+<p>$$w_i \leftarrow w_i - \eta \frac{\partial C}{\partial w_i} - \frac{\partial C}{\partial w_j}$$  $$w_j \leftarrow w_j - \eta \frac{\partial C}{\partial w_j} - \frac{\partial C}{\partial w_i}$$</p>
+<p>以上的式子可以确保$w_i$和$w_j$在训练的过程中永远都是tie在一起的。</p>
+<h3 id="Prediction-based-——-Training"><a href="#Prediction-based-——-Training" class="headerlink" title="Prediction based —— Training"></a>Prediction based —— Training</h3><p>要如何训练这个network呢？这个network的训练完全是unsupervised的。也就是说，我们只要collect一大堆文字的data（可通过爬虫获取），然后通过Minimizing cross entropy去train你的model。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/8.png" alt="8"></p>
+<h3 id="Prediction-based-——-Various-Architectures"><a href="#Prediction-based-——-Various-Architectures" class="headerlink" title="Prediction-based —— Various Architectures"></a>Prediction-based —— Various Architectures</h3><p>上面所讲的只是最基本的形态，其实这个prediction based的model可以有种种的变形，它们的performance在不同的task上互有胜负，所以很难说哪一种方法一定是比较好的。</p>
+<ul>
+<li><strong>Continuous bag of word (CBOW) model</strong></li>
+</ul>
+<p>之前所讲的都是拿前面的词汇去predict接下来的词汇，而CBOW是拿某一个词汇的context去predict中间的词汇（用$w_{i-1}$和$w_{i+1}$去predict $w_i$）。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/9.png" alt="9"></p>
+<ul>
+<li><strong>Skip-gram</strong></li>
+</ul>
+<p>Skip-gram是拿$w_i$去predict $w_{i-1}$和$w_{i+1}$。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/10.png" alt="10"></p>
+<p>有人可能会问，这个network它不是deep的啊，它其实就是一个linear的hidden layer，不是deep的，为什么呢？</p>
+<p>propose word vector的作者Tomas Mikolov有自己的解释：首先他并不是第一个propose word vector的人，在他之前其实就有很多人做过word vector，有提出类似的概念。Tomas Mikolov想要verify的最重要的一件事情就是，过去其他人其实就是用deep的，其实这个task不用deep就做得起来，不用deep的好处是减少运算量，可以跑很大量的data。过去确实有人做过word vector这件事，只是结果没有红起来。其实word embedding这个概念在语言界，大概是2010年的时候开始红起来，那个时候它叫做continuous的language model。一开始的时候，也不是用neural network来得到这个word embedding的，因为neural network的运算量很大，而是用其他比较简单的方法来得到word embedding。只是后来大家逐渐发现用neural network得到的结果才是最好的，过去没用neural network的方法逐渐式微，通通都变成neural network based的方法了。</p>
+<hr>
+<p>word vector可以得到一些有趣的特性，如果把同样类型的word vector摆在一起，比如下图中的(Italy-Rome,Germany-Berlin)，会发现它们之间是有某种固定的关系的。或者把同一个动词的三态摆在一起，它们也是有某种固定的关系。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/11.png" alt="11"></p>
+<p>所以从word vector里面，可以发现我们不知道的word与word之间的关系。比如，有人发现如果把word vector两两相减，然后project到一个2维的space上面，会发现在某个区域，某一个word是包含于某一个word之间的关系，如下图：</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/12.png" alt="12"></p>
+<p>所以用word vector的概念，我们可以做一些简单的推论。举例来说，有些word vector的差会很接近，如下</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/13.png" alt="13"></p>
+<p>那如果有人问Rome之于Italy，就好像是Berlin至于什么，机器就可以回答这种问题了。因为由上面的式子我们知道</p>
+<p>$$V(Germany) \approx V(Berlin) - V(Rome) + V(Italy)$$</p>
+<h2 id="Multi-lingual-Embedding"><a href="#Multi-lingual-Embedding" class="headerlink" title="Multi-lingual Embedding"></a>Multi-lingual Embedding</h2><p>word vector还可以做很多其他的事情，比如把不同语言的word vector拉在一起。如果今天有一个中文的corpus和英文的corpus，我们各自分别去train一组word vector，会发现中文和英文的word vector它是完全没有任何关系的，它们每一个dimension对应的含义并没有任何关系，为什么？因为要train word vector的时候，它凭借的就是上下文之间的关系，所以如果corpus里面没有中文英文的句子混杂在一起，那machine就没法判断中英文之间的关系。但是假如我们已经事先知道某几个中文词汇和英文词汇是对应在一起的，先得到一组中文的vector,再得到一组英文的vector，接下来可以再learn一个model，它把中文和英文对应的词汇project在space上的同一个点。做了这个transform以后，接下来又有新的中文和英文词汇，通可以用同样的projection把它们project到同一个space上面，这样就能做到类似自动翻译的效果。</p>
+<h2 id="Multi-domain-Embedding"><a href="#Multi-domain-Embedding" class="headerlink" title="Multi-domain Embedding"></a>Multi-domain Embedding</h2><p>embedding不只限于文字，也可以对影像对embedding。下面是一个例子，如下图，我们先已经找到一组word vector（cat,horse,dog等等）。接下来，要learn一个model，它的input是一张image，output是一个跟word vector一样dimension的vector。假设一些image我们已经知道是属于哪一类了，那可以把它们project到它们所对应到的word vector附近。当又有一个新的image进来，我们就可以通过同样的project，把它project到这个space上以后，神奇的是会发现它可能就在猫的附近，machine就会告诉我们这张image是猫。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/14.png" alt="14"></p>
+<p>在做影像分类的时候，machine其实很难去处理新增加的、它没有办法看过的object。比如我们先定好10个class，那么learn出来的model，就是只能分这10个class。如果今天有一个新的东西不在这10个class里面，那么model是完全无能为力的。但是如果用上面的方法，就算有一张image，是在train的时候没有看过的class，比如cat，但是如果cat的image可以project到cat的vector附近的话，就会知道这张image叫做cat。这就好像是machine先阅读了大量的文章以后，它知道每一个词汇指的是什么意思，接下来在看image的时候，它就可以根据它已经阅读得到的知识，去mapping每一个image所应该对应的东西。这样就算它看到它没有看过的东西，它也可能叫出它的名字。</p>
+<h2 id="Document-Embedding"><a href="#Document-Embedding" class="headerlink" title="Document Embedding"></a>Document Embedding</h2><p>也可以做<strong>Document Embedding</strong>，不只是把一个word变成一个vector，也可以把一个document变成一个vector。</p>
+<p>最简单的方法就是把一个document变成bag-of-word，然后用Auto-encoder就可以learn出这个document的Semantic Embedding。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/15.png" alt="15"></p>
+<p>但是光用bag-of-word来描述一篇document是不够的，因为我们知道词汇的顺序代表了很重要的含义。同样的bag-of-word在语义上可能是完全不一样的。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/16.png" alt="16"></p>
+<p>要解决这个问题，可以参考下面的reference。</p>
+<p><img src="/2019/11/04/Unsupervised Learning Word Embedding/17.png" alt="17"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="https://nlp.stanford.edu/projects/glove/" target="_blank" rel="noopener">GloVe: Global Vectors for Word Representation</a></p>
+</li>
+<li><p><a href="https://www.semanticscholar.org/paper/Efficient-Estimation-of-Word-Representations-in-Mikolov-Chen/330da625c15427c6e42ccfa3b747fb29e5835bf0" target="_blank" rel="noopener">Efficient Estimation of Word Representations in Vector Space</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/blog01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/30/blog01/" itemprop="url">blog01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T19:43:08+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/CMake/" itemprop="url" rel="index">
+                    <span itemprop="name">CMake</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Global-varibales"><a href="#Global-varibales" class="headerlink" title="Global varibales"></a>Global varibales</h1><ul>
+<li><p><code>CMAKE_BINARY_DIR</code> : if you are building in-source, this is the same as <code>CMAKE_SOURCE_DIR</code>, otherwise this is the top level directory of your build tree</p>
+</li>
+<li><p><code>CMAKE_SOURCE_DIR</code> : this is the directory, from which cmake was started, i.e. the top level source directory</p>
+</li>
+<li><p><code>EXECUTABLE_OUTPUT_PATH</code> : set this variable to specify a common place where CMake should put all executable files (instead of <code>CMAKE_CURRENT_BINARY_DIR</code>)</p>
+  <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;PROJECT_BINARY_DIR&#125;</span>/bin)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>LIBRARY_OUTPUT_PATH</code> : set this variable to specify a common place where CMake should put all libraries (instead of <code>CMAKE_CURRENT_BINARY_DIR</code>)</p>
+  <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;PROJECT_BINARY_DIR&#125;</span>/lib)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>PROJECT_NAME</code> : the name of the project set by <code>PROJECT()</code> command.</p>
+</li>
+</ul>
+<ul>
+<li><code>PROJECT_SOURCE_DIR</code> : contains the full path to the root of your project source directory, i.e. to the nearest directory where <code>CMakeLists.txt</code> contains the <code>PROJECT()</code> command. Now, you have to compile the <code>test.cpp</code>. The way to do this task is too simple. Add the following line into your <code>CMakeLists.txt</code>:</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(hello <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">test</span>.cpp)</span><br></pre></td></tr></table></figure>
+
+<h1 id="example"><a href="#example" class="headerlink" title="example"></a>example</h1><p>source code of <code>test.cpp</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">     <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>CMakeLists.txt</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Specify the minimum version for CMake</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Project's name</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">project</span>(hello)</span><br><span class="line"><span class="comment"># Set the output folder where your program will be created</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_BINARY_DIR <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/bin)</span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;CMAKE_BINARY_DIR&#125;</span>)</span><br><span class="line"><span class="keyword">set</span>(LIBRARY_OUTPUT_PATH <span class="variable">$&#123;CMAKE_BINARY_DIR&#125;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># The following folder will be included</span></span><br><span class="line"><span class="keyword">include_directories</span>(<span class="string">"$&#123;PROJECT_SOURCE_DIR&#125;"</span>)</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/blog02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/28/blog02/" itemprop="url">Vim基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-28T12:13:54+08:00">
+                2019-10-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>所用系统为Ubuntu 16.04LTS</p>
+<h1 id="使用h-j-k-l来移动光标"><a href="#使用h-j-k-l来移动光标" class="headerlink" title="使用h j k l来移动光标"></a>使用h j k l来移动光标</h1><p>vim中不使用方向键来移动光标是因为在vim诞生的时候，那时的键盘上还没有方向键。</p>
+<h1 id="插入模式即退出"><a href="#插入模式即退出" class="headerlink" title="插入模式即退出"></a>插入模式即退出</h1><p>vi最具特色的功能就是支持多种模式，并且可以在这些模式之间进行自由切换以实现它的强大功能。vi有6种基本模式和5种派生模式。</p>
+<ul>
+<li><p>基本模式</p>
+<ul>
+<li>普通模式</li>
+<li>插入模式</li>
+<li>可视模式</li>
+<li>选择模式</li>
+<li>命令行模式</li>
+<li>Ex模式</li>
+</ul>
+</li>
+<li><p>派生模式</p>
+<ul>
+<li>操作符等待模式</li>
+<li>插入普通模式</li>
+<li>插入可视模式</li>
+<li>插入选择模式</li>
+<li>替换模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="插入模式"><a href="#插入模式" class="headerlink" title="插入模式"></a>插入模式</h2><p>使用vi打开名为lesson2的文本文件，命令如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi lesson2</span><br></pre></td></tr></table></figure>
+
+<p>打开之后默认进入的是普通模式。普通模式下可以使用<code>h j k l</code>来移动光标（当然使用方向键来移动也可以）。这个时候敲一下键盘<code>i</code>键，会发现左下角出现<strong>INSERT</strong>字样。点击<code>Esc</code>键可以退出insert模式。</p>
+<p>事实上进入插入模式的方式有很多，如下，它们的区别主要是进入的时候光标到 位置不同。</p>
+<p><img src="/2019/10/28/blog02/1.png" alt="1"></p>
+<h2 id="退出vim"><a href="#退出vim" class="headerlink" title="退出vim"></a>退出vim</h2><p>退出有两种方式，一种是<strong>保存修改并退出</strong>，一种是<strong>忽略修改直接退出</strong>。</p>
+<p>忽略修改直接退出比较简单，首先按下冒号，进入命令行模式，然后输入<code>q!</code>即可。</p>
+<p>保存修改并退出，按下冒号进入命令行模式，然后输入<code>wq</code>即可。</p>
+<h2 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h2><p>可以在<strong>插入模式</strong>里面使用退格键来删除光标前面的字符，或者使用del键来删除光标指定的字符。</p>
+<p>在<strong>普通模式</strong>下，有如下删除方法：</p>
+<ul>
+<li><p>删除一个字符可以用<code>x</code>命令</p>
+</li>
+<li><p>删除多个字符可以使用<code>d</code>命令，格式为<code>d motion</code>，其中motion表示操作范围的指令，如下</p>
+</li>
+</ul>
+<p><img src="/2019/10/28/blog02/2.png" alt="2"></p>
+<p>相应的删除命令如下</p>
+<p><img src="/2019/10/28/blog02/3.png" alt="3"></p>
+<h2 id="灵活运用数字"><a href="#灵活运用数字" class="headerlink" title="灵活运用数字"></a>灵活运用数字</h2><ul>
+<li><p>数字 + motion = 重复多个motion</p>
+</li>
+<li><p>d + 数字 + motion = 删除多个motion范围</p>
+</li>
+</ul>
+<h2 id="撤销"><a href="#撤销" class="headerlink" title="撤销"></a>撤销</h2><p>普通模式下</p>
+<ul>
+<li><code>u</code>表示撤销最后一次修改</li>
+<li><code>U</code>表示撤销对整行的修改</li>
+<li><code>Ctrl+r</code>快捷键可以恢复撤销的内容</li>
+</ul>
+<blockquote>
+<p>备注：上面所有的“删除”操作并不是真的删除，它们事实上是存放在VIM的一个缓冲区中，相当于Windows的剪切功能。（VIM称为寄存器）</p>
+</blockquote>
+<h1 id="粘贴拷贝替换修改"><a href="#粘贴拷贝替换修改" class="headerlink" title="粘贴拷贝替换修改"></a>粘贴拷贝替换修改</h1><h2 id="粘贴命令"><a href="#粘贴命令" class="headerlink" title="粘贴命令"></a>粘贴命令</h2><p>使用<code>p</code>命令可以将最后一次删除的内容粘贴到光标之后。（大写的<code>P</code>则是粘贴到光标之前）</p>
+<blockquote>
+<p>注意：如果需要粘贴的是整行为单位，那么<code>p</code>命令将在光标的下一行开始粘贴；如果拷贝的是非整行的局部字符串，那么<code>p</code>命令将在光标后开始粘贴。</p>
+</blockquote>
+<h2 id="拷贝命令"><a href="#拷贝命令" class="headerlink" title="拷贝命令"></a>拷贝命令</h2><p>vim使用<code>y</code>来实现拷贝，语法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y [数字] motion</span><br></pre></td></tr></table></figure>
+
+<h2 id="替换命令"><a href="#替换命令" class="headerlink" title="替换命令"></a>替换命令</h2><ul>
+<li><p><code>r</code>命令用于替换光标所在的字符，做法是先将光标移动到需要替换的字符处，按一下<code>r</code>键，然后输入新的字符。</p>
+</li>
+<li><p>在键入<code>r</code>命令之前输入数字，表示从光标处开始，将多个字符统一替换为新字符。</p>
+</li>
+<li><p><code>R</code>命令可以进入到替换模式</p>
+</li>
+</ul>
+<h2 id="修改命令"><a href="#修改命令" class="headerlink" title="修改命令"></a>修改命令</h2><p>修改和替换是不一样的，修改会进入插入模式，替换不会进入插入模式。</p>
+<p>使用<code>c</code>命令实现修改:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c [数字] motion</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/10/28/blog02/4.png" alt="4"></p>
+<h1 id="文件信息"><a href="#文件信息" class="headerlink" title="文件信息"></a>文件信息</h1><p>有时候我们需要当前文件的文件信息，比如文件名、文件总行数等。可以使用<code>Ctrl+g</code>来查看文件信息。</p>
+<h2 id="跳转"><a href="#跳转" class="headerlink" title="跳转"></a>跳转</h2><p><code>行号+G</code>可以快速跳转。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/27/blog01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/27/blog01/" itemprop="url">Linux Windows双系统安装问题记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-27T10:53:48+08:00">
+                2019-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>安装了windows和Linux双系统，Linux版本为Ubuntu18.04TLS。</p>
+<h1 id="连接有线校园网"><a href="#连接有线校园网" class="headerlink" title="连接有线校园网"></a>连接有线校园网</h1><p>下载锐捷客户端Linux版本，解压。进入到<code>rjsupplicant</code>目录下，在终端运行如下命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./rjsupplicant.sh -u username -p password -d 1</span><br></pre></td></tr></table></figure>
+
+<p>将username和password替换为校园网的用户名和密码即可。</p>
+<h1 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h1><p>显卡为GeForce GTX 2070，Linux自带的显卡驱动显示不了2K的分辨率。</p>
+<ol>
+<li><p>首先卸载系统里低版本的英伟达显卡驱动</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get purge nvidia*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把显卡驱动加入PPA</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:graphics-drivers</span><br><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查找英伟达显卡驱动最新版本号</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-cache search nvidia</span><br></pre></td></tr></table></figure>
+
+<p>使用终端命令查看Ubuntu推荐的驱动版本(后面带有recommended)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ubuntu-drivers devices</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>然后打开系统里的软件和更新，点击附加驱动，选择上面推荐的驱动版本<br><img src="/2019/10/27/blog01/1.png" alt="1"></p>
+</li>
+<li><p>安装完成后重启系统即可，会发现多了一个名为NVIDIA X Server Settings的显卡驱动应用。</p>
+</li>
+</ol>
+<h1 id="安装中文输入法"><a href="#安装中文输入法" class="headerlink" title="安装中文输入法"></a>安装中文输入法</h1><ol>
+<li><p>首先卸载电脑中存在的ibus输入法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove `ibus*`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装fcitx输入法配置框架</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install fcitx-bin fcitx-table</span><br></pre></td></tr></table></figure>
+
+<p>然后打开设置中心，选择<strong>Region &amp; Language &gt; Manage Installed Languages</strong>(会提示The language support is not installed completely,选择Remind me Later)。在<strong>Keyboard input method system:</strong>中选择<strong>fcitx</strong>。</p>
+<p><img src="/2019/10/27/blog01/2.png" alt="2"></p>
+<p>这时候重启电脑可以看到右上角的fcitx的设置图标。然后开始安装搜狗输入法，进入官网下载安装包，双击安装即可。</p>
+<ol start="3">
+<li>选用搜狗输入法</li>
+</ol>
+<p>在终端运行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fcitx-configtool</span><br></pre></td></tr></table></figure>
+
+<p>如果未安装图形配置界面，则需执行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install <span class="string">'fcitx-config-gtk'</span></span><br></pre></td></tr></table></figure>
+
+<p>出现如下界面，点击减号按钮将自带的拼音输入法清除，然后点击加号按钮，搜索我们自己安装的输入法，选择即可。<br><img src="/2019/10/27/blog01/3.png" alt="3"></p>
+<p>可以按<strong>Ctrl+Space</strong>来快速切换不同的输入法</p>
+<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>插入耳机没有声音，发现是耳机插在了mic接口，改查spk接口后问题解决。</p>
+<h1 id="截屏"><a href="#截屏" class="headerlink" title="截屏"></a>截屏</h1><p>Ubuntu18.04中有自带的截图工具Screenshot，为了方便使用，将截图快捷键设置成熟悉的<strong>ctrl+alt+a</strong></p>
+<p>在右上角选择系统设置，<strong>Ｄevices-&gt;Keyboard</strong>，将<strong>Save a screenshot of an area to Pictures</strong>改为Ｃtrl+alt+a即可。<br><img src="/2019/10/27/blog01/4.png" alt="4"></p>
+<h1 id="安装vs-code"><a href="#安装vs-code" class="headerlink" title="安装vs code"></a>安装vs code</h1><p>从vs官网下载最新版本，运行下面命令安装即可</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i code_1.39.2-1571154070_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>如果安装过程中有如下错误<br><img src="/2019/10/27/blog01/5.png" alt="5"></p>
+<p>执行以下命令即可</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt --fix-broken install</span><br><span class="line">$ sudo dpkg -i code_1.39.2-1571154070_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/m0_37343696/article/details/79268886" target="_blank" rel="noopener">Linux系统下锐捷客户端连接方法</a></li>
+<li><a href="安装英伟达显卡驱动">Ubuntu 18.04</a></li>
+<li><a href="https://www.cnblogs.com/zhuangmingnan/p/9496499.html" target="_blank" rel="noopener">Ubuntu 18.04LTS安装搜狗输入法</a></li>
+<li><a href="https://www.jianshu.com/p/502b267ee658" target="_blank" rel="noopener">Ubuntu 18.04安装vscode</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/27/Unsupervised Learning Linear Methods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/27/Unsupervised Learning Linear Methods/" itemprop="url">Unsupervised Learning —— Linear Methods</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-27T10:06:33+08:00">
+                2019-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Dimension Reduction可分成两种，<strong>Generation</strong>(无中生有)和<strong>Reduction</strong>(化繁为简)。Unsupervised Learning可以分为两大类，一种是Clustering，一种是<strong>Dimension</strong> <strong>Reduction</strong>。</p>
+<p>化繁为简的意思是，现在有很多种不同的input，比如一个function，它可以input看起来像树的东西，output都是抽象的树。也就是把本来比较复杂的input,变成比较简单的output。在做unsupervised learning的时候，通常只会有function的其中一边。比如我们要找一个function，它可以把所有的树都变成抽象的树，但是我们所拥有的training data，就只有一大堆的各种不同的image，我们不知道它的output应该要长什么样。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/1.png" alt="1"></p>
+<p>另外一个Unsupervised Learning会做的事情是Generation。它做的事情是，找一个function,随机给它一个input，比如输入不同的数字，它就会output不同的树。在这个task里，我们要找的这个可以画图的function，只有这个function的output,但是没有这个function的input。（只有一大堆的image,但是不知道输入什么样的code才可以得到这些image）</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/2.png" alt="2"></p>
+<h1 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h1><p>假设我们要做image的clustering,就是有一大堆image，我们要把它们几类，每一个cluster就是一个标签，这样就把本来有些不同的image，都用同一个class来表示。、</p>
+<p>这里最重要的一个问题是，到底应该要有几个cluster。这个问题没有什么好的方法，就跟neural network要几层一样。</p>
+<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p>在Clustering方法里面，最常用的就是<strong>k-means</strong>。假设我们有一大堆的data，它们都是unlabeled的，$X = \{x^1,\cdots,x^n,\cdots,x^N\}$,其中每一个$x$可能代表一张image，我们要把它做成K个cluster。先找这些cluster的center，假如每一个object都是用vector来表示的话，那么center也是一样长度的vector。每一个cluster要找一个center,所以需要$c^1$到$c^K$个center。这些初始的center怎么来呢？可以从training data里面随机地找K个object出来，作为K个center。接下来，要对所有在training data里面的x，都要决定它属于1到K的哪一个cluster（看它与哪一个cluster center最接近）。之后再做update</p>
+<p>K-means步骤总结如下:</p>
+<ul>
+<li><p>Clustering $X=\{x^1,\cdots,x^2,\cdots,x^N\}$ into K clusters</p>
+</li>
+<li><p>Initialize cluster center $c^i,i=1,2,\cdots,K$(K random $x^n$ from X)</p>
+</li>
+<li><p>Repeat</p>
+</li>
+<li><ul>
+<li>For all $x^n$ in $X$:</li>
+</ul>
+</li>
+</ul>
+<p>$$b_i^n=<br>\begin{cases}<br>1&amp; x^n\text{ is most “close” to } c^i\\<br>0&amp; \text{Otherwise}<br>\end{cases}$$</p>
+<ul>
+<li><ul>
+<li>Updating all $c^i$:</li>
+</ul>
+</li>
+</ul>
+<p>$$c^i = \sum_{x^n}b^n_ix^n/\sum_{x^n}b_i^n$$</p>
+<p>之所以在做initialization的时候会直接从database里面去挑K个object出来做center，一个很重要的原因是，假设我们纯粹随机的，而不是从data point里面挑的，很有很能在第一次assign这个object的时候，就没有任何一个example跟某一个cluster很像，那么update的时候，程序会segmentation fault。</p>
+<h2 id="HAC"><a href="#HAC" class="headerlink" title="HAC"></a>HAC</h2><p>clustering有另外一个方法叫做<strong>Hierarchical Agglomerative Clustering(HAC)</strong>,这个方法是先建一个tree，假设现在有5个example，要把他做cluster，先做一个tree structure。即把这5个example两两去算它们的相似度，然后挑最相似的pair出来，将它们平均起来得到一个新的vector，现在就变成有4个example了。然后再把这4笔data两两去算他们的相似度，依次类推，这样就建立出一个tree structure。在这个tree里面，比较早的分支代表比较不像。接下来就是做clustering，选择一个threshold对tree structure进行切分，得到几个cluster，如下图。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/3.png" alt="3"></p>
+<p>HAC和K-means最大的差别就是如何决定cluster的数目，在K-means里面我们要决定K的值是多少，而HAC不直接决定几个cluster，而是要决定切在树的structure的哪里。</p>
+<h1 id="Distributed-Representation"><a href="#Distributed-Representation" class="headerlink" title="Distributed Representation"></a>Distributed Representation</h1><h2 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h2><p>但是，光只做cluster是非常卡的。在做cluster的时候，我们就是以偏概全，因为每一个object都必须要属于某一个cluster，但这样其实是比较粗糙的，应该要用一个vector来表示Object，这个vector里面的每一个dimension就代表了某一种特质，一种attribute。这件事情就叫做distributed representation。如果原来的object是一个非常high dimension的东西，比如image。那现在用它的attribute来描述，它就会从比较高维的空间变成比较低维的空间。这件事情就是Dimension Reduction。</p>
+<p>为什么Dimension Reduction可能是有用的？举例来说，假设data的分布如下图，用3D的空间来描述这些data其实是很浪费的，从直观上就能知道，其实可以把左边的data“摊开”，变成右边的样子，所以其实只需要在2D的空间，就可以描述3D的information。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/4.png" alt="4"></p>
+<p>再举一个比较具体的例子，我们考虑MNIST，在MNIST里面，每一个input的digit是一个image,它都用$28\times 28$的dimension来描述它。但实际上多数$28\times 28$的dimension的vector,把它转成一个image，看起来都不像一个数字。所以在这个$28\times 28$的空间里面，是digit的vector，其实是很少的。要描述一个digit，或许根本不需要$28\times 28$维。</p>
+<p>比如下面有一堆3，这堆3如果是从Pixel来看待它的话，要用$28\times 28$来描述每一个image。而实际上这些3只需要用一个维度就可以来表示，它们都可以用中间的3选择某一个角度得到。所以只需要一维就可以描述这些image。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/5.png" alt="5"></p>
+<p>要怎么做Dimension Reduction呢？我们要找一个function，这个function的input是一个vector $\bf{x}$，它的output是另外一个vector $\bf{z}$。z的维度要比x小。在Dimension Reduction里面，最简单的方法是<strong>Feature Selection</strong>。这个方法比较简单，我们将data的分布拿出来看一下，本来在二维的平面上，但我们发现其实都集中在$x_2$的dimension而已，$x_1$这个dimension没什么用，把它拿掉，这样就做到了Dimension Reduction这件事情。这个方式不是总是有用，因为有时候任何一个dimension都不能拿掉。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/6.png" alt="6"></p>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p>另外一个方法是<strong>Principle Component Analysis(PCA)</strong>,它做的事情是，假如function是一个很简单的linear function，input $\bf{x}$与output $\bf{z}$之间的关系就是一个linear的transform:</p>
+<p>$$\bf{z} = W\bf{x}$$</p>
+<p>现在要做的，就是根据一大堆的\bf{x},把W找出来（我们现在不知道\bf{z}长什么样）。</p>
+<p>为了找出W，我们现在考虑一个比较简单的one dimensional的case，即\bf{z}是一维的。z是一个scalar，那么W其实就是一个row vector,用$w^1$表示。于是就有：</p>
+<p>$$z_1 = w^1\cdot x$$</p>
+<p>另外还有如下很必要的假设：</p>
+<p>$$||w^1||_2 = 1$$</p>
+<p>有了上面假设，那么$z_1$就意味着$x$在$w^1$上面的投影值。所以我们现在做的事情就是把一堆$x$透过$w^1$把它投影变成$z_1$，这样就得到一堆$z^1$（project all the data points $x$ onto $w^1$,and obtain a set of $z_1$）。现在的问题是，这个$w_1$应该长什么样子？我们要选哪一个$w^1$呢？</p>
+<p>假设下面是$x$的分布，每一个点代表一只宝可梦，横坐标为攻击力，纵坐标为防御力。如果我们要把二维投影到一维，应该要选什么样的$w^1$？选择不同的$w^1$方向，最后得到的结果会是不一样的。我们的目标是：希望选一个$w^1$，它经过projection后得到的$z_1$的分布是越大越好的。下图中选择红色箭头方向会有比较大的variance，所以$w^1$的方向应该指向该方向。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/7.png" alt="7"></p>
+<p>如果我们用equation来表示的话，我们要去maximize的对象是$z_1$的variance：</p>
+<p>$$Var(z_1) = \sum_{z_1}(z_1 - \bar{z_1})^2\ \ \ \ \ \  ||w^1||_2 = 1$$</p>
+<p>但是我们可能不是只要投影到1维，比如想要投影到一个二维的平面。</p>
+<p>$$z_1 = w^1\cdot x$$  $$z_2 = w^2\cdot x$$</p>
+<p>其中$z_1$和$z_2$串起来就是$\bf{z}$。找$z_2$与找$z_1$一样，首先我们希望$w^2$的2-norm是1，并且$z_2$的分布越大越好。但如果只是让$Var(z_2)$越大越好，那找出来的不就是$w^1$吗，所以还需要再加一个constraint，这个constraint是：$w^2$要与$w^1$垂直（orthogonal）,即$w^1\cdot w^2=0$。</p>
+<p>要project到几维是需要我们自己决定的（和cluster、hidden layer的决定一样）。如果要project到$K$维，就需要找$w^1$到$w^K$,最后的$\bf{W}$如下</p>
+<p>$$\bf{W} =\begin{bmatrix}<br>{(w^1)^T}\\<br>{(w^2)^T}\\<br>{\vdots}\\<br>{(w^K)^T}\\<br>\end{bmatrix}$$</p>
+<blockquote>
+<p>找出来的$\bf{W}$是一个orthogonal matrix。因为的行向量长度为1并且两两正交。</p>
+</blockquote>
+<p>接下来的问题是怎么解出$w^1$到$w^K$，这里要用到<strong>Lagrange multiplier</strong>，（其实也可以将PCA描述成一个neural network，然后用Gradient Descent的方法来解），方法如下图：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/8.png" alt="8"></p>
+<p>$w^1$的解法如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/9.png" alt="9"></p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/10.png" alt="10"></p>
+<p>上图中第二个微分式子为：$(w^1)^TSw^2 - \alpha (w^1)^Tw^2 -\beta (w^1)^Tw^1 = 0$</p>
+<h3 id="PCA-decorrelation"><a href="#PCA-decorrelation" class="headerlink" title="PCA - decorrelation"></a>PCA - decorrelation</h3><p>$\bf{z} = Wx$</p>
+<p>上式有一个神奇的地方，就是$z$的covariance会是一个diagonal matrix（$Cov(z) = D$）。也就是说，如果我们今天做PCA，原来的data distribution可能是下图左边的样子，做完PAC以后，会做decorrelation，会让不同的dimension间的convariance是0。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/11.png" alt="11"></p>
+<p>这样做有时候会有帮助，假设现在的PCA所得到的新的feature，即$\bf{z}$是一种新的feature，这个新的feature是要给其他Model用的，而这个model假设是一个generative model，用Gaussian来描述某一个class的distribution。而在做这个Gaussian假设的时候，假设input data，它的covariance是diagnoal（不同的dimension之间没有correlation），这样可以减少参数量。把原来的data做PCA之后，在丢给其他的model，其他的model就可以假设现在的input data的dimension间没有corelation，所以它就可以用比较简单的Model来处理input data，这样就可以避免overfitting的情形。</p>
+<p>这件事情的证明也是非常trivial的。</p>
+<p>$$Con(z) = \sum(z - \bar{z})(z - \bar{z})^T = WSW^T$$ $$S = Cov(x)$$</p>
+<p>所以有：</p>
+<p>$$Cov(z) = WS[w^1\ \cdots \ w^K] = W[Sw^1\ \cdots \ Sw^K] = W[\lambda_1w^1\ \cdots \ \lambda_Kw^K]$$ $$ = [\lambda_1Ww^1\ \cdots \ \lambda_KWw^K] = [\lambda_1e_1\ \cdots \ \lambda_Kw_K]$$</p>
+<p>以上部分或许不是太容易理解，我们从另外一个角度来看PCA。另一个比较直观的PCA如下，假设我们考虑的是手写数字，这些数字其实是由一些basic component所组成，这些component就可能代表笔画。举例来说，人手写的数字可能由这些basic component所组成，把这些component加起来以后，就可以得到一个数字。这些basic component其实就是一个个的vector，假设我们现在考虑的是MNIST的话，MNIST的一张image是$28\times 28$pixel，也就是$28\times 28$维的一个vector，这些component其实也就是$28\times 28$维的vector，把这些vector加起来以后，所得到的vector就代表了一个digit，</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/12.png" alt="12"></p>
+<p>整理一下有下式：</p>
+<p>$$x - \bar{x} \approx c_1u^1 + c_2u^2 + \cdots + c_Ku^K = \hat{x}$$</p>
+<p>现在假设我们不知道这些$u^1$到$u^K$这$K$个vector长什么样子，要怎么找这K个vector出来呢？我们要做的事情就是找出$u^1$到$u^K$，使得$x - \bar{x}$与$\hat{x}$越接近越好。它们中间的差，没有办法用component来描述的部分，叫做<strong>reconstruction error</strong>。我们要找K个vector，来minimize这个reconstruction error。reconstruction error写成$L$，它的公式如下：</p>
+<p>$$L = \min_{\{u^1,\cdots,u^K\}} \sum \left|\left|((x - \bar{x}) - (\sum^K_{k=1}c_ku^k))\right|\right|_2 \tag{1}$$</p>
+<p>先来回顾一下PCA，在PCA里，我们要找一个matrix $W$,原来的vector $\bf{x}$乘上$W$以后，就得到Dimension Reduction以后的结果$\bf{z}$，下式中的$w_1$到$w_K$都是covariance matrix的eigenvector。事实上，如果要解式子(1)，找出$u^1$到$u^K$，$w^1$到$w^K$，就是由PCA找出来的这个解，其实就是可以让式子(1)最小化。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/13.png" alt="13"></p>
+<p>用一个比较简单的方式来证明。我们现在在database里面有一大堆的$x$，现在假设有一个$x^1$，有：</p>
+<p>$$x^1 - \bar{x} \approx c_1^1u^1 + c_2^1u^2 + \cdots$$</p>
+<p>database里面不只有$x^1$，所以可以表示如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/14.png" alt="14"></p>
+<p>上图中Matrix X的column的数目就是data的数目，我们希望左右两边的matrix越接近越好。如何解这个问题呢？在线代里面，每一个matrix X,都可以用SVD，把它拆成一个3个Matrix的乘积。如下，其中$k$是component的数目。矩阵$U$对应上面左边的矩阵($u^1$到$u^K$组成)，矩阵$\Sigma$和$V$的乘积对应上面右边的矩阵($c_n^m$组成)。如果我们用SVD的方法将$X$拆成这三个matrix相乘的结果，那么右边这三个Matrix相乘的结果跟左边这个matrix它们之间的Frobenius的norm是会被minimize的。也就是说，用SVD提供给我们的一个matrix拆解方法，<br>它跟左边的matrix是最接近的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/15.png" alt="15"></p>
+<p>解出来的结果是，U的k个column其实就是一组orthonormal的vector，这组orthonormal的vector，它们是$XX^T$的eigenvector。而这里总共有K个orthonormal的vector，这K个vector就对应到$XX^T$最大的k个eignenvalue的eigenvector。$XX^T$就是covariance matrix，我们之前PCA找出来的那一些$w$就是covariance matrix的eigenvector，而我们做SVD，解出来的U的每一个column，就是covariance matrix的eigenvector。所以U这个解，其实就是PCA的出来的解。即PCA得到的w其实就是component。</p>
+<h3 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h3><p>我们现在已经知道，从PCA找出来的$w^1$到$w^K$就是K个component($u^1$到$u^K$),根据component linear combination的结果$\hat{x}$：</p>
+<p>$$\hat{x} = \sum^K_{k=1}c_kw^k$$</p>
+<p>我们希望$\hat{x}$与$x - \bar{x}$越接近越好。我们现在已经根据SVD，找出来W，那么$c_k$的值到底应该是多少？这个问题其实是在说，现在有$K$维的vector，它们做span以后，得到一个space，现在用$c_1$到$c_K$对他做linear combination，怎样才能最接近$x-\bar{x}$。因为$w^1$到$w^K$是orthonormal的，所以要得到$c_k$其实很简单，只要把$x - \bar{x}$与$w^k$做inner product，得到的就是$c_k$：</p>
+<p>$$c^k = (x-\bar{x})\cdot w^k$$</p>
+<p>上面做linear combination的事情，其实可以想成用neural network来表示。假设$x - \bar{x}$就是一个vector，这边写成一个3维的vector,假设K=2,我们先算出$c_1$和$c_2$（innear product）,也就是把$x - \bar{x}$的每一个component乘上w^1的每一个component，就得到$c_1$，这就好像是说，$x - \bar{x}$是neuron network的input，$c_1$是一个neuron，$w_1^1$、$w_2^2$是neuron的weight，这个neuron它是一个linear的neuron，它没有activation function。我们希望这个neural network的output跟$x - \bar{x}$越接近越好。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/16.png" alt="16"></p>
+<p>我们会发现，其实PCA可以表示成一个neural network，这个neural network只有一个hidden layer，这个hidden layer是linear的activation function。我们train这个neural network的criterion是要让output与input越接近越好。这个东西就叫做<strong>Autoencoder</strong>。</p>
+<blockquote>
+<p>假设现在的weight不是用PCA找eigenvector的方法，而是直接用neural network通过Gradient Descent训练得到$w^1$到$w^K$,那么这个结果会和用PCA得到的结果一样吗？</p>
+</blockquote>
+<p>其实是会不一样的，PCA解出来的W，它们是orthonormal的。如果用neural network训练得到的结果，没有办法保证会是垂直的。我们在前面的SVD证明里面已经说PCA导出来的这组解$w^1$到$w^K$，它可以让我们的reconstruction error被minimize。如果用Gradient descent的方法去硬解一发，其实也不可能比PCA找出来的reconstruction error还要小。</p>
+<p>所以，如果是在linear的情况下，或许就会直接用PCA来找W，是比较快的。用neural network或许是比较麻烦的。但是用neural network的好处是它可以是deep的，这就是之后会讲的<strong>deep autoencoder</strong>。</p>
+<h3 id="Weakness-of-PCA"><a href="#Weakness-of-PCA" class="headerlink" title="Weakness of PCA"></a>Weakness of PCA</h3><p>PCA其实有一些很明显的弱点。一个就是，因为它是unsupervised，所以今天假如给它一大堆点，没有label，那对PCA来说，假设把它project到一维上，PCA会找一个可以让data variance最大的那一个dimension，如下图。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/17.png" alt="17"></p>
+<p>但是有一个可能是，或许这两组data point，它们分别代表了两个class，如果用PCA这个方法来做Dimension Reduction的话,就会使得这两个蓝色和橙色的class被merge在一起。它们在PCA上找出来的single dimension上，完全被混在一起，无法分别。这个时候可能就需要引入label data。<strong>LDA(linear discriminant analysis)</strong>是考虑这个labeled data的一个降维方法，但它是supervised的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/18.png" alt="18"></p>
+<p>另外一个PCA的弱点是它是linear的，如下图点的分布像是S形的，我们期待做dimension reduction以后，可以把S形的曲面，把它拉直，但这件事情对PCA来说是做不到的。因为将S形的曲面拉直是一个non-linear的transformation。把S行的曲面做PCA，得到的结果如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/19.png" alt="19"></p>
+<hr>
+<p>一个实际的例子，假设每只宝可梦可以用一个6维的vector来表示，我们现在来用PCA来分析它。在用PCA的时候常常会问的一个问题是，需要有多少个component。到底要把它project到几维，资讯量才足够呢？这个取决于你想要做什么。假设要做visualization，因为现在每一个宝可梦都是6维，没有办法了解这些宝可梦之间的特性有什么样的关系，所以可能就会想把它project到二维，就比较容易分析。要用多少principle component，就好像是neural network要有几层layer，每层layer要有多个neuron一样，这个是要我们自己决定的。一个常见的方法是，计算每一个principle component的$\lambda$，我们知道每一个principle component就是一个eigenvector，这个eigenvector又对应一个eigenvalue，也就是$\lambda$。这个eigenvalue代表我们用这个principle component去做dimension reduction的时候，在principle component的dimension上，它的variance有多大，那个variance就是$\lambda$。今天这个宝可梦的data总共有6维，所以它的covariance matrix是6维，所以可以找出6个eigenvector和6个eigenvalue。我们现在来计算一下每个eigenvalue的ratio（把每个eigenvalue除以6个eigenvalue的总和），得到的结果如下，从中可以看出第五个和第六个principle component它们的作用其实是比较小的。用这两个dimension来做projection的时候，project出来的variance其实是很小的。这表示，现在宝可梦的这些特性在第五个和第六个principle component上是没有太多information。所以，如果我们今天要分析宝可梦的data的话，感觉只需要前面4个principle component就好了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/20.png" alt="20"></p>
+<p>做了PCA以后，得到的4个principle component如下，每一个principle component是一个六维的vector。那么每一个principle component它做的事情是什么呢？可以看到第一个principle component每一个dimension都是正的，所以它代表这只宝可梦的强度。第2个principle component它在Def是正值，在Speed处是负值，也就是宝可梦防御力提升的时候，它的速度会下降。其他的principle component也有各自的功能。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/21.png" alt="21"></p>
+<p>用PCA做手写数字辨识的话，每一个component都是一个image。用PCA得到前30个component如下，用这些component做linear combination，就可以得到所有的数字。所以这些component就叫做Eigen-digit。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/22.png" alt="22"></p>
+<p>同理，如果做人脸辨识的话，找出来的principle component就叫做Eigen-face。</p>
+<h3 id="NMF"><a href="#NMF" class="headerlink" title="NMF"></a>NMF</h3><p>注意principle component不一定是要加起来，也可以减掉它们，所以component不一定都是类似笔画的东西，如Eigen-face每一个就是一张完整的脸。如果要得到类似笔画的东西，要用到另外一个技术<strong>NMF(Non-negative matrix factorization)</strong></p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/23.png" alt="23"></p>
+<p>之前说过，PCA可以看作是对matrix X做SVD，SVD就是一种矩阵分解的技术。它分解出来的两个两个matrix的值，可以是正的，也可以是负的。如果用NMF的话，我们会强迫所有的component的weight都是正的，这样的好处就是，现在一张iamge必须由component叠加得到，而不能是由复杂的东西减去一部分得到。另外，所有的component的每一个dimension，也都必须是正的。</p>
+<ul>
+<li><p>Non-negative matrix factorization(NMF)</p>
+<ul>
+<li><p>Forcing $a_1,a_2,\cdots$ be non-negative</p>
+<ul>
+<li>additive combination</li>
+</ul>
+</li>
+<li><p>Forcing $w^1,w^2,\cdots$ be non-negative</p>
+<ul>
+<li>More like “parts of digits”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>NMF在手写数字辨识上得到的的principal component如下，现在的component就可以看作是笔画了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/24.png" alt="24"></p>
+<h1 id="Matrix-Factorization"><a href="#Matrix-Factorization" class="headerlink" title="Matrix Factorization"></a>Matrix Factorization</h1><p>有时候会有两种object，它们之间是受到某种共通的latent factor去操控的。假设我们现在调查每个人手上公仔的数目，下面的A到E代表5个人，</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/25.png" alt="25"></p>
+<p>我们会发现，在上面的matrix中，每个table里的block并不是随机出现的。例如，买凉宫春日公仔的人，会比较有可能有御坂美琴的公仔。这是因为，每一个人跟每一个角色背后是有一些共同的特性，一些共同的factor来操控(There are some common factors behind otakus and characters)。</p>
+<p>动漫宅或许可以分为两种，萌傲娇和萌天然呆，每一个人，其实就是在这两种属性的组合。每一个角色，也有这两种属性，所以也可以用一个二维的vector来描述它。如果某一个人萌的属性跟某一个角色他本身所具有的属性是match的话（即它们背后的vector很像，比如inner product的值很大），那么这个人就会买很多对应角色的公仔。所以它们匹配的程度取决于他们背后这个latent factor是不是匹配的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/26.png" alt="26"></p>
+<p>问题在于一个人的属性分配是没有办法直接被观察的（没有人在意阿宅心里在想什么(<em>^_^</em>)），另外也没有办法知道每个动漫人物背后的属性是什么。我们有的只是动漫人物跟阿宅中间的关系，我们需要凭借这个关系，去推论出每一个人跟每一个动漫人物他们背后的latent factor。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/27.png" alt="27"></p>
+<p>我们现在做一个假设：Matrix X里面的每一个element都来自于两个vector的inner product</p>
+<p>$$r^A\cdot r^1 \approx 5$$  $$r^B\cdot r^1 \approx 4$$  $$r^C\cdot r^1 \approx 1$$</p>
+<p>用数学式表示的话如下图，$K$是latent factor的数目，它的值我们是每办法知道的，上面我们将人分成萌傲娇和萌天然呆其实是不精确的分析方式，如果我们有更多的data的话，应该可以更精准知道要有多少factor。但是实际上要有多少factor这件事必须要试出来，就像是principal component的数目或neural network的层数一样。如下图，我们要做的事情就是找一组$r^A$到$r^E$和一组$r^1$到$r^4$，将右边两个matrix相乘后，结果和Matrix X越接近越好。我们可以用SVD来解，$\Sigma$并到左边或右边都可以。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/28.png" alt="28"></p>
+<p>有时候可能会遇到一个问题，就是有一些information是missing的。比如我们并不知道ABC手上有没有小野寺的公仔，有可能只是在他所在的地区没有发行这个公仔而已。所以不知道如果发行的话，他到底会不会买。所以下表中有些数据是问号，这样再做SVD就会有点卡。如果在matrix X上有一些missing value的话，我们还是可以做的。我们就用Gradient Descent的方法来做它。我们写一个loss function，如下图，其重点在于，在summation over这些element的时候，可以避开这些missing data，我们只算值有定义的部分。剩下的部分用Gradient descent就可以了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/29.png" alt="29"></p>
+<p>算出了$r^1$到$r^4$和$r^A$到$r^E$,即每个人和每个角色对应的vector，有了这些data后，就可以预测missing value（将相应的vector做inner product），即每个人会买相应公仔的数目。所以这种方法，常用在推荐系统里面。（例如预测某个人会不会喜欢某部电影）</p>
+<p>其实，上面的model可以做更精致一点。A背后的latent factor乘上1背后的latent factor，得到的结果就是table上面的数值。但事实上，可能还会有别的因素会操纵他的数值。更精确的写法如下：</p>
+<p>$$r^A \cdot r^1 \approx 5  \rightarrow r^A \cdot r^1 + b_A + b_1 \approx 5 $$</p>
+<p>$b_A$是与A有关的scalar，它代表A有多喜欢买公仔。$b_1$是与1有关的scalar，它代表该角色的公仔有多想让别人购买。这件事情是和属性无关的。改一下要minimize的式子：</p>
+<p>$$L = \sum_{(i,j)}(r^i\cdot r^j + b_i + b_j - n_{ij})^2$$</p>
+<p>用Gradient descent找出$r^i$、$r^j$、$b_i$、$b_j$的值。如果想要知道更多，可以参考链接2，它是Matrix Factorization在Netflix上面的应用。</p>
+<h2 id="Matrix-Factorization-for-Topic-analysis"><a href="#Matrix-Factorization-for-Topic-analysis" class="headerlink" title="Matrix Factorization for Topic analysis"></a>Matrix Factorization for Topic analysis</h2><p>Matrix Factorization的另一个应用是<strong>Topic analysis</strong>。将Matrix Factorization用在Topic analysis上面的话就叫做<strong>Latent semantic analysis(LSA)</strong>。它的技术和上面所讲是一模一样的，只不过是换了名词而已。charater换成了document,otakus换成了word，table里面的值就是Term frequency，即每个word在document里面出现的次数。有时候，我们不知会用Term frequency,而是会把Term frequency再乘上一个weight，代表这个term本身有多重要。通常怎么evaluate一个term重不重要呢？有很多方法，一个常用的就是<strong>inverse document frequency</strong>。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/30.png" alt="30"></p>
+<p>在这个task里面，如果今天把这个matrix做分解的话，就会找到每一个documnet背后的latent factor，和每一个词汇背后的latent factor。这里的latent factor可能指的是topic，即某一个document（或word），它背后要谈的主题有多少部分与财经有关，有多少部分与政治有关等等。</p>
+<p>Topic analysis的方法多如牛毛，他们基本的精神是差不多的，但是有很多各种各样的变化，常见的是<strong>Probability latent semantic analysis(PLSA)</strong>和<strong>latent Dirichlet allocation(LDA)</strong></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="https://www.researchgate.net/publication/2538030_Algorithms_for_Non-negative_Matrix_Factorization" target="_blank" rel="noopener">Algorithm for Non-negative Matrix Factorization</a></p>
+</li>
+<li><p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-[Netflix].pdf" target="_blank" rel="noopener">MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS</a></p>
+</li>
 </ol>
 
           
@@ -2015,7 +2239,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2063,7 +2287,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2074,7 +2298,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2085,7 +2309,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ROS版本ROS从2014年稳定之后，推出了长期支持版，支持的时间与Ubuntu是保持一致的。  ROS安装ROS安装之前需要先对软件库的设置进行确认。本人使用的Ubuntu18.04版本。在Ubuntu系统中打开Ubuntu Software，然后点击Software&amp;amp;Upadtes，将下面的4个复选框勾上。  ROS安装有以下6个步骤。 添加ROS软件源1$sudo sh -c &apos;ec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS安装及介绍">
+<meta property="og:url" content="http://yoursite.com/2019/10/18/Lecture01/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="ROS版本ROS从2014年稳定之后，推出了长期支持版，支持的时间与Ubuntu是保持一致的。  ROS安装ROS安装之前需要先对软件库的设置进行确认。本人使用的Ubuntu18.04版本。在Ubuntu系统中打开Ubuntu Software，然后点击Software&amp;amp;Upadtes，将下面的4个复选框勾上。  ROS安装有以下6个步骤。 添加ROS软件源1$sudo sh -c &apos;ec">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/18/Lecture01/13.png">
+<meta property="og:updated_time" content="2019-11-09T01:57:44.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ROS安装及介绍">
+<meta name="twitter:description" content="ROS版本ROS从2014年稳定之后，推出了长期支持版，支持的时间与Ubuntu是保持一致的。  ROS安装ROS安装之前需要先对软件库的设置进行确认。本人使用的Ubuntu18.04版本。在Ubuntu系统中打开Ubuntu Software，然后点击Software&amp;amp;Upadtes，将下面的4个复选框勾上。  ROS安装有以下6个步骤。 添加ROS软件源1$sudo sh -c &apos;ec">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/18/Lecture01/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/18/Lecture01/">
+
+
+
+
+
+  <title>ROS安装及介绍 | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/18/Lecture01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ROS安装及介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-18T11:59:21+08:00">
+                2019-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ROS版本"><a href="#ROS版本" class="headerlink" title="ROS版本"></a>ROS版本</h1><p>ROS从2014年稳定之后，推出了长期支持版，支持的时间与Ubuntu是保持一致的。</p>
+<p><img src="/2019/10/18/Lecture01/1.png" alt="1"></p>
+<h1 id="ROS安装"><a href="#ROS安装" class="headerlink" title="ROS安装"></a>ROS安装</h1><p>ROS安装之前需要先对软件库的设置进行确认。本人使用的Ubuntu18.04版本。在Ubuntu系统中打开Ubuntu Software，然后点击<strong>Software&amp;Upadtes</strong>，将下面的4个复选框勾上。</p>
+<p><img src="/2019/10/18/Lecture01/2.png" alt="2"></p>
+<p>ROS安装有以下6个步骤。</p>
+<h2 id="添加ROS软件源"><a href="#添加ROS软件源" class="headerlink" title="添加ROS软件源"></a>添加ROS软件源</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> sh -c <span class="string">'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"&gt; /etc/apt/sources.list.d/ros-latest.list'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加密钥"><a href="#添加密钥" class="headerlink" title="添加密钥"></a>添加密钥</h2><p>很多ROS相关的功能包下载下来之前要去对照密钥，所以我们要把密钥也设置一下。</p>
+<p>上面的命令就是将ROS软件源添加到系统软件源里面，因为ROS本身有一个单独的镜像去做维护，而这个软件源是系统本身没有的，需要我们自己去添加。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-key adv --keyserver <span class="string">'hkp://keyserver.ubuntu.com:80'</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装ROS"><a href="#安装ROS" class="headerlink" title="安装ROS"></a>安装ROS</h2><p>安装ROS之前要先更新软件源，<code>$sudo apt update</code>指令会从上面的软件源配置里面去搜索所有ROS相关的包的安装路径，然后更新到系统里面。因为网络问题，可能要尝试好几次。</p>
+<p>update之后，所有软件源的下载地址已经更新到本地了，系统会更具链接去查找下载的地址，不需要再重新去update了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt update</span><br><span class="line"><span class="variable">$sudo</span> apt install ros-melodic-desktop-full</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>sudo apt install ros-melodic-desktop-full</code>命令时可能会报如下错误，可以参考链接[2]</p>
+<p><img src="/2019/10/18/Lecture01/3.png" alt="3"></p>
+<p>ROS的安装包分为几个版本，如果用PC来安装，一般安装<code>desktop-full</code>,这是一个桌面完整版。但是虽然它名字里面有full，但它并不是完全的完整版，很多后面要用到的ROS功能包，还是需要apt get或apt install这种方式来安装，desktop-full只是把一些基本的工具包和基本的使用工具都具备了。</p>
+<p>下载内容比较多，要确保足够的存储空间(大概2GB),可能需要20多分钟。</p>
+<h2 id="初始化rosdep"><a href="#初始化rosdep" class="headerlink" title="初始化rosdep"></a>初始化rosdep</h2><p><strong>rosdep</strong>是ROS里面的一个工具，它可以用来去帮助我们完成一些功能包依赖的设置和安装。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> rosdep init</span><br><span class="line"><span class="variable">$rosdep</span> update</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> <span class="built_in">echo</span> <span class="string">"source /opt/ros/melodic/setup.bash"</span>&gt;&gt;~/.bashrc</span><br><span class="line"><span class="variable">$source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p> <code>/bashrc</code>是终端的一个配置文件，后面我们在终端里面输入所有的ROS命令都可以通过这个配置文件去确认它的位置。<code>source</code>指令用来运行脚本。环境变量生效后，输入<code>ros</code>然后按两下tab键，就会发现有很多有ros开头的命令。这些命令都是我们安装完ros后ros里面包含的命令行工具，只有环境变量设置成功后才会看到这样的效果。</p>
+<p> <img src="/2019/10/18/Lecture01/4.png" alt="4"></p>
+<h2 id="安装rosinstall"><a href="#安装rosinstall" class="headerlink" title="安装rosinstall"></a>安装rosinstall</h2><p><code>rosinstall</code>也是用来帮助安装ROS依赖包的工具。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt install python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br></pre></td></tr></table></figure>
+
+<p>至此，ROS已经安装完毕。所有ROS的安装内容都在<code>/opt/ros/melodic/</code>目录下。为了验证ROS是否安装成功，可以运行<code>roscore</code>命令，如果有如下信息出来，说明ROS安装没有问题。</p>
+<p><img src="/2019/10/18/Lecture01/5.png" alt="5"></p>
+<h1 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h1><p>我们来运行一个ROS里面最基础的例程，小海龟仿真器。需要如下3个步骤</p>
+<ol>
+<li><code>$roscore</code> 启动ROS Master</li>
+<li><code>$rosrun turtlesim turtlesim_node</code> 启动小海龟仿真器</li>
+<li><code>$rosrun turtlesim turtle_teleop_key</code> 启动海龟控制节点</li>
+</ol>
+<p>运行结果如下</p>
+<p><img src="/2019/10/18/Lecture01/6.png" alt="6"></p>
+<hr>
+<h1 id="ROS发展史"><a href="#ROS发展史" class="headerlink" title="ROS发展史"></a>ROS发展史</h1><p>ROS诞生于2007年，它产生于斯坦福大学的一个项目，他们希望建立一个机器人平台，有移动底盘，上面有机械臂，可以帮助人们去完成一些家庭里面的工作。Willow Garage公司看中了这个项目，决定用商业化的手段来推进这个机器人平台的发展，从而也诞生了PC（Personal Robot）这款机器人，Willow Garage接手了，对项目进行了维护，到了2010年，正式对外开源ROS，并且发布了ROS第一个版本。2011年，由于Willow Garage公司的Personal Robot成本太高，没有办法走入到人们的生活，所以他们做了第二个非常重要的机器人平台TurtleBot,这是一个移动底盘加上面一个PC和一个kinect传感器，它可以完成SLAM导航、图像等等相关的应用。这款机器人对ROS的促进作用非常大，因为它成本非常低（几千块），很多ROS里面的主流功能尤其是导航都可以跑起来，所以很多实验室、学校和科研院所都购买了这款机器人作为平台。在2012年，ROS相关的研发已经比较多了，所以ROS官方就组织了第一届ROScon，这个相当于是一个ROS的开发者大会，每年一届。2013年由于Willow Garage公司的经营问题，ROS团队解散了，所以ROS的维护就会成为问题，ROS的创始人创建了OSRF基金会，它接管了ROS的维护性工作，包括版本迭代和后期维护。2014年OSRF发布了ROS的第一个长期支持版Indigo，此后每两年发布一个ROS的长期支持版。</p>
+<p>ROS早期的定位是一个科研性质的机器人研发平台，所以ROS本身有很多设计上的缺陷和问题，随着ROS的广泛引用，使得这些问题暴露的越来越明显，很多人也呼吁ROS官方能不能去维护一个ROS2.0版本。2014年ROS2.0的概念正式提出，经过一段时间的迭代和维护，到2017年发布了ROS2.0的正式版Ardent。ROS2.0和1.0有比较大的变化，它的整个框架都做了重新设计，这要的设计目标是让机器人的开发从研发领域到产品的过渡更加平滑，让ROS2.0能够适用于更多的机器人。目前ROS2.0还不是很成熟，但是未来可能会取代1.0成为主流标准，很多大公司也会加入进来推动2.0的发展。</p>
+<p><img src="/2019/10/18/Lecture01/7.png" alt="7"></p>
+<h1 id="ROS应用现状"><a href="#ROS应用现状" class="headerlink" title="ROS应用现状"></a>ROS应用现状</h1><p>ROS的发展也离不开大公司的推动，之前人们也呼吁ROS能不能支持windows。一直到2018年9月，微软才正式官方宣布可以在win10当中支持ros，并且有一系列如vs studio的工具可以支持ROS的开发，包括可以集成很多微软的机器学习算法和图像识别算法。目前来看，windows里面使用ROS的功能还是非常有限的，大部分的ROS开发还是要做Ubuntu里面实现。例外亚马逊也推出了RoboMaker这样的云机器平台，它可以在web网页上去开发机器人的所有功能，包括集成亚马逊的云服务，然后去部署到机器人上。</p>
+<p><img src="/2019/10/18/Lecture01/8.png" alt="8"></p>
+<h1 id="ROS是什么"><a href="#ROS是什么" class="headerlink" title="ROS是什么"></a>ROS是什么</h1><p>到底ROS是什么呢？比较抽象的概念是说ROS是一个机器人源操作系统，里面包括硬件管理等等的概念，但这样的定义非常的模糊。ROS官方给出的定义是ROS=通信机制+开发工具+应用功能+生态系统。ROS其实就是一套通信机制，一套开发工具，一些列应用功能和一个生态系统组成的一个集合。它的目标是用来提高机器人研发过程中的软件复用率。我们可以把别人开发的代码功能去复用，在此基础上去进一步完善。</p>
+<p><img src="/2019/10/18/Lecture01/9.png" alt="9"></p>
+<h2 id="ROS通信机制"><a href="#ROS通信机制" class="headerlink" title="ROS通信机制"></a>ROS通信机制</h2><p>在通信机制层面上ROS给我们提供了一个非常重要的松耦合分布式通信框架，整个ROS里面的所有的功能，这些框架可以把它抽象成一个节点图，里面有一系列的椭圆，每个椭圆代表一个节点，比如图像采集、图像处理、图像驱动、SLAM导航以及相关的算法，每一个具体的功能都是一个椭圆节点，节点之间通过箭头连接，箭头代表节点之间通信的数据的流向，包括数据的内容。最后整个功能抽象之后，就是下面这张计算图。计算图的结构在很多软件设计里面用的是比较广泛的。</p>
+<p><img src="/2019/10/18/Lecture01/10.png" alt="10"></p>
+<h2 id="ROS开发工具"><a href="#ROS开发工具" class="headerlink" title="ROS开发工具"></a>ROS开发工具</h2><p>ROS为了帮助我们提高机器人开发效率，提供了很多工具。比如命令行工具和可视化工具等。</p>
+<p><img src="/2019/10/18/Lecture01/11.png" alt="11"></p>
+<h2 id="ROS应用功能"><a href="#ROS应用功能" class="headerlink" title="ROS应用功能"></a>ROS应用功能</h2><p>ROS里面的应用功能是非常丰富的，不管是开发移动机器人、机械臂还是无人机，任意的机器人都可以在ROS里面找到相关的原型。这些功能包都是在整个ROS社区里面大家围绕这样的框架（接口、标准、协议定义）去开发了一系列算法，这些算法我们只用关心它的接口输入和输出是什么样的，</p>
+<p><img src="/2019/10/18/Lecture01/12.png" alt="12"></p>
+<h2 id="ROS生态系统"><a href="#ROS生态系统" class="headerlink" title="ROS生态系统"></a>ROS生态系统</h2><p>围绕ROS整个核心的代码、功能包、相关资源，是有一个庞大的生态系统的，这个生态系统有一个组织的方式。另外在ROS生态系统里面主要的功能包都是下图右边这样的组织形式。比如我们去开源分享了一些代码，这些代码可能以功能包的形式组成，每一个功能包完成一个具体的功能，比如图像识别、摄像头的驱动，都是与图像相关的功能包就会组成一个元功能包（或者叫功能包集），这些功能包集的内容会被传到github或者SVN上去做管理，这就是我们代码的仓库。最后在整个社区范围内，是基于互联网的一个非常庞大的软件的仓库，每个人去分享自己的软件仓库，大家的仓库联合到一起后，就成为了ROS社区。这就是从最基本的代码到整个ROS社区的所有代码仓库的一个结构。</p>
+<p><img src="/2019/10/18/Lecture01/13.png" alt="13"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/a13526758473/article/details/79247478" target="_blank" rel="noopener">apt-get软件包管理命令和apt-key命令</a></li>
+<li><a href="https://itsfoss.com/could-not-get-lock-error/" target="_blank" rel="noopener">Fix ‘E: Could not get lock /var/lib/dpkg/lock’ Error in Ubuntu</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/17/预备知识/" rel="next" title="预备知识">
+                <i class="fa fa-chevron-left"></i> 预备知识
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/23/Lecture02/" rel="prev" title="ROS的核心概念">
+                ROS的核心概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS版本"><span class="nav-number">1.</span> <span class="nav-text">ROS版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS安装"><span class="nav-number">2.</span> <span class="nav-text">ROS安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加ROS软件源"><span class="nav-number">2.1.</span> <span class="nav-text">添加ROS软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加密钥"><span class="nav-number">2.2.</span> <span class="nav-text">添加密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装ROS"><span class="nav-number">2.3.</span> <span class="nav-text">安装ROS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化rosdep"><span class="nav-number">2.4.</span> <span class="nav-text">初始化rosdep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置环境变量"><span class="nav-number">2.5.</span> <span class="nav-text">设置环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装rosinstall"><span class="nav-number">2.6.</span> <span class="nav-text">安装rosinstall</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试程序"><span class="nav-number">3.</span> <span class="nav-text">测试程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS发展史"><span class="nav-number">4.</span> <span class="nav-text">ROS发展史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS应用现状"><span class="nav-number">5.</span> <span class="nav-text">ROS应用现状</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROS是什么"><span class="nav-number">6.</span> <span class="nav-text">ROS是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS通信机制"><span class="nav-number">6.1.</span> <span class="nav-text">ROS通信机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS开发工具"><span class="nav-number">6.2.</span> <span class="nav-text">ROS开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS应用功能"><span class="nav-number">6.3.</span> <span class="nav-text">ROS应用功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS生态系统"><span class="nav-number">6.4.</span> <span class="nav-text">ROS生态系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

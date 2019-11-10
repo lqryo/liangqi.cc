@@ -80,12 +80,12 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="学习笔记">
+<meta property="og:title" content="Qi-Liang&#39;blog">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习笔记">
+<meta name="twitter:title" content="Qi-Liang&#39;blog">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <title>学习笔记</title>
+  <title>Qi-Liang'blog</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -259,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/Lecture08/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/25/Semi-supervised Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -268,7 +268,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/03/Lecture08/" itemprop="url">容器之间的实现关系与分类</a></h1>
+                <a class="post-title-link" href="/2019/10/25/Semi-supervised Learning/" itemprop="url">Semi-supervised Learning</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-03T17:56:46+08:00">
-                2019-10-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-25T19:18:33+08:00">
+                2019-10-25
               </time>
             
 
@@ -313,19 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
                   </a>
                 </span>
 
@@ -363,708 +352,152 @@
       
         
           
-            <p>不同的容器之间有没有什么关联性？下图是以缩进的形式表达“<strong>基层与衍生层</strong>”的关系。这里所谓衍生，并非<strong>继承（inheritance）</strong>而是<strong>复合（composition）</strong>。复合可以理解为拥有，例如下图中，set里面有一个红黑树。标准库里面很少有继承，GNU2.9版本几乎各个class完全独立没有继承的关系，到了4.9版的时候单一的容器本身就分为很多class的组合。</p>
-<p><img src="/2019/10/03/Lecture08/1.png" alt="1"></p>
-<p>有一个Class A和一个Class B,如果我们要让A用到B的function，可以让A继承自B，也可以让A拥有（复合）B。C++标准库中尽量没有用到继承。</p>
-<p>在C++11中，<strong>slist</strong>名为<strong>forward_list</strong>,<strong>hash_set</strong>、<strong>hash_map</strong>名为<strong>unordered_set</strong>、<strong>unordered_map</strong>,<strong>hash_multiset</strong>、<strong>hash_multimap</strong>名为<strong>unordered_multiset</strong>、<strong>unordered_multimap</strong>（它们当初不是标准类，但是因为比较重要所以各家编译器的标准库都将它们做出来）</p>
-<p>上图中左右两侧蓝色框里面的数据，是测试出这些容器的一个object的大小(<code>sizeof()</code>的返回值)，即容器本身的大小。这个大小和容器里面元素的数量没有关系，这个大小指的是一个容器要控制整个数据结构要用的控制变量的大小。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/01/Lecture07/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/01/Lecture07/" itemprop="url">分配器详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-01T13:34:36+08:00">
-                2019-10-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>不建议直接去使用分配器。</p>
-<h1 id="operator-new-与malloc"><a href="#operator-new-与malloc" class="headerlink" title="operator new()与malloc()"></a>operator new()与malloc()</h1><p>所有的分配动作，最终一层一层下去，都会跑到<code>malloc()</code>函数中去，这个函数是<strong>C Runtime library</strong>提供的，这个函数再根据它是在linux底下或windows底下去调用不同的操作系统里面的api。<code>malloc()</code>会分配比所要求的更大的内存，因为它会添加一些附加的内容。分配的细节这里不详述。</p>
-<p>vc6所附标准库中<code>allocator</code>的实现如下（<code>&lt;xmemory&gt;</code>）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">allocator</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> _SIZT size_type;</span><br><span class="line">    <span class="keyword">typedef</span> _PDFT difference_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Ty _FARQ *pointer;</span><br><span class="line">    <span class="keyword">typedef</span> _Ty value_type;</span><br><span class="line">    <span class="function">pointer <span class="title">allocate</span><span class="params">(size_type _N,<span class="keyword">const</span> <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function">        </span>&#123;<span class="keyword">return</span> (_Allocate((difference_type)_N,(pointer)<span class="number">0</span>));&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(<span class="keyword">void</span> _FARQ *_P,size_type)</span></span></span><br><span class="line"><span class="function">        </span>&#123;<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(_P)</span></span>;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>其中<code>_Allocate()</code>定义如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Ty</span>&gt;<span class="title">inline</span></span></span><br><span class="line"><span class="class">_<span class="title">Ty</span> _<span class="title">FARQ</span> *_<span class="title">Allocate</span>(_<span class="title">PDFT</span> _<span class="title">N</span>,_<span class="title">Ty</span> _<span class="title">FARQ</span> *)</span></span><br><span class="line"><span class="class">&#123;</span><span class="keyword">if</span> (_N &lt; <span class="number">0</span>) _N = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">return</span> ((_Ty _FARQ *)<span class="keyword">operator</span> <span class="keyword">new</span>((_SIZT)_N * <span class="keyword">sizeof</span>(_Ty)));&#125;</span><br></pre></td></tr></table></figure>
-
-<p>相关宏定义如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _FARQ</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _FARQ</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _PDFT  ptrdiff_t</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _SIZT  size_t</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _POINTER_X(T,A)  T_FARQ * </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _REFERENCE_X(T,A)  T_FARQ &amp;</span></span><br></pre></td></tr></table></figure>
-
-<p>分配器最重要的两个函数是<code>allocate()</code>和<code>deallocate()</code>，而<code>allocate()</code>函数调用了<code>operator new()</code>，<code>operator new()</code>又调用了<code>malloc()</code>。</p>
-<p>VC6的<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallocate()</code>,没有任何特殊设计。所以如果我们在容器中放入100万个元素，每个元素所占的内存很小，前面提到<code>malloc()</code>分配内存会有额外开销，这样会导致额外开销的比例很大，额外的内存开销可能比100万个元素本身所占用的内存还要多！</p>
-<p>使用allocate的代码如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p = allocator&lt;<span class="keyword">int</span>&gt;().allocate(<span class="number">512</span>,(<span class="keyword">int</span>*)<span class="number">0</span>);</span><br><span class="line">allocator&lt;<span class="keyword">int</span>&gt;().deallocate(p,<span class="number">512</span>);</span><br></pre></td></tr></table></figure>
-
-<p>注意上面代码中的一个特殊语法：typename后面接一个空的小括号，这样就形成了一个没有名称的临时对象。<code>&lt;xmemory&gt;</code>代码的第8行，<code>allocate</code>的第二个参数没有名称，这里是一个小技巧，通过这个参数让allocate知道每个内存单位是什么类型。</p>
-<p>同样地，Borland C++5的<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallcoate()</code>,没有任何特殊设计。</p>
-<p>Gnu C2.9所附的标准库，其allocator的实现如下(<code>&lt;defalloc.h&gt;</code>)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">T</span>* <span class="title">allocate</span>(<span class="title">ptrdiff_t</span> <span class="title">size</span>, <span class="title">T</span>*) &#123;</span></span><br><span class="line">    set_new_handler(<span class="number">0</span>);</span><br><span class="line">    T* tmp = (T*)(::<span class="keyword">operator</span> <span class="keyword">new</span>((<span class="keyword">size_t</span>)(size * <span class="keyword">sizeof</span>(T))));</span><br><span class="line">    <span class="keyword">if</span> (tmp == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="built_in">cerr</span> &lt;&lt; <span class="string">"out of memory"</span> &lt;&lt; <span class="built_in">endl</span>; </span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">void</span> <span class="title">deallocate</span>(<span class="title">T</span>* <span class="title">buffer</span>) &#123;</span></span><br><span class="line">    ::<span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(buffer)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">allocator</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> T value_type;</span><br><span class="line">    <span class="keyword">typedef</span> T* pointer;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T* const_pointer;</span><br><span class="line">    <span class="keyword">typedef</span> T&amp; reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">const</span> T&amp; const_reference;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line">    <span class="function">pointer <span class="title">allocate</span><span class="params">(size_type n)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> ::allocate((difference_type)n, (pointer)<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">deallocate</span><span class="params">(pointer p)</span> </span>&#123; ::deallocate(p); &#125;</span><br><span class="line">    <span class="function">pointer <span class="title">address</span><span class="params">(reference x)</span> </span>&#123; <span class="keyword">return</span> (pointer)&amp;x; &#125;</span><br><span class="line">    <span class="function">const_pointer <span class="title">const_address</span><span class="params">(const_reference x)</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> (const_pointer)&amp;x; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">init_page_size</span><span class="params">()</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> max(size_type(<span class="number">1</span>), size_type(<span class="number">4096</span>/<span class="keyword">sizeof</span>(T))); </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function">size_type <span class="title">max_size</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; </span><br><span class="line">	<span class="keyword">return</span> max(size_type(<span class="number">1</span>), size_type(UINT_MAX/<span class="keyword">sizeof</span>(T))); </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">allocator</span>&lt;void&gt; &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">void</span>* pointer;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，GNU C和vc、Borland C一样，<code>allocator</code>只是以<code>::operator new</code>和<code>::operator delete</code>完成<code>allocate()</code>和<code>deallcoate()</code>,没有任何特殊设计。这样的缺点是可能会带来大比例的额外开销。</p>
-<p>在GNU C2.9的<code>&lt;defalloc.h&gt;</code>文件中有如下说明</p>
+            <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>Semi-supervised Learning里面，在labeled data上面，我们有另外一组labeled data和一组unlabeled data，这些unlabeled data只有function的input而没有output。通常做semi-supervised learning的时候，常见的情形是unlabeled的数量远大于labeled数量。Semi-supervised Learning可以分成两种，<strong>Transductive learning</strong>和<strong>Inductive learning</strong>，它们的区别如下：</p>
+<ul>
+<li><p>Semi-supervised learning:$\{(x^r,\hat{y}^r)\}_{r=1}^R$,$\{x^u\}_{u=R}^{R+U}$</p>
+<ul>
+<li>A set of unlabeled data,usually U &gt;&gt; R</li>
+<li>Transductive learning:unlabeled data is the testing data</li>
+<li>Inductive learning:unlabeled data is not the testing data</li>
+</ul>
+</li>
+</ul>
+<p>做Semi-supervised Learning的原因有如下两点：</p>
+<ul>
+<li><p>Collecting data is easy,but collecting “labeled” data is expensive。（收集data是很容易的，但是收集带label的data是比较困难的）</p>
+</li>
+<li><p>We do semi-supervised learning in our lives。其实对人类来说，也是一直在做Semi-supervised Learning。</p>
+</li>
+</ul>
+<h1 id="Why-semi-supervised-learning-helps"><a href="#Why-semi-supervised-learning-helps" class="headerlink" title="Why semi-supervised learning helps"></a>Why semi-supervised learning helps</h1><p>假设现在要做一个classifier，用来区分猫和狗。同时有一大堆猫和狗的图片，但这些图片是没有label的，并不知道哪些是猫哪些是狗。假设只考虑猫和狗有label的data的话，我们画一个boundary将毛和狗的图片分开，假如unlabeled data的分布是像灰色点这样的话，这可能就会影像我们的决定。unlabel data虽然只告诉了我们function的input，但是unlabel data的分布可以告诉我们某些事。在下图中，加了unlabel data后，boundary发生了变化。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/1.png" alt="1"></p>
+<p>但是semi-supervised learning使用unlabeled的方式，往往伴随着一些假设。semi-supervised learning有没有用其实就取决于这个假设符不符合实际。</p>
+<h1 id="semi-supervised-learning-for-Generative-Model"><a href="#semi-supervised-learning-for-Generative-Model" class="headerlink" title="semi-supervised learning for Generative Model"></a>semi-supervised learning for Generative Model</h1><p>在<strong>Generative Model</strong>里面，如何做semi-supervised learning？我们已经知道了Supervised learning的Generative model。在Supervised learning里，我们有一堆training data，并且知道它们属于class 1还是class 2。我们回去估测class 1和class 2的prior probability，然后去估测$P(x|C_1)$和$P(x|C2)$。假设每一个class的分布都是一个Gaussian distribution的话，class 1是从mean为$\mu^1$，covariance是$\Sigma$的Gaussian估测出来的，class 2是从mean为$\mu^2$，covariance也是是$\Sigma$的Gaussian估测出来的（之前讲过share Gaussian的performance可能会是比较好的）。有了这些值后，就可以估计给定一个新的data x，它是属于C1的<br>posterior probability，</p>
+<p>$$P(c_1|x) = \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1) + P(x|C_2)P(C_2)}$$</p>
+<p>但是如果又多了一些unlabeled data，它就会影响我们的决定。如下图，右侧绿色的点为unlabel data，那么左边的$\mu^1$、$\mu^2$和$\Sigma$的值显然就是不合理的。它们的范围应该是虚线框才对。prior也会受到影响，没有unlabel data是我们觉得两个class的data是一样多的，但加入unlabel data后会觉得class 2的data其实是比较多的，所以它的prior probability其实是比较大的。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/2.png" alt="2"></p>
+<p>实际的操作方式如下：</p>
+<ul>
+<li>Initialization:$\theta = \{P(C_1),P(C_2),\mu^1,\mu^2,\Sigma\}$</li>
+<li>Step 1:compute the posterior probability of unlabeled data $P_{\theta}(C_1|x^{\mu})$</li>
+<li>Step 2:Update model.($N$:total number of examples;$N_1$:number of examples belonging to $C_1$)</li>
+</ul>
+<p>$$ P(C_1) = \frac{N_1 + \Sigma_{x^u}P(C_1|x^u)}{N} $$</p>
+<p>$$\mu^1 = \frac{1}{N_1}\sum_{x^r\in C^1}x^r + \frac{1}{\sum_{x^u}P(C_1|x^u)}\sum_{x^u}P(C_1|x^u)x^u$$</p>
+<p>$$\cdots\cdots$$</p>
+<ul>
+<li>back to Step1</li>
+</ul>
+<p>在理论上，上面的方法会保证收敛。但是它的初始值$\theta$会影响最后的收敛结果。事实上，Step1就是EM algorithm中的E Step,Step2就是M step。</p>
+<p>下面上上述操作的理论根据。</p>
+<p>原来假设我们只有labeled data的时候，我们要做的事情是去maximize一个likelihood，每一笔training data，它的likelihood，我们是可以算出来的：</p>
+<p>$$logL(\theta) = \sum_{x^r}logP_{\theta}(x^r,\hat{y}^r)$$</p>
+<p>$$P_{\theta}(x^r,\hat{y}^r) = P_{\theta}(x^r|\hat{y}^r)P(\hat{y}^r)$$</p>
+<p>现在如果有unlabeled data，式子有什么不一样呢？</p>
+<p>$$logL(\theta) = \sum_{x^r}logP_{\theta}(x^r,\hat{y}^r) + \sum_{x^u}logP_{\theta}(x^u) \tag{1}$$</p>
+<p>主要是我们不知道unlabeled data来自哪个class，要怎么去估算它的几率呢？因为C1和C2都有可能，所以一笔unlabeled data出现的几率可以如下计算($x^u$ can come from either $C_1 and $C_2$) </p>
+<p>$$P_{\theta}(x^u) = P_{\theta}(x^u|C_1)P(C_1) + P_{\theta}(x^u|C_2)(C_2)$$</p>
+<p>接下来要做的事情就是去maximize式子(1)，然而这个式子不是convex的，所以要用EM algorithm解(要iterative地去slove它)。</p>
+<h1 id="Low-density-Separation"><a href="#Low-density-Separation" class="headerlink" title="Low-density Separation"></a>Low-density Separation</h1><p>接下来要讲一个比较general的方式，它的假设是<strong>low-density separation</strong>，也就是说这个世界是非黑即白的。非黑即白的意思是，假设我们现在有一大堆的data（label data和unlabel data），在两个class之间，它们会有一个非常明显的鸿沟。（在两个class的交界处，density是low的，data量是很少的）。low-density最具代表性的方法是<strong>Self-training</strong>。它的思想是先从labeled data去train一个model $f^{\star}$(用什么方法去得到$f^{\star}$是很general的),然后根据$f^{\star}$去label unlabeled data，得到的data叫做<strong>Pseudo-label</strong>,接下来从unlabeled data set里面拿出一些data，把它加到labeled data set里面。至于哪些data要加进去是一个open question,需要自己去design一些heuristic的rule，自己想办法来解决。有了更过的label datah后，可以回头再去train你的model $f^{\star}$。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/3.png" alt="3"></p>
 <blockquote>
-<p>Inclusion of this file is DEPRECATED.  This is the original HP default allocator.  It is provided only for backward compatibility. This file WILL BE REMOVED in a future release.<br>DO NOT USE THIS FILE unless you have an old container implementation that requires an allocator with the HP-style interface.  Standard-conforming allocators have a very different interface.  The standard default allocator is declared in the header <code>&lt;memory&gt;</code>.</p>
+<p>思考：上面这个process,如果用在Regression上面，回怎么样？</p>
 </blockquote>
-<p>这说明GNU C自己的容器并没有用到该分配器，而是用的另一个分配器<code>alloc</code>，下图是该分配器的行为模式（<code>&lt;stl_alloc.h&gt;</code>）：<br><img src="/2019/10/01/Lecture07/1.png" alt="1"></p>
-<p>这个特殊的分配器，它的主要诉求是尽量减少<code>malloc()</code>的使用次数。因为malloc会带着overhead的额外开销。那这些额外开销到底是做什么的呢？额外开销里面一个比较重要的内容就是记录内存的大小，这个是必要的，因为用malloc去拿内存的时候，得到一个指针，还的时候还这个指针但不需要指明所还内存的大小（这部分内容称为cookie）。通过overhead的cookie，<code>free()</code>函数就能知道要回收的内存大小。由于<code>malloc()</code>是给各式各样的人使用，要分配的内存有大有小。但是容器元素的大小是一样的，所以似乎不必把这个大小在每个元素都附带着记着。为此，GNU C设计了16条链表，每一条链表负责某一种特定大小的区块，例如第0个链表负责8个字节大小，第7个链表负责56个字节大小，依次类推。所有的容器当需要内存的时候都来跟这个分配器要内存。容器的元素大小会被调整到8的倍数。比如50，会被调整到56，然后分配器判断它由第7个链表来负责，分配器会看这个链表里面有没有分配内存块，如果没有，它才会调用<code>malloc()</code>来申请一大块内存，然后将申请的大块内存做切割分给容器，切出来的内存用单项链表串联起来，这样切出来的内存就不用带cookie。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://blog.csdn.net/colourful_sky/article/details/79495536" target="_blank" rel="noopener">vs与vc版本对应关系</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/01/Lecture06/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/01/Lecture06/" itemprop="url">操作符重载与模板</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-01T00:28:03+08:00">
-                2019-10-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Operator-Overloading"><a href="#Operator-Overloading" class="headerlink" title="Operator Overloading"></a>Operator Overloading</h1><p>操作符重载，下面的例子是<code>stl_list.h</code>文件中<code>_List_iterator</code>的定义</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>, <span class="title">class</span> _<span class="title">Ref</span>, <span class="title">class</span> _<span class="title">Ptr</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> _<span class="title">List_iterator</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Tp&amp;,_Tp*&gt;             iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,<span class="keyword">const</span> _Tp&amp;,<span class="keyword">const</span> _Tp*&gt; const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Ref,_Ptr&gt;             _Self;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> bidirectional_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp value_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Ptr pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Ref reference;</span><br><span class="line">  <span class="keyword">typedef</span> _List_node&lt;_Tp&gt; _Node;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line"></span><br><span class="line">  _Node* _M_node;</span><br><span class="line"></span><br><span class="line">  _List_iterator(_Node* __x) : _M_node(__x) &#123;&#125;</span><br><span class="line">  _List_iterator() &#123;&#125;</span><br><span class="line">  _List_iterator(<span class="keyword">const</span> iterator&amp; __x) : _M_node(__x._M_node) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node == __x._M_node; &#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node != __x._M_node; &#125;</span><br><span class="line">  reference <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> (*_M_node)._M_data; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SGI_STL_NO_ARROW_OPERATOR</span></span><br><span class="line">  pointer <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123; <span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*()); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __SGI_STL_NO_ARROW_OPERATOR */</span></span></span><br><span class="line"></span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>++() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_next);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    ++*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>--() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_prev);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>--(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    --*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>我们看到迭代器重载了<code>*</code>,<code>-&gt;</code>,<code>++</code>等这些操作符，因为迭代器代表的就是一个泛化的指针，指针可以做的操作，iterator都需要重载一遍。</p>
-<h1 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h1><p>模板分为3大类：类模板，函数模板，成员模板</p>
-<h2 id="Class-Templates"><a href="#Class-Templates" class="headerlink" title="Class Templates"></a>Class Templates</h2><p>一个类模板的例子如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">complex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">complex</span> (T r=<span class="number">0</span>,T i= <span class="number">0</span>):re(r),im(i)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">    <span class="keyword">complex</span>&amp; <span class="keyword">operator</span>+=(<span class="keyword">const</span> <span class="keyword">complex</span>&amp;);</span><br><span class="line">    <span class="function">T <span class="title">real</span> <span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> re;&#125;</span><br><span class="line">    <span class="function">T <span class="title">imag</span> <span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> im;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T re,im;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Function-Templates"><a href="#Function-Templates" class="headerlink" title="Function Templates"></a>Function Templates</h2><p>一个函数模板的例子如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">stone</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  stone(<span class="keyword">int</span> w,<span class="keyword">int</span> h,<span class="keyword">int</span> we)</span><br><span class="line">  :_w(w),_h(h),_weight(we)&#123;&#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> stone&amp; rhs) <span class="keyword">const</span></span><br><span class="line">  &#123;<span class="keyword">return</span> _weight &lt; rhs._weight;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span> _w,_h,_weight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span></span></span><br><span class="line"><span class="class"><span class="title">const</span> <span class="title">T</span>&amp; <span class="title">min</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">return</span> b&lt;a?b:a;  <span class="comment">//实参推导结果，T为stone,于是调用stone::operator&lt;()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面代码中stone类需要自己定义大小比较的操作。运行以下代码，编译器对function template进行<strong>实参推导</strong>（<strong>argument deduction</strong>）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stone r1(2,3),r2(2,3),r3;</span><br><span class="line">r3 = min(r1,r2);</span><br></pre></td></tr></table></figure>
-
-<p>和类模板一样，函数模板也是把它里面的一些类型暂定为一个符号而不写死，等到真正使用的时候才去把它确定下来。</p>
-<h2 id="Member-Templates"><a href="#Member-Templates" class="headerlink" title="Member Templates"></a>Member Templates</h2><p>成员模板比较复杂，目前解析STL源码不会用到，可参考底部链接。</p>
-<h2 id="泛化与特化"><a href="#泛化与特化" class="headerlink" title="泛化与特化"></a>泛化与特化</h2><h3 id="全特化"><a href="#全特化" class="headerlink" title="全特化"></a>全特化</h3><p>对于类模板，有一个独特的特性就是<strong>特化</strong>（<strong>Specialization</strong>）,泛化里面的<code>typename T</code>我们可以绑定任意类型。可是在设计类模板的时候，我们会有这样的想法，我们可能会设计出一个非常泛化的版本，但同时又希望，如果指定T是某一个特定的类型，可以提供另外一套更好的操作。</p>
-<p>举一个例子，在计算机图形学中，我们在屏幕上画一条线，直线上每一个点的坐标都是实数。但是在屏幕上每一个Pixel的坐标都是整数，所以屏幕上画出的直线其实是锯齿状的。于是就有计算机科学家提出一种算法，如果点的坐标都是整数的话，有一种画直线的方式会非常快。在这个例子里，直线的数学公式相当于泛化，而具体在屏幕上画直线相当于特化。</p>
-<p>在<code>type_traits.h</code>里面，对类模板<code>__type_traits</code>进行的特化。其中<code>__STL_TEMPLATE_NULL</code>是一个宏定义，替换为<code>template&lt;&gt;</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> __<span class="title">type_traits</span> &#123;</span> </span><br><span class="line">   <span class="keyword">typedef</span> __true_type     this_dummy_member_must_be_first;</span><br><span class="line">                   <span class="comment">/* Do not remove this member. It informs a compiler which</span></span><br><span class="line"><span class="comment">                      automatically specializes __type_traits that this</span></span><br><span class="line"><span class="comment">                      __type_traits template is special. It just makes sure that</span></span><br><span class="line"><span class="comment">                      things work if an implementation is using a template</span></span><br><span class="line"><span class="comment">                      called __type_traits for something unrelated. */</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/* The following restrictions should be observed for the sake of</span></span><br><span class="line"><span class="comment">      compilers which automatically produce type specific specializations </span></span><br><span class="line"><span class="comment">      of this class:</span></span><br><span class="line"><span class="comment">          - You may reorder the members below if you wish</span></span><br><span class="line"><span class="comment">          - You may remove any of the members below if you wish</span></span><br><span class="line"><span class="comment">          - You must not rename members without making the corresponding</span></span><br><span class="line"><span class="comment">            name change in the compiler</span></span><br><span class="line"><span class="comment">          - Members you add will be treated like regular members unless</span></span><br><span class="line"><span class="comment">            you add the appropriate support in the compiler. */</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Provide some specializations.  This is harmless for compilers that</span></span><br><span class="line"><span class="comment">//  have built-in __types_traits support, and essential for compilers</span></span><br><span class="line"><span class="comment">//  that don't.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __STL_NO_BOOL</span></span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;bool&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __STL_NO_BOOL */</span></span></span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;char&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;signed char&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// other specializations</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="偏特化"><a href="#偏特化" class="headerlink" title="偏特化"></a>偏特化</h3><p><strong>偏特化（Partial Specialization）</strong></p>
-<p>下面的例子中，vector类有两个模板参数，只绑定其中一个参数，这是偏特化的一种。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span> ,<span class="title">class</span> <span class="title">Alloc</span> = <span class="title">alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//偏特化</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span>&lt;bool,Alloc&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>另外一种形式的偏特化是范围内的特化，在<code>stl_iterator.h</code>文件里有下列代码，它对模板类<code>iterator_traits</code>的指针参数和指向const的指针进行特化。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __STL_CLASS_PARTIAL_SPECIALIZATION</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Iterator</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::iterator_category iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::value_type        value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::difference_type   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::pointer           pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::reference         reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;_Tp*&gt; &#123;</span>  <span class="comment">//偏特化</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp*                        pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp&amp;                        reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;const _Tp*&gt; &#123;</span>  <span class="comment">//偏特化</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp*                  pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp&amp;                  reference;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://zh.cppreference.com/w/cpp/language/member_template" target="_blank" rel="noopener">成员模板</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/30/Lecture05/" itemprop="url">OOP vs. GP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T22:53:19+08:00">
-                2019-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>源码之前，了无秘密。</p>
-<h1 id="源代码分布-VC-GCC"><a href="#源代码分布-VC-GCC" class="headerlink" title="源代码分布(VC,GCC)"></a>源代码分布(VC,GCC)</h1><p>接下来我们就要分析STL的源代码，代码的版本是GNU C++ 2.9版本，有些小地方会和VC进行比较。GNU C在语言标准的实现上是最接近C++标准的。gcc的源码可以从底下链接下载，STL的实现就在libstdc++-v3目录里面，本博客讲解对应的版本是<code>gcc-2_95_release</code>。</p>
-<p>vs的STL所在默认目录如下，<br><img src="/2019/09/30/Lecture05/1.png" alt="1"></p>
-<h1 id="OOP与GP"><a href="#OOP与GP" class="headerlink" title="OOP与GP"></a>OOP与GP</h1><p>OOP（Object-Oriented programming）与GP(Generic Programming)两者的差别在哪里呢？<br>以标准库里面的List为例，List里面要存放数据本身，如果要对数据进行排序，按照OOP的思想，数据和操作数据的函数都会被放到类里面，所以list类里面有一个<code>sort()</code>方法。而GP是将datas和methods分开来，例如vector和deque容器里面没有sort方法，需要调用全局函数sort()，并且把操作的范围通过迭代器参数传到函数中。</p>
-<p>采用GP的好处如下：</p>
+<p>做regression不能用上面这一招，因为regression是output一个real number，将$x^u$对应的real number加到training data里面再去train，并不会影响$f^{\star}$。</p>
+<p>Self-training很像Generative Model里面用到的方法，它们唯一的差别是在做self-training的时候，用的是<strong>hard label</strong>，而在做Generative model的时候，用的是<strong>Soft label</strong>。</p>
+<p>在做Self-training的时候，我们会强制assign一笔training data，它一定属于某一个class，但是在Generative model的时候，是根据它的posterior probability，它可能有部分属于class 1，有部分属于class 2,所以是Soft label。那到底哪一个比较好呢？</p>
+<p>如果考虑的是Neural Network的话，从label data得到一组network的参数$\theta^{\star}$，现在有一笔unlabeled data $x^u$，然后根据现在的参数$\theta^{\star}$把它分成两类，如下，它有0.7的几率属于class 1,有0.3的几率属于class 1。而如果是hard label的话，它可以直接label成class 1。如下图：</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/4.png" alt="4"></p>
+<p>显然对于Neural Network，soft label结果是没有用的。当我们用hard label时,其实就是Low-density separation的概念，也就是说，$x^u$属于class 1的几率只比较高，并不确定它一定属于class 1，但是这是一个非黑即白的世界，如果看起来像class 1,那就一定是class 1！</p>
+<h2 id="Entropy-based-Regularization"><a href="#Entropy-based-Regularization" class="headerlink" title="Entropy-based Regularization"></a>Entropy-based Regularization</h2><p>上面的方法有一个进阶版，叫做<strong>Entropy-based Regularization</strong>。这个方法是说，如果用neural network的时候，output是一个distribution。不要限制output一定是class 1或class 2，但是我们的假设是，这个output的distribution一定要很集中(因为这是一个非黑即白的世界)。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/5.png" alt="5"></p>
+<p>现在的问题是要怎么用数值的方法来evaluate这个distribution到底好还是不好。可以使用<strong>Entropy</strong>。算一个distribution的Entropy，它能表示一个distribution的集中与否。它的式子如下</p>
+<p>$$E(y^u) = -\sum_{m = 1}^5 y_m^u In(y_m^u)$$</p>
+<p>$E(y^u)$的值越大，表示distribution越不集中。这样我们可以重新设计loss function，原来的loss function是希望找到一组参数，让现在在labeled data上的model的output跟正确的model的output它的距离越近越好，可以用cross entropy来evaluate它们之间的距离。重新设计的loss function如下</p>
+<p>$$L = \sum_{x^r}C(y^r,\hat{y}^r)  +  \lambda\sum_{x^u}E(y^u) \tag{2}$$</p>
+<p>上式中$\sum_{x^r}C(y^r,\hat{y}^r)$是labeled data的部分，$\sum_{x^u}E(y^u)$是unlabeled data部分，$\lambda$可以决定是偏向unlabel data多一点还是少一点。式子(2)是可以算微分的。所以就用Gradient Descent来minimize这个式子，这件事情的角色就很像之前所讲的Regularization。所以它称为Entropy-based Regularization。</p>
+<p>还有别的semi-supervised learning的方式，比较著名的就是Semi-supervised SVM。SVM要做的事情就是给两个class的data,找一个boundary。这个boundary，一方面它要有最大的margin，所谓最大的margin就是让这两个class分的越开越好。同时，它也要有最小的分类的错误。现在假设有一些unlabeled data，Semi-supervised SVM会怎么处理这个问题呢？它会穷举所有可能的label。下面有4笔unlabel data，每一笔都可以属于class 1或class 2，穷举所有的可能，对每一个可能的结果，都去做一个SVM，然后再去看哪一个可能性可以让margin最大同时又minimize error。但是穷举所有可能的时间复杂度很大，下面的论文提出了一个很approximate的方法，基本精神是，一开始得到一些label，每次改一笔unlabeled data的label，看能不能让objective function变大，变大的话就改一下。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/6.png" alt="6"></p>
+<h1 id="semi-supervised-learning-Smoothness-Assumption"><a href="#semi-supervised-learning-Smoothness-Assumption" class="headerlink" title="semi-supervised learning Smoothness Assumption"></a>semi-supervised learning Smoothness Assumption</h1><p><strong>Smoothness Assumption</strong>的基本假设是如果两个x是像的，那它们的label y也比较像。这个假设是比较粗糙的，更精确的假设如下</p>
 <ul>
-<li>Containers和Algorithm团队可各自闭门造车，其间以Iterator沟通即可。</li>
-<li>Algorithms通过Iterators确定操作范围，并通过Iterators取用Container元素。</li>
+<li><p>$x$ is not uniform</p>
+</li>
+<li><p>If $x^1$ and $x^2$ are close in a high density region,$\hat{y}^1$ and $\hat{y}^2$ are the same(connected by a high density path)</p>
+</li>
 </ul>
-<p><img src="/2019/09/30/Lecture05/2.png" alt="2"></p>
-<p>为什么list类里面有自己的sort()函数呢？因为Algorithm中的sort在设计上面，需要迭代器是<strong>随机访问迭代器</strong>，而list在内存里面是用指针串起来的一个个节点，不是一个连续空间。换句话说，list的迭代器不能执行iterator+5这样的操作。</p>
-<p>所有algorithms，其内最终涉及元素本身的操作，无非就是比较大小。下面的代码分别通过字符串的字典序和字符长度来比较两个字符串大小。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">max</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>,<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> a &lt; b?b:a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Compare</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">max</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>,<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>,<span class="title">Compare</span> <span class="title">comp</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> comp(a,b)?b:a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">strLonger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; s1,<span class="keyword">const</span> <span class="built_in">string</span>&amp; s2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"max of zoo and hello :"</span> &lt;&lt; max(<span class="built_in">string</span>(<span class="string">"zoo"</span>),<span class="built_in">string</span>(<span class="string">"hello"</span>)) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//zoo</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"longest of zoo and hello :"</span> &lt;&lt; max(<span class="built_in">string</span>(<span class="string">"zoo"</span>),<span class="built_in">string</span>(<span class="string">"hello"</span>),strLonger) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//hello</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://github.com/gcc-mirror/gcc" target="_blank" rel="noopener">gcc源码</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/30/Lecture04/" itemprop="url">分配器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T22:17:12+08:00">
-                2019-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>容器需要利用分配器来管理对内存的使用。在理想的情况下，编程者是不需要知道分配器的存在，因为容器都有一个默认的分配器。以下讲解的GNU C底下的分配器，与VC下的分配器存在区别。</p>
-<h1 id="使用分配器"><a href="#使用分配器" class="headerlink" title="使用分配器"></a>使用分配器</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">vector</span>:<span class="keyword">protected</span> _Vector_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">list</span>:<span class="keyword">protected</span> _List_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">deque</span>:<span class="keyword">protected</span> _Deque_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Key,<span class="keyword">typename</span> _Compare = <span class="built_in">std</span>::less&lt;_Key&gt;,</span><br><span class="line">        <span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Key&gt;&gt;</span><br><span class="line">    class <span class="built_in">set</span></span><br></pre></td></tr></table></figure>
-
-<p>容器默认使用的分类器是<code>std::allocate&lt;&gt;</code>,要使用std::allocator以外的allocator,得自行<code>#include&lt;ext\...&gt;</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\array_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\mt_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\debug_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\pool_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\bitmap_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\malloc_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\new_allocator.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_list_with_special_allocator</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="built_in">string</span>,__gnu_cxx::malloc_allocator&lt;<span class="built_in">string</span>&gt;&gt; c2;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="built_in">string</span>,__gnu_cxx::new_allocator&lt;<span class="built_in">string</span>&gt;&gt; c3;</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>同样的容器使用不同的分配器，运行效率是不同的。调用allocator分配释放内存的代码如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p;</span><br><span class="line">allocator&lt;<span class="keyword">int</span>&gt; alloc1;</span><br><span class="line">p = alloc1.allocate(<span class="number">1</span>); <span class="comment">//分配 1*sizeof(int)大小的内存</span></span><br><span class="line">alloc1.deallocate(p,<span class="number">1</span>); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">__gnu.cxx::malloc_allocator&lt;<span class="keyword">int</span>&gt; alloc2;</span><br><span class="line">p = alloc2.allocate(<span class="number">1</span>);</span><br><span class="line">alloc2.deallocate(p,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-
-<p>我们不需要去这样使用分配器，所有的内存管理函数，嵌套到最底层都是<code>malloc()</code>和<code>free()</code>，我们在malloc时指明要申请多少字节，在free()的时候并没有指明要释放多少字节。而分配器需要指明释放的字节数，这样就很麻烦。</p>
+<p>$x$的分布是不平均的，它在某些地方很平均，某些地方有很分散。如果$x^1$和$x^2$在一个high density的region很close的话，$\hat{y}^1$和$\hat{y}^2$才会很像。</p>
+<p>举一个例子，假设下面是data的分布，有3笔data $x^1$、$x^2$、$x^3$，如果我们只考虑上面那个粗糙的假设，那么感觉$x^2$和$x^3$的label应该比较像，但实际上它们的label并不像。在更精确的假设中， $x^1$和$x^2$才是比较像的，因为它们中间有high density的path。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/7.png" alt="7"></p>
+<p>为什么会有Smoothness Assumption这样的假设，因为在真实的情况下，这个假设是很有可能成立的。考虑手写数字辨识的例子，如下图，单纯考虑pixel上的相似度的话，两个2比较不像，而右边的2和3还比较像。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/8.png" alt="8"></p>
+<p>但是如果将data通通倒出来的话，会发现这两个2中间，有很多连续的形态，它们中间有很多不直接相连的相似，所以如果根据Smoothness Assumption的话，可以得出两侧的2是比较像的。而2和3之间没有过渡的形态，所以它们其实是比较不像的，不应该属于一个class。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/9.png" alt="9"></p>
+<p>如果看人脸识别的话，其实也是一样的。一个人的左脸图和右脸图是差很多的。但是假设收集到够多的unlabeled data的话，会找到左脸和有脸之间有很多过渡的形态，如下图。所以这两张脸可能是同一张人脸。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/10.png" alt="10"></p>
+<p>在文件分类上Smoothness Assumption也非常有用。假设现在要分天文跟旅游的文章，天文学文章有一个固定的word distribution，旅游文章也有一个固定的word distribution。如果unlabeled data和label data是有overlapped的，那就很容易处理这个问题。但是在真实的情况下，unlabeled data和labeled data，它们中间可能没有任何overlapped word，因为世界上的word很多，而一篇文章的词汇往往不会太多。但是如果collect到够多的unlabeled data的话，文章之间的相似性就可以一路propagate过去。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/11.png" alt="11"></p>
+<h2 id="Cluster-and-then-Label"><a href="#Cluster-and-then-Label" class="headerlink" title="Cluster and then Label"></a>Cluster and then Label</h2><p>要如何实践Smoothness Assumption呢，最简单的方法是<strong>Cluster and then Label</strong>。例如现在data distribution如下，蓝色部分是unlabel data。接下来，把所有的data拿来做clustering，可能分成3个cluster。然后看每个cluster里面最多的label data是哪一类，就把它分成那一类。如果要让这个方法有用，必须cluster要很强。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/12.png" alt="12"></p>
+<h2 id="Graph-based-Approach"><a href="#Graph-based-Approach" class="headerlink" title="Graph-based Approach"></a>Graph-based Approach</h2><p>另外一个方法是引入<strong>Graph structure</strong>，用Graph structure来表达<em>connected by a high density path</em>这件事情。也就是把所有的data points，都建成一个graph，每一笔data point x，就是这个图上的一个点，我们需要想办法算它们之间的similarity，要想办法把它们之间的edge建出来。有了这个Graph以后，就可以说所谓的high density path的意思是，如果有两个点它们在graph上面是相连的，是走得到的，它们就是同一个class。如果没有相连，就算实际的距离不算太远，也不算同一class。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/13.png" alt="13"></p>
+<p>那要怎么建一个graph呢？有些时候，这个graph的representation是很自然就可以得到的。举例来说，假设现在要做的是网页分类，而我们有记录网页之间的超链接，那么超链接自然就告诉我们网页是如何连接的。或者做的是论文的分类，而论文之间有引用的关系，引用关系也是另外一种graph的edge。</p>
+<p>而有时候，需要自己想办法去建这个graph，graph的好坏对最后的结果影响是非常大的。不过这个地方是非常的heuristic，就是凭着经验和直觉，觉得怎么做比较好。通常的做法如下</p>
+<ul>
+<li><p>Define the similarity $s(x^i,x^j)$ between $x^i$ and $x^j$</p>
+</li>
+<li><p>Add edge:</p>
+</li>
+<li><ul>
+<li>K Nearest Neighbor</li>
+</ul>
+</li>
+<li><ul>
+<li>e-Neighborhood</li>
+</ul>
+</li>
+<li><p>Edge weight is proportional to $s(x^i,x^j)$</p>
+</li>
+</ul>
+<p>定义相似度，对于影像的话可以base on pixel来算相似度，但是performance不太好。base on auto encoder抽出来的feature算相似度performance会比较好。</p>
+<p><strong>K Nearest Neighbor</strong>:有一堆data，data和data之间都可以算出一个相似度，如果设K=3，每一个point都跟它最近的、相似度最像的三个点做相连。</p>
+<p><strong>e-Neighborhood</strong>:每一个点，只有和他相似度超过每一个threshold的点才会被连起来。</p>
+<p>所谓的edge也不是只有相连和不相连这样binary的选择而已，可以给edge一些weight，让edge跟要被连起来的两个data point之间相似度成正比。</p>
+<p>定义相似度比较好的选择使用Gaussian Radial Basis Function:</p>
+<p>$$s(x^i,x^j) = exp(-\gamma||x^i - x^j||^2)$$</p>
+<p>上面的公式取exponential，是为了让$x^i$和$x^j$非常靠近的时候，similarity才会大。</p>
+<p>如果在graph上面有一些labeled data,比如class 1，那么跟它们有相连的那些data point，它是属于class 1的几率也就会上升。所以每一笔data它会去影响它的邻居。光会影响邻居是不够的，因为相连代表他们本来就很像，这样帮助不会太大。Graph-based approach真正会有帮助地方是它的class会传递的，</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/14.png" alt="14"></p>
+<p>上面说得是如何定性的使用Graph,接下来要说如何定量地使用Graph。定量的使用方式是在graph的structure上面定一个label的smoothness。定义这个label有多符合Smoothness Assumption假设。在下面的例子里，都有4个data point，两个data point之间连接的数字代表edge的weight。左右两边的graph是一样的，但是data的label有所不同，那么左右两边的图谁比较smooth呢？</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/15.png" alt="15"></p>
+<p>直观的感觉就是左边比较smooth，因为它三角形部分的label都是一样的。但我们需要用一个数字来定量地描述它有多smooth，常见的做法如下：</p>
+<ul>
+<li>Define the smoothness of the labels on the graph</li>
+</ul>
+<p>$$S = \frac{1}{2}\sum_{i,j}w_{i,j}(y^i-y^j)^2 \tag{3}$$</p>
+<p>上面式子的含义是，考虑两两有相连point，对所有相连的pair计算i、j之间的weight跟i的label与j的label的差的平方。（i,j是对所有的data，不管是有label还是没有label）</p>
+<p>根据定义，左边算出来的smoothness是0.5,右边算出来的smoothness是3。（值越小越smooth）</p>
+<p>式子(3)可以稍微整理一下，写成一个比较简洁的式子。把$\bf{y}$串成一个vector,$\bf{y}$包括labeled data和unlabeled data。</p>
+<p>$\bf{y}$:(R+U)-dim vecotr</p>
+<p>$$ {\bf y} = [\cdots y^i \cdots y^j \cdots] $$</p>
+<p>所以式子(3)可写成<br>$$S = \frac{1}{2}\sum_{i,j}w_{i,j}(y^i-y^j)^2 = {\bf y}^TL{\bf y} \tag{4}$$</p>
+<p>其中L是一个$(R+U)\times (R+U)$的matrix，它的名字是<strong>Graph Laplacian</strong>,L的定义如下：</p>
+<p>$$L = D - W $$</p>
+<p>$W$表示Point两两之间的weight connection的matrix,对于上图右侧的graph，有</p>
+<p>$$ W = \begin{bmatrix}<br>0&amp;2&amp;3&amp;0\\<br>2&amp;0&amp;1&amp;0\\<br>3&amp;1&amp;0&amp;1\\<br>0&amp;0&amp;1&amp;0\\<br>\end{bmatrix}$$</p>
+<p>D是把W的每一个row合起来，放在diagonal的地方。</p>
+<p>$$ D = \begin{bmatrix}<br>5&amp;0&amp;0&amp;0\\<br>0&amp;3&amp;0&amp;0\\<br>0&amp;0&amp;5&amp;0\\<br>0&amp;0&amp;0&amp;1\\<br>\end{bmatrix}$$</p>
+<p>现在我们就可以用式子(4)来evaluate得到的label有多smooth。在这个式子里面，$\bf{y}$的值是取决于network的parameter，这一项其实是network的dependent。所以，要把graph的information考虑到neural network的training的时候，要做的事情，其实就是在原来的loss function里面加一项。原来的loss function可能是考虑cross entropy之类的，我们就再加另外一项，这一项是smoothness的值。</p>
+<p>$$ L = \sum_{x^r}C(y^r,\hat{y}^r) + \lambda S$$</p>
+<p>上式中的$\lambda S$就像是一个Regularization的term。现在我们不只要调参数让neural network在那些labeled data的output跟真正的label越接近越好，同时还要让output的label,不管是在Labeled data还是unlabeled data上面，它都符合smoothness Assumption的假设。同样的，接下来就是做Gradient Descent。</p>
+<p>其实，算smoothness的时候不一定要算在output的地方，如果今天是一个deep neural network的话，可以把smoothness放在network的任何地方。可以假设output是smooth，也可以同时把某一个hidden layer接出来，在乘上一些别的transform,它也要smooth。也可以要求每一个hidden layer的output都要是smooth的，可以同时把这些smooth通通都加到neural network上面去。</p>
+<p><img src="/2019/10/25/Semi-supervised Learning/16.png" alt="16"></p>
+<h1 id="semi-supervised-Learning-——-Better-Representation"><a href="#semi-supervised-Learning-——-Better-Representation" class="headerlink" title="semi-supervised Learning —— Better Representation"></a>semi-supervised Learning —— Better Representation</h1><p>这个方法会到unsupervised learning再讲，其主要的思想就是去芜存菁，化繁为简。</p>
+<ul>
+<li><p>Find the latent factors behind the observation</p>
+</li>
+<li><p>The latent factors (usually simpler) are better representations</p>
+</li>
+</ul>
 
           
         
@@ -1113,7 +546,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture03/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/Lecture05/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -1122,7 +555,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -1132,7 +565,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/30/Lecture03/" itemprop="url">容器</a></h1>
+                <a class="post-title-link" href="/2019/10/24/Lecture05/" itemprop="url">发布者Publisher的编程实现</a></h1>
         
 
         <div class="post-meta">
@@ -1144,8 +577,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T21:10:03+08:00">
-                2019-09-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T22:22:12+08:00">
+                2019-10-24
               </time>
             
 
@@ -1167,8 +600,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
                   </a>
                 </span>
 
@@ -1178,8 +611,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
                   </a>
                 </span>
 
@@ -1217,364 +650,816 @@
       
         
           
-            <h1 id="容器的结构与分类"><a href="#容器的结构与分类" class="headerlink" title="容器的结构与分类"></a>容器的结构与分类</h1><p>容器大致可以分为两类，<strong>序列容器（Sequence Containers）</strong>和<strong>关联容器（Associative Containers）</strong>,关联容器的元素有<strong>Key</strong>和<strong>Value</strong>。也有些分类将Unordered set/Multiset和Unordered Map/Multimap分为第三类<strong>Unordered Containers</strong>。Unordered是C11新出现的一种容器，Unordered可翻译为不定序，元素放到容器里面没有一定的次序。</p>
-<h2 id="Sequence-Containers"><a href="#Sequence-Containers" class="headerlink" title="Sequence Containers:"></a>Sequence Containers:</h2><p>Sequence Containers有以下5种容器：</p>
+            <p>该篇主要实现的功能是让海龟仿真器里的海龟通过程序去控制它的运动。之前主要是通过命令行或键盘控制的形式来发布指令。这是一个话题通讯的问题。怎么通过程序来实现发布者并且发布海龟的速度指令，让海龟可以动起来。</p>
+<p>下面是实现的话题模型，ROS Master管理所有节点，有两个节点，Subscriber是海龟仿真器节点turtlesim，另一个是我们要去实现的Publisher，它是速度指令的发布者。它发布的Message的数据结构是geometry_msgs::Twist</p>
+<p><img src="/2019/10/24/Lecture05/1.png" alt="1"></p>
+<h1 id="创建功能包"><a href="#创建功能包" class="headerlink" title="创建功能包"></a>创建功能包</h1><p>创建一个名为learning_topic的功能包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">$ catkin_create_pkg learning_topic roscpp rospy std_msgs geometry_msgs turtlesim</span><br></pre></td></tr></table></figure>
+
+<h1 id="创建发布者代码-C"><a href="#创建发布者代码-C" class="headerlink" title="创建发布者代码(C++)"></a>创建发布者代码(C++)</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/Lecture04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/24/Lecture04/" itemprop="url">创建工作空间与功能包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T13:14:28+08:00">
+                2019-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>工作空间(workspace)是一个存放工程开发相关文件的文件夹。可以理解为windows里面使用vs创建工程的第一步。ROS里面的工程就是我们所说的工作空间。后面所有的源码、配置文件、编译出来的可执行文件都是在工作空间里面放置的。工作空间里面有4个主要的文件夹</p>
+<ul>
+<li><p><strong>src</strong>:代码空间（Source Space），放置功能包，所有功能包的代码、配置文件、launch文件都放置在该文件夹下。</p>
+</li>
+<li><p><strong>build</strong>:编译空间（Build Space）,放置在编译过程中所产生的中间文件。</p>
+</li>
+<li><p><strong>devel</strong>:开发空间（Development Space），放置编译生成的可执行文件，一些库，包括一些脚本等等。</p>
+</li>
+<li><p><strong>install</strong>:安装空间（Install Space），放置用install指令安装成功后的结果。开发空间与安装空间里面的内容是有一定重复的。devel是开发过程中，install是开发结束后分享给用户的结果文件。</p>
+</li>
+</ul>
+<h1 id="创建工作空间"><a href="#创建工作空间" class="headerlink" title="创建工作空间"></a>创建工作空间</h1><p>怎样在系统里面去创建一个工作空间？有如下几个步骤</p>
+<h2 id="创建工作空间-1"><a href="#创建工作空间-1" class="headerlink" title="创建工作空间"></a>创建工作空间</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~/catkin_ws/src</span><br><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">$ catkin_init_workspace</span><br></pre></td></tr></table></figure>
+
+<p>上面指令中的<code>catkin_ws</code>名称可以自己替换，但是<code>src</code>名称不能改。<code>catkin_init_workspace</code>命令将当前文件夹初始化，变成一个ROS的workspace，这是一个属性的变化。指令执行完之后，会看到在src文件夹下有一个<code>CMakeLists.txt</code>文件，说明工作空间创建成功。</p>
+<h2 id="编译工作空间"><a href="#编译工作空间" class="headerlink" title="编译工作空间"></a>编译工作空间</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line">$ catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>在ROS的工作空间做编译首先要回到ROS工作空间的根目录，即<code>catkin_ws</code>。<code>catkin_make</code>命令是ROS里面catkin编译工具所提供的编译器的指令，通过这个指令会根据配置来编译src下面所有功能包的源码，结果会放到devel和install里面。执行之后会看到根目录下产生了build和devel两个文件夹。如果要产生install文件夹，可以使用<code>catkin_make install</code>命令。</p>
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">source</span> devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="检查环境变量"><a href="#检查环境变量" class="headerlink" title="检查环境变量"></a>检查环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$ROS_PACKAGE_PATH</code>是ROS本身的环境变量，通过这个环境变量来查找ROS所有功能包的路径。</p>
+<h1 id="创建功能包"><a href="#创建功能包" class="headerlink" title="创建功能包"></a>创建功能包</h1><p>在创建代码的时候一定要创建一个功能包，功能包是我们放置ROS里面源码的一个最小单元，所有源码必须全部放到功能包里面，不能直接放到src下面去编译。创建功能包的指令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg &lt;package_name&gt; [depend1] [depend2] [depend3]</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>&lt;package_name&gt;</code>是要创建的功能包的名字，<code>[depend]</code>是在编译的时候需要依赖ROS里面哪些其他的功能包。</p>
+<p>在src目录下执行下面命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg test_pkg roscpp rospy std_msgs</span><br></pre></td></tr></table></figure>
+
+<p>因为要写C++程序，添加<code>roscpp</code>依赖包，要写python程序，添加<code>rospy</code>依赖包，要使用ros定义的标准消息结构，添加<code>std_msgs</code>依赖包。</p>
+<p>上面命令运行成功后会在src文件夹中看到<code>test_pkg</code>文件夹，里面的内容如下：</p>
+<p><img src="/2019/10/24/Lecture04/1.png" alt="1"></p>
+<p><code>CMakeLists.txt</code>和<code>package.xml</code>是每个功能包必须要存在的文件，这两个文件才标志这该文件夹为功能包而不是一个普通文件夹。<code>package.xml</code>文件描述的是跟功能包相关的信息，比如功能包的名字、版本号、依赖的功能包等。<code>CMakeLists.txt</code>是用来描述功能包的编译规则，使用cmake语法。</p>
+<p>可以用如下命令来编译一个功能包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">$ catkin_make</span><br><span class="line">$ <span class="built_in">source</span> ~/catkin_ws/devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<p><code>source ~/catkin_ws/devel/setup.bash</code>是针对catkin_ws工作空间的一个环境变量设置，只有设置这个环境变量之后，才能让系统去找到工作空间，并且找到工作空间中对应的工作包。</p>
+<blockquote>
+<p>注意，同一个工作空间下，不允许存在同名功能包。不同工作空间下，允许存在同名功能包。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/Lecture03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/24/Lecture03/" itemprop="url">ROS命令行工具的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T11:55:47+08:00">
+                2019-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ROS里面有提供非常丰富的命令行工具，这些工具可以帮助我们实现代码的编写、调试与测试，包括系统整个框架的调试，数据的显示，命令的一些帮助信息等等。</p>
+<p>下面以之前运行的小海龟例程为例，通过ROS中的命令行工具来剖析仿真器背后所蕴含的ROS核心机制。</p>
+<p>启动三个终端，运行下面的3个指令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动ROS Master</span></span><br><span class="line">$ roscore</span><br><span class="line"><span class="comment"># 启动小海龟仿真器</span></span><br><span class="line">$ rosrun turtlesim turtlesim_node</span><br><span class="line"><span class="comment"># 启动海龟控制节点</span></span><br><span class="line">$ rosrun turtlesim turtle_teleop_key</span><br></pre></td></tr></table></figure>
+
+<p>指令说明如下</p>
+<ul>
+<li><p><strong>roscore</strong>:roscore用来启动ROS Master，Master是ROS里面所有节点的管理器，也是我们在运行ROS系统时必须要首先运行的指令。</p>
+</li>
+<li><p><strong>rosrun</strong>:rosrun用来运行在某个功能包里面某个节点的指令。后面要跟两个参数，一个是功能包名（<code>turtlesim</code>），一个是节点，<code>turtlesim_node</code>是仿真器节点，</p>
+</li>
+</ul>
+<blockquote>
+<p>TIP：<code>rosrun</code>命令后面接上功能包参数后，双击tap键，就可以将功能包里面所包含的节点列出来。</p>
+</blockquote>
+<p><img src="/2019/10/24/Lecture03/1.png" alt="1"></p>
+<p>下面我们通过一系列工具来分析这里面的原理。首先再打开一个终端，输入命令<code>rqt_graph</code>,在ROS里面有一系列以rqt开头的工具，都是一些基于qt的可视化工具，可以通过它直观地看到很多信息。<code>rqt_graph</code>是一个用来显示系统计算图的工具，ROS里面的核心通讯机制就是一个计算图，通过这张图可以很快了解整个系统的全貌，尤其针对一些未知的系统，可以很快知道这个系统是干嘛的。回车之后可以看到如下界面，这个界面很清晰地列出了当前ROS系统里面的几个节点（仿真器节点turtlesim和键盘控制teleop_turtle）。</p>
+<p><img src="/2019/10/24/Lecture03/2.png" alt="2"></p>
+<h1 id="其他命令行工具"><a href="#其他命令行工具" class="headerlink" title="其他命令行工具"></a>其他命令行工具</h1><h2 id="rosnode"><a href="#rosnode" class="headerlink" title="rosnode"></a>rosnode</h2><p><code>rosnode</code>是用来显示系统当中所有节点相关信息的一个指令，几个典型的使用方式如下</p>
+<ul>
+<li><strong>rosnode list</strong>:列出系统当中的所有节点。</li>
+</ul>
+<p><img src="/2019/10/24/Lecture03/3.png" alt="3"></p>
+<p>上图中的/rosout是在ROS环境里面，默认只要启动roscore就会启动的话题，这个话题主要采集ros里面所有节点的日志信息，然后提交给上面的界面做显示，这个是一个ros默认的话题，我们可以不用去关心它，只用去看除它之外其他节点的名字。</p>
+<blockquote>
+<p>TIP：直接输入<code>rosnode</code>然后按回车键，下面就会出现帮助系统，提示该指令的用法。其他ros命令也有此用法。</p>
+</blockquote>
+<ul>
+<li><strong>rosnode info</strong>:查看某一个节点它的具体的信息，如下是查看turtlesim这个节点的信息，</li>
+</ul>
+<p><img src="/2019/10/24/Lecture03/4.png" alt="4"></p>
+<h2 id="rostopic"><a href="#rostopic" class="headerlink" title="rostopic"></a>rostopic</h2><ul>
+<li><strong>rostopic list</strong>：打印当前系统的所有话题列表。下图中，键盘控制节点和仿真器节点之间是通过话题<code>/turtle1/cmd_vel</code>来做通讯的完成命令的。</li>
+</ul>
+<p><img src="/2019/10/24/Lecture03/5.png" alt="5"></p>
+<p>我们也可以通过指令来给这个话题发布数据并且让海龟运动。使用<code>rostopic pub</code>命令，后面第一个参数是话题名，第二个参数是消息类型，第三个参数是消息内容。<strong>Twist</strong>是一个消息结构，后面双引号里面的内容是消息数据结构的虚拟数据，可以看到Twist数据结构里面有两个部分，一个是线速度<em>linear<em>（单位m/s）,一个数角速度</em>angular</em>(单位弧度/s)。按回车后会发现小海龟运动一小段后停了下来，因为pub指令只会发布一次。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic pub /turtle1/cmd_vel geometry_msgs/Twist <span class="string">"linear:</span></span><br><span class="line"><span class="string">  x: 1.0</span></span><br><span class="line"><span class="string">  y: 0.0</span></span><br><span class="line"><span class="string">  z: 0.0</span></span><br><span class="line"><span class="string">angular:</span></span><br><span class="line"><span class="string">  x: 0.0</span></span><br><span class="line"><span class="string">  y: 0.0</span></span><br><span class="line"><span class="string">  z: 0.0"</span></span><br></pre></td></tr></table></figure>
+
+<p>为了让海龟一直能动，需要加一个循环，在pub后面加一个参数<code>-r</code>，它代表频率，即以多少的频率去发布消息的数据内容。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ rostopic pub -r 10 /turtle1/cmd_vel geometry_msgs/Twist <span class="string">"linear:</span></span><br><span class="line"><span class="string">  x: 1.0</span></span><br><span class="line"><span class="string">  y: 0.0</span></span><br><span class="line"><span class="string">  z: 0.0</span></span><br><span class="line"><span class="string">angular:</span></span><br><span class="line"><span class="string">  x: 0.0</span></span><br><span class="line"><span class="string">  y: 0.0</span></span><br><span class="line"><span class="string">  z: 0.0"</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="rosmsg"><a href="#rosmsg" class="headerlink" title="rosmsg"></a>rosmsg</h2><p>如果想具体看一下现在发布的话题Twist消息的结构，可以使用<code>rosmsg show</code>命令，如下</p>
+<p><img src="/2019/10/24/Lecture03/6.png" alt="6"></p>
+<h2 id="rosservice"><a href="#rosservice" class="headerlink" title="rosservice"></a>rosservice</h2><ul>
+<li><strong>rosservice list</strong>:可以看到当前在仿真器里面提供的所有service服务的内容，当然这里服务的服务端都是海龟仿真器，我们的终端都是作为客户端去请求某个服务的。</li>
+</ul>
+<p><img src="/2019/10/24/Lecture03/7.png" alt="7"></p>
+<p>上图中的<code>/spawn</code>服务是用来产生新的海龟的，其中x和y是产生海龟的坐标，theta是海龟的角度，name是海龟名字。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rosservice call /spawn <span class="string">"x: 0.0</span></span><br><span class="line"><span class="string">y: 0.0</span></span><br><span class="line"><span class="string">theta: 0.0</span></span><br><span class="line"><span class="string">name: ''"</span></span><br></pre></td></tr></table></figure>
+
+<p>输入上面的命令按回车就可以调用该服务，服务发布出去后仿真器会接收到这个服务的请求，并且完成turtle2的诞生。它会返回一个数据（注意service是有response反馈的），下图中<code>name: &quot;turtle2&quot;</code>这一行就是海龟产生成功之后的反馈信息。</p>
+<p><img src="/2019/10/24/Lecture03/8.png" alt="8"></p>
+<p>使用<code>rostopic list</code>命令会发现，发现这时topic里面除了turtle1之外，还出现了turtle2，我们也可以通过指令来控制turtle2海龟做运动。</p>
+<p><img src="/2019/10/24/Lecture03/9.png" alt="9"></p>
+<h2 id="rosbag"><a href="#rosbag" class="headerlink" title="rosbag"></a>rosbag</h2><p><code>rosbag</code>可以去记录当前系统的所有话题数据，并且保存下来，然后在下次使用的时候复现出来。一个应用场景是，有一个无人机要做调试，但是不可能每一次都让飞机飞起来然后做数据的调试，这样非常不方便。所以一般是做一次飞行，飞行的时候会把所有的数据都保存下来，然后回到实验室里面再把这些数据复现出来，再去做实验。</p>
+<p>运行下面命令，记录数据。<code>-a</code>表示将所有参数都保存下来，<code>-O</code>表示将要保存的数据保存成一个压缩包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rosbag record -a -O cmd_record</span><br></pre></td></tr></table></figure>
+
+<p>运行上面指令，如下图。通过提示信息可以看到它已经在订阅相关数据内容了。控制海龟做运动，记录结束后在终端按ctrl+c，然后数据就可以保存下来了。保存的数据会发在当前终端的默认路径下面，文件名为cmd_record.bag。<br><img src="/2019/10/24/Lecture03/10.png" alt="10"></p>
+<p>现在就可以复现bag文件中保存的数据内容了。先启动<code>roscore</code>，再启动仿真器节点<code>rosrun turtlesim turtlesim_node</code>，这里我们并没有启动键盘控制节点，在新的终端中输入如下指令,就可以复现之前的所有指令。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rosbag play cmd_record.bag</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/23/Lecture02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/23/Lecture02/" itemprop="url">ROS的核心概念</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-23T21:54:21+08:00">
+                2019-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="通信机制"><a href="#通信机制" class="headerlink" title="通信机制"></a>通信机制</h1><p>ROS的通信机制是一个松耦合的分布式软件框架，如下图中有很多Node,每个Node就是一个节点，节点就是在机器人系统中完成具体功能的进程。所有节点之间的位置也不是固定的，比如下图中的Computer A和Computer B，有些节点可以在A当中，有些节点可以在B当中。每个节点的编程语言也不是固定的，可以是C++，也可以是python。</p>
+<p><img src="/2019/10/23/Lecture02/1.png" alt="1"></p>
+<h1 id="节点与节点管理器"><a href="#节点与节点管理器" class="headerlink" title="节点与节点管理器"></a>节点与节点管理器</h1><h2 id="节点（Node）"><a href="#节点（Node）" class="headerlink" title="节点（Node）"></a>节点（Node）</h2><p>节点在ROS当中是一个具体的执行单元，它相当于系统里面一个具体的进程。<strong>它是完成具体功能的可独立运行的可执行文件</strong>。一个节点里面实现的内容可多可少，这个完全是根据系统的设计结构做搭建的。节点在系统中的名称必须是唯一的。</p>
+<h2 id="节点管理器（ROS-Master）"><a href="#节点管理器（ROS-Master）" class="headerlink" title="节点管理器（ROS Master）"></a>节点管理器（ROS Master）</h2><p>一个复杂机器人里面节点的数量可能会很多。这些节点之间的管理和通信都需要依托于ROS里面Master（控制中心），它是ROS里面的节点管理器。下图中的节点都需要去找ROS Master去做注册，比如告诉ROS Master启动、发数据等事情。这些管理的注册信息都是由ROS Master一手掌握的。所以ROS Master后台会有一个小的笔记本，它会把所有节点的各种信息都记下来，帮助他们建立连接。总结ROS Master功能如下</p>
+<ul>
+<li><p>为节点提供命名和注册服务</p>
+</li>
+<li><p>跟踪和记录话题/服务通信，辅助节点互相查找、建立连接</p>
+</li>
+<li><p>提供参数服务器，节点使用此服务器存储和检索运行时的参数（一个全局的对象字典）</p>
+</li>
+</ul>
+<p>下图中由ROS Master管理一个机器人上的电脑，电脑上会通过一个节点来连接外部摄像头，它主要完成摄像头驱动的功能。另外一个节点主要完成图像处理的功能，比如人脸识别等,ROS Master会帮助他们建立通讯，只要他们都成功在Master注册成功，数据就会由Master来帮助它们建立连接，从驱动端传到处理端，处理之后会传到远端的图像显示节点。远端有一个远程的电脑，它上面可能有一个屏幕，它的节点通过Master注册之后，获取结果数据并显示。</p>
+<p><img src="/2019/10/23/Lecture02/2.png" alt="2"></p>
+<h1 id="通信方式"><a href="#通信方式" class="headerlink" title="通信方式"></a>通信方式</h1><p>节点间的通信就必然涉及到几种通信方式，ROS主要给节点之间设置两种核心的通信方式，<strong>话题</strong>和<strong>服务</strong></p>
+<h2 id="话题——异步通信机制"><a href="#话题——异步通信机制" class="headerlink" title="话题——异步通信机制"></a>话题——异步通信机制</h2><p>话题通信的模型比较简单，如下图，里面分为发布者和订阅者，话题的通信方式是单向传输。比如一个节点，它要发布一个数据，比如驱动摄像头并获取数据的节点，它会不断地往外发布一些图像数据。另外可能有很多节点要去处理图像，就需要去订阅图像数据。所以最终的图像数据会从驱动端传到订阅端。数据的流向是从发布者到订阅者。</p>
+<p><img src="/2019/10/23/Lecture02/3.png" alt="3"></p>
+<p>针对我们传输的数据，通道会定义一个名字，叫做是<strong>话题topic</strong>。topic相当于是数据传输的重要总线。通道当中传输的数据都有自己的数据结构定义，这个数据结构定义我们称之为<strong>消息Message</strong>。消息是用来描述传输话题数据里面话题的数据类型的。它是有一定的数据类型和数据结构的，包括ROS提供的标准类型和用户自定义类型。在下图中，前端的笔记本上面有一个驱动节点，驱动节点驱动摄像头之后数据会由驱动节点获取得到，它会作为发布者将数据发布出去，这些发出去的管道叫做image data，image data这个管道之中传输的数据内容（RGB值）称为消息，这些消息内容通过Camera Node发布出去之后，由Image Processing Node来处理图像数据，所以它是订阅者。另外有一个上位机Image Display Node,它要在远端显示机器人看到的信息，所以它也要订阅这个图像数据。在这个模型中，有一个图像数据的发布者，有两个图像数据的订阅者。</p>
+<p>消息里面的很多内容在ROS里面已经预定义好了结构，比如图像、雷达。如果有些定义是满足不了需求的，我们也可以自己去定义接口，这个接口是使用<code>.msg</code>文件定义的，编译过程中生成对应的代码文件。</p>
+<p><img src="/2019/10/23/Lecture02/4.png" alt="4"></p>
+<h2 id="服务（Service）——同步通信机制"><a href="#服务（Service）——同步通信机制" class="headerlink" title="服务（Service）——同步通信机制"></a>服务（Service）——同步通信机制</h2><p>使用客户端/服务器（C/S）模型，客户端发送请求数据，服务器完成处理后返回应答数据。下图中有两个节点，一个是Client端，一个是Service端，服务模型是请求/应答模式。Clinet想要获取某个数据，会发一个request请求告诉server,server会开始处理，处理完成之后会反馈一个response,告诉客户端有没有处理成功。所以Client是可以知道处理结果的。</p>
+<p><img src="/2019/10/23/Lecture02/5.png" alt="5"></p>
+<p>比如说很多摄像头相关的配置的信息，我们可以通过这种方式来配置，如下图可以看到Camera Node做驱动的时候，一些参数比如摄像头的分辨率、自主曝光等等可以通过这种机制来做配置。Image Processing Node发一个Request给Camera Node,请求它调整分辨率到720p，然后Camera Node这边开始做处理，切换分辨率到720p，然后返回一个Reply告诉Image Processing Node。通过这样的Request/Reply，我们可以知道配置信息是生效的，我们可以根据机器人实际应用的场景去区分到底用话题还是用服务通信。<strong>话题是单向的，服务是双向的</strong>。</p>
+<p><img src="/2019/10/23/Lecture02/6.png" alt="6"></p>
+<p>服务的数据内容也是可以自定义的，它使用编程语言无关的<code>.srv</code>文件定义请求和应答数据结构，编译过程中生成对应的代码文件。</p>
+<h2 id="话题-vs-服务"><a href="#话题-vs-服务" class="headerlink" title="话题 vs 服务"></a>话题 vs 服务</h2><p>话题与服务的区别如下</p>
+<p><img src="/2019/10/23/Lecture02/7.png" alt="7"></p>
+<h1 id="参数-parameter-——全局共享字典"><a href="#参数-parameter-——全局共享字典" class="headerlink" title="参数(parameter)——全局共享字典"></a>参数(parameter)——全局共享字典</h1><p>在ROS Master里面有维护一个参数服务器，它会来保存一部分参数作为全局共享字典，所以全部的节点都可以通过网络访问共享字典。字典里面的数据类型是可以多变的，比如说int、float、string等。下图中Talker和Listener节点都可以找Master去设置一个变量，比如Talker设置一个参数名为foo，值为1的参数。接着Listener可以通过Master来获取参数foo的值。注意参数服务器底层的通信机制是RPC，并不是上面介绍的话题和服务。</p>
+<p><img src="/2019/10/23/Lecture02/8.png" alt="8"></p>
+<p>总之，参数的作用就是一个全局共享字典，它用来存储整个系统里面运行的一些参数，它比较适合存储一些静态的、非二进制的配置参数，不适合存储动态配置（需要频繁改动）的数据。</p>
+<h1 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h1><p>在文件系统级别还有一些关键的概念，主要涉及在ROS里面开发这些代码的管理。</p>
+<p>ROS里面的代码一般是放在<strong>功能包（Package）</strong>里面管理的，一般情况下一个功能包是ROS软件中的基本单元，里面包含节点的源码、配置文件、数据定义等。一般功能包是完成某项具体的功能，比如人类识别、图像处理等。</p>
+<p>针对一系列同等目标的功能包组成的一个更大的功能包，聚在一起后组成一个<strong>元功能包（Meta Packages）</strong>，比如又有驱动、又有图像识别等等都是围绕图像相关的功能包。</p>
+<p><strong>功能包清单（Package manifest）</strong>是用来描述每一个功能包里面具体的内容，包括作者信息、许可信息、依赖选项、编译标志等。</p>
+<p><img src="/2019/10/23/Lecture02/9.png" alt="9"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/18/Lecture01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/18/Lecture01/" itemprop="url">ROS安装及介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-18T11:59:21+08:00">
+                2019-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="ROS版本"><a href="#ROS版本" class="headerlink" title="ROS版本"></a>ROS版本</h1><p>ROS从2014年稳定之后，推出了长期支持版，支持的时间与Ubuntu是保持一致的。</p>
+<p><img src="/2019/10/18/Lecture01/1.png" alt="1"></p>
+<h1 id="ROS安装"><a href="#ROS安装" class="headerlink" title="ROS安装"></a>ROS安装</h1><p>ROS安装之前需要先对软件库的设置进行确认。本人使用的Ubuntu18.04版本。在Ubuntu系统中打开Ubuntu Software，然后点击<strong>Software&amp;Upadtes</strong>，将下面的4个复选框勾上。</p>
+<p><img src="/2019/10/18/Lecture01/2.png" alt="2"></p>
+<p>ROS安装有以下6个步骤。</p>
+<h2 id="添加ROS软件源"><a href="#添加ROS软件源" class="headerlink" title="添加ROS软件源"></a>添加ROS软件源</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> sh -c <span class="string">'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"&gt; /etc/apt/sources.list.d/ros-latest.list'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="添加密钥"><a href="#添加密钥" class="headerlink" title="添加密钥"></a>添加密钥</h2><p>很多ROS相关的功能包下载下来之前要去对照密钥，所以我们要把密钥也设置一下。</p>
+<p>上面的命令就是将ROS软件源添加到系统软件源里面，因为ROS本身有一个单独的镜像去做维护，而这个软件源是系统本身没有的，需要我们自己去添加。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt-key adv --keyserver <span class="string">'hkp://keyserver.ubuntu.com:80'</span> --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装ROS"><a href="#安装ROS" class="headerlink" title="安装ROS"></a>安装ROS</h2><p>安装ROS之前要先更新软件源，<code>$sudo apt update</code>指令会从上面的软件源配置里面去搜索所有ROS相关的包的安装路径，然后更新到系统里面。因为网络问题，可能要尝试好几次。</p>
+<p>update之后，所有软件源的下载地址已经更新到本地了，系统会更具链接去查找下载的地址，不需要再重新去update了。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt update</span><br><span class="line"><span class="variable">$sudo</span> apt install ros-melodic-desktop-full</span><br></pre></td></tr></table></figure>
+
+<p>执行<code>sudo apt install ros-melodic-desktop-full</code>命令时可能会报如下错误，可以参考链接[2]</p>
+<p><img src="/2019/10/18/Lecture01/3.png" alt="3"></p>
+<p>ROS的安装包分为几个版本，如果用PC来安装，一般安装<code>desktop-full</code>,这是一个桌面完整版。但是虽然它名字里面有full，但它并不是完全的完整版，很多后面要用到的ROS功能包，还是需要apt get或apt install这种方式来安装，desktop-full只是把一些基本的工具包和基本的使用工具都具备了。</p>
+<p>下载内容比较多，要确保足够的存储空间(大概2GB),可能需要20多分钟。</p>
+<h2 id="初始化rosdep"><a href="#初始化rosdep" class="headerlink" title="初始化rosdep"></a>初始化rosdep</h2><p><strong>rosdep</strong>是ROS里面的一个工具，它可以用来去帮助我们完成一些功能包依赖的设置和安装。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> rosdep init</span><br><span class="line"><span class="variable">$rosdep</span> update</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> <span class="built_in">echo</span> <span class="string">"source /opt/ros/melodic/setup.bash"</span>&gt;&gt;~/.bashrc</span><br><span class="line"><span class="variable">$source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p> <code>/bashrc</code>是终端的一个配置文件，后面我们在终端里面输入所有的ROS命令都可以通过这个配置文件去确认它的位置。<code>source</code>指令用来运行脚本。环境变量生效后，输入<code>ros</code>然后按两下tab键，就会发现有很多有ros开头的命令。这些命令都是我们安装完ros后ros里面包含的命令行工具，只有环境变量设置成功后才会看到这样的效果。</p>
+<p> <img src="/2019/10/18/Lecture01/4.png" alt="4"></p>
+<h2 id="安装rosinstall"><a href="#安装rosinstall" class="headerlink" title="安装rosinstall"></a>安装rosinstall</h2><p><code>rosinstall</code>也是用来帮助安装ROS依赖包的工具。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> apt install python-rosinstall python-rosinstall-generator python-wstool build-essential</span><br></pre></td></tr></table></figure>
+
+<p>至此，ROS已经安装完毕。所有ROS的安装内容都在<code>/opt/ros/melodic/</code>目录下。为了验证ROS是否安装成功，可以运行<code>roscore</code>命令，如果有如下信息出来，说明ROS安装没有问题。</p>
+<p><img src="/2019/10/18/Lecture01/5.png" alt="5"></p>
+<h1 id="测试程序"><a href="#测试程序" class="headerlink" title="测试程序"></a>测试程序</h1><p>我们来运行一个ROS里面最基础的例程，小海龟仿真器。需要如下3个步骤</p>
 <ol>
-<li><strong>Array</strong>  数组，一个连续空间，分配的空间是固定的，不能扩充</li>
-<li><strong>Vector</strong>  起点不能动，后端可以自动扩充</li>
-<li><strong>Deque</strong>  两端均可以扩充</li>
-<li><strong>List</strong>  双向链表，元素之间用指针串起来。</li>
-<li><strong>Forward-List</strong>  单向链表</li>
+<li><code>$roscore</code> 启动ROS Master</li>
+<li><code>$rosrun turtlesim turtlesim_node</code> 启动小海龟仿真器</li>
+<li><code>$rosrun turtlesim turtle_teleop_key</code> 启动海龟控制节点</li>
 </ol>
-<p><img src="/2019/09/30/Lecture03/1.png" alt="1"></p>
-<p>可想而知，List中每个元素带有2个指针（因为是双向的），Forward-List中每个元素只带有一个指针，所以List耗用的内存要比Forward-List大。（32位系统上一个指针占用4个字节）</p>
-<h2 id="Associative-Containers"><a href="#Associative-Containers" class="headerlink" title="Associative Containers"></a>Associative Containers</h2><p>对于要大量查找的数据，可以放到Associative Containers里面。<strong>Set</strong>的实现是一个二分树，在标准库里面，并没有规定Set或Map要用什么来实现，但由于红黑树非常好（它是一种高度平衡的二分数），所以各家编译器所带的标准库都用红黑树来做Set和Map。注意set的key就是value，即key和value不分。而Multiset和Multimap的key可以重复。</p>
-<p><img src="/2019/09/30/Lecture03/2.png" alt="2"></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/30/Lecture02/" itemprop="url">STL体系结构基础介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T20:23:02+08:00">
-                2019-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="STL六大组件"><a href="#STL六大组件" class="headerlink" title="STL六大组件"></a>STL六大组件</h1><p>STL分为6大组件（Components）:</p>
-<ul>
-<li>容器（Containers)</li>
-<li>分配器（Allocators）</li>
-<li>算法（Algorithms）</li>
-<li>迭代器（Iterators）</li>
-<li>适配器（Adapters）</li>
-<li>仿函数（Functors）</li>
-</ul>
-<p>六个组件之间的关系如下,通常我们会用到的时Containers，Containers里面要放入数据，数据要占用内存，Containers已经帮我们把内存的问题全部解决掉，编程者不用自己考虑内存这件事情，这有赖于其背后的Allocator组件的支持。对Containers里面的数据进行操作，有些操作是在Containers类本身做的，但是还有更多的操作被独立出来变成一个一个的函数，放在Algorithms组件里面。Algorithms要访问Containers里面的元素，是通过Iterators来实现的。Iterators就好像是一种泛化的指针(它重载的指针的所有操作)。仿函数Functors的作用像是函数，Adapters可以对Containers、Iterators、Functors做转换。<br><img src="/2019/09/30/Lecture02/1.png" alt="1"></p>
-<p>下面是用一个程序来说明六大组件间的关联：<br><img src="/2019/09/30/Lecture02/2.png" alt="2"></p>
-<h1 id="前闭后开空间"><a href="#前闭后开空间" class="headerlink" title="前闭后开空间"></a>前闭后开空间</h1><p>把一堆数据放到容器里面，所有的容器都提供<code>begin()</code>和<code>end()</code>两个函数，注意<code>end()</code>指向的是容器最后一个元素的下一位置。<br><img src="/2019/09/30/Lecture02/3.png" alt="3"></p>
-<h2 id="range-based-for-statement"><a href="#range-based-for-statement" class="headerlink" title="range-based for statement"></a>range-based for statement</h2><p>从C11开始，增添了以下语法</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(decl:coll)&#123; <span class="comment">//coll(collection)是比较广泛的容器</span></span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>对容器的遍历有以下简洁写法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i :&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>&#125;)&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> elem:vec)&#123; <span class="comment">//elem的类型是iterator</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; elem &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; elem:vec)&#123;</span><br><span class="line">    elem *= <span class="number">3</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liang Qi">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/30/Lecture01/" itemprop="url">认识headers、版本、重要资源</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T07:54:36+08:00">
-                2019-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">STL源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本部分内容介绍C++标准库的体系结构与内核分析。C标准库是一个个单一的函数，彼此之间几乎没有什么关联，而C++标准库主要分为6个部件，部件之间有很紧密的关系存在。</p>
-<p>STL中一个很重要的概念就是<strong>泛型编程</strong>（<strong>Generic Programming,GP</strong>）,所谓泛型编程就是使用template为主要工具来编写程序。STL就是泛型编程最成功的作品。</p>
-<h1 id="C-Standard-Library-amp-Standard-Template-Library"><a href="#C-Standard-Library-amp-Standard-Template-Library" class="headerlink" title="C++ Standard Library &amp; Standard Template Library"></a>C++ Standard Library &amp; Standard Template Library</h1><p>C++标准库与标准模板库有什么关系？C++标准库就是编译器提供好的一堆头文件，而不是编译好的库，所以完全可以看到源代码。标准库里面的大部分都是STL，STL可分为6大component，STL之外还有一些零零碎碎的小东西，它们非常重要，也很好用。</p>
-<p>所以，只要我们手上有编译器，就一定带着一个标准库，如上所述，它是以header files的形式呈现，可以看到所有的源代码。另外有以下几点要注意：</p>
-<ul>
-<li><p>C++标准库的header files不带后缀名（.h），例如<code>#include &lt;vector&gt;</code></p>
-</li>
-<li><p>新式C header files不带后缀名.h，例如<code>#include&lt;cstdio&gt;</code></p>
-</li>
-<li><p>旧式C header files（带有.h）仍然可用，例如<code>#include&lt;stdio.h&gt;</code></p>
-</li>
-<li><p>新式headers内的组件封装于<strong>namespace “std”</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; <span class="comment">//or</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>旧式headers内的组件不封装于<strong>namespace “std”</strong> 内</p>
-</li>
-</ul>
-<h1 id="C-标准库版本"><a href="#C-标准库版本" class="headerlink" title="C++标准库版本"></a>C++标准库版本</h1><p>不管你用哪一个开发平台，它所带哪一个编译器，它们都会带着一套标准库。这些标准库的用法几乎100%都是一样的。</p>
-<h1 id="重要资源"><a href="#重要资源" class="headerlink" title="重要资源"></a>重要资源</h1><p>C++标准库里面的东西太丰富，在用C++编程时，以下是比较重要的一些参考网站：</p>
-<ol>
-<li><a href="cplusplus.com">www.cplusplus.com</a></li>
-<li><a href="en.cppreference.com">en.cppreference.com</a></li>
-<li><a href="gcc.gnu.org">gcc.gnu.org</a></li>
+<p>运行结果如下</p>
+<p><img src="/2019/10/18/Lecture01/6.png" alt="6"></p>
+<hr>
+<h1 id="ROS发展史"><a href="#ROS发展史" class="headerlink" title="ROS发展史"></a>ROS发展史</h1><p>ROS诞生于2007年，它产生于斯坦福大学的一个项目，他们希望建立一个机器人平台，有移动底盘，上面有机械臂，可以帮助人们去完成一些家庭里面的工作。Willow Garage公司看中了这个项目，决定用商业化的手段来推进这个机器人平台的发展，从而也诞生了PC（Personal Robot）这款机器人，Willow Garage接手了，对项目进行了维护，到了2010年，正式对外开源ROS，并且发布了ROS第一个版本。2011年，由于Willow Garage公司的Personal Robot成本太高，没有办法走入到人们的生活，所以他们做了第二个非常重要的机器人平台TurtleBot,这是一个移动底盘加上面一个PC和一个kinect传感器，它可以完成SLAM导航、图像等等相关的应用。这款机器人对ROS的促进作用非常大，因为它成本非常低（几千块），很多ROS里面的主流功能尤其是导航都可以跑起来，所以很多实验室、学校和科研院所都购买了这款机器人作为平台。在2012年，ROS相关的研发已经比较多了，所以ROS官方就组织了第一届ROScon，这个相当于是一个ROS的开发者大会，每年一届。2013年由于Willow Garage公司的经营问题，ROS团队解散了，所以ROS的维护就会成为问题，ROS的创始人创建了OSRF基金会，它接管了ROS的维护性工作，包括版本迭代和后期维护。2014年OSRF发布了ROS的第一个长期支持版Indigo，此后每两年发布一个ROS的长期支持版。</p>
+<p>ROS早期的定位是一个科研性质的机器人研发平台，所以ROS本身有很多设计上的缺陷和问题，随着ROS的广泛引用，使得这些问题暴露的越来越明显，很多人也呼吁ROS官方能不能去维护一个ROS2.0版本。2014年ROS2.0的概念正式提出，经过一段时间的迭代和维护，到2017年发布了ROS2.0的正式版Ardent。ROS2.0和1.0有比较大的变化，它的整个框架都做了重新设计，这要的设计目标是让机器人的开发从研发领域到产品的过渡更加平滑，让ROS2.0能够适用于更多的机器人。目前ROS2.0还不是很成熟，但是未来可能会取代1.0成为主流标准，很多大公司也会加入进来推动2.0的发展。</p>
+<p><img src="/2019/10/18/Lecture01/7.png" alt="7"></p>
+<h1 id="ROS应用现状"><a href="#ROS应用现状" class="headerlink" title="ROS应用现状"></a>ROS应用现状</h1><p>ROS的发展也离不开大公司的推动，之前人们也呼吁ROS能不能支持windows。一直到2018年9月，微软才正式官方宣布可以在win10当中支持ros，并且有一系列如vs studio的工具可以支持ROS的开发，包括可以集成很多微软的机器学习算法和图像识别算法。目前来看，windows里面使用ROS的功能还是非常有限的，大部分的ROS开发还是要做Ubuntu里面实现。例外亚马逊也推出了RoboMaker这样的云机器平台，它可以在web网页上去开发机器人的所有功能，包括集成亚马逊的云服务，然后去部署到机器人上。</p>
+<p><img src="/2019/10/18/Lecture01/8.png" alt="8"></p>
+<h1 id="ROS是什么"><a href="#ROS是什么" class="headerlink" title="ROS是什么"></a>ROS是什么</h1><p>到底ROS是什么呢？比较抽象的概念是说ROS是一个机器人源操作系统，里面包括硬件管理等等的概念，但这样的定义非常的模糊。ROS官方给出的定义是ROS=通信机制+开发工具+应用功能+生态系统。ROS其实就是一套通信机制，一套开发工具，一些列应用功能和一个生态系统组成的一个集合。它的目标是用来提高机器人研发过程中的软件复用率。我们可以把别人开发的代码功能去复用，在此基础上去进一步完善。</p>
+<p><img src="/2019/10/18/Lecture01/9.png" alt="9"></p>
+<h2 id="ROS通信机制"><a href="#ROS通信机制" class="headerlink" title="ROS通信机制"></a>ROS通信机制</h2><p>在通信机制层面上ROS给我们提供了一个非常重要的松耦合分布式通信框架，整个ROS里面的所有的功能，这些框架可以把它抽象成一个节点图，里面有一系列的椭圆，每个椭圆代表一个节点，比如图像采集、图像处理、图像驱动、SLAM导航以及相关的算法，每一个具体的功能都是一个椭圆节点，节点之间通过箭头连接，箭头代表节点之间通信的数据的流向，包括数据的内容。最后整个功能抽象之后，就是下面这张计算图。计算图的结构在很多软件设计里面用的是比较广泛的。</p>
+<p><img src="/2019/10/18/Lecture01/10.png" alt="10"></p>
+<h2 id="ROS开发工具"><a href="#ROS开发工具" class="headerlink" title="ROS开发工具"></a>ROS开发工具</h2><p>ROS为了帮助我们提高机器人开发效率，提供了很多工具。比如命令行工具和可视化工具等。</p>
+<p><img src="/2019/10/18/Lecture01/11.png" alt="11"></p>
+<h2 id="ROS应用功能"><a href="#ROS应用功能" class="headerlink" title="ROS应用功能"></a>ROS应用功能</h2><p>ROS里面的应用功能是非常丰富的，不管是开发移动机器人、机械臂还是无人机，任意的机器人都可以在ROS里面找到相关的原型。这些功能包都是在整个ROS社区里面大家围绕这样的框架（接口、标准、协议定义）去开发了一系列算法，这些算法我们只用关心它的接口输入和输出是什么样的，</p>
+<p><img src="/2019/10/18/Lecture01/12.png" alt="12"></p>
+<h2 id="ROS生态系统"><a href="#ROS生态系统" class="headerlink" title="ROS生态系统"></a>ROS生态系统</h2><p>围绕ROS整个核心的代码、功能包、相关资源，是有一个庞大的生态系统的，这个生态系统有一个组织的方式。另外在ROS生态系统里面主要的功能包都是下图右边这样的组织形式。比如我们去开源分享了一些代码，这些代码可能以功能包的形式组成，每一个功能包完成一个具体的功能，比如图像识别、摄像头的驱动，都是与图像相关的功能包就会组成一个元功能包（或者叫功能包集），这些功能包集的内容会被传到github或者SVN上去做管理，这就是我们代码的仓库。最后在整个社区范围内，是基于互联网的一个非常庞大的软件的仓库，每个人去分享自己的软件仓库，大家的仓库联合到一起后，就成为了ROS社区。这就是从最基本的代码到整个ROS社区的所有代码仓库的一个结构。</p>
+<p><img src="/2019/10/18/Lecture01/13.png" alt="13"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/a13526758473/article/details/79247478" target="_blank" rel="noopener">apt-get软件包管理命令和apt-key命令</a></li>
+<li><a href="https://itsfoss.com/could-not-get-lock-error/" target="_blank" rel="noopener">Fix ‘E: Could not get lock /var/lib/dpkg/lock’ Error in Ubuntu</a></li>
 </ol>
 
           
@@ -1624,7 +1509,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/why deep/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/17/预备知识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -1633,7 +1518,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -1643,7 +1528,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/26/why deep/" itemprop="url">why deep</a></h1>
+                <a class="post-title-link" href="/2019/10/17/预备知识/" itemprop="url">预备知识</a></h1>
         
 
         <div class="post-meta">
@@ -1655,8 +1540,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T23:40:21+08:00">
-                2019-09-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-17T09:53:36+08:00">
+                2019-10-17
               </time>
             
 
@@ -1665,6 +1550,39 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/" itemprop="url" rel="index">
+                    <span itemprop="name">SLAM</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SLAM/Laser-SLAM/" itemprop="url" rel="index">
+                    <span itemprop="name">Laser SLAM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1695,7 +1613,19 @@
       
         
           
-            <h1 id="Deep-is-Better"><a href="#Deep-is-Better" class="headerlink" title="Deep is Better?"></a>Deep is Better?</h1>
+            <h1 id="SLAM是什么"><a href="#SLAM是什么" class="headerlink" title="SLAM是什么"></a>SLAM是什么</h1><h2 id="SLAM定义"><a href="#SLAM定义" class="headerlink" title="SLAM定义"></a>SLAM定义</h2><ul>
+<li>Location:在给定地图的情况下，估计机器人的位姿</li>
+<li>Mapping:在给定机器人位姿的情况下，估计环境地图</li>
+<li>SLAM:同时估计机器人的位姿和环境地图</li>
+</ul>
+<h2 id="SLAM解决的问题"><a href="#SLAM解决的问题" class="headerlink" title="SLAM解决的问题"></a>SLAM解决的问题</h2><ul>
+<li>机器人在环境中的位姿</li>
+<li>导航过程中需要的环境地图</li>
+</ul>
+<p>最近SLAM的火爆与移动机器人的发展有关。SLAM是移动机器人进行自主移动的核心技术之一。</p>
+<p>SLAM根据环境是否改变可分为静态slam和动态slam。</p>
+<p><img src="/2019/10/17/预备知识/1.png" alt="1"></p>
+
           
         
       
@@ -1743,7 +1673,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/Lecture01/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/12/Lecture02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -1752,7 +1682,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -1762,7 +1692,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/20/Lecture01/" itemprop="url">Lecture 01</a></h1>
+                <a class="post-title-link" href="/2019/10/12/Lecture02/" itemprop="url">Tensorflow2.0 tf.keras概述</a></h1>
         
 
         <div class="post-meta">
@@ -1774,8 +1704,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-20T22:49:44+08:00">
-                2019-09-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-12T10:14:44+08:00">
+                2019-10-12
               </time>
             
 
@@ -1836,23 +1766,339 @@
       
         
           
-            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>TensorFlow分为CPU和GPU两个版本。TensorFlow是Google的第二代人工智能学习系统，它的底层是C++写的，使用的时候主要用Python，也可以用C++。支持CNN、RNN等算法，可以用于语言识别和图像处理等多个深度学习的领域。它可以在一个或者多个CPU或GPU中运行，它还可以运行在嵌入式系统中比如手机、平板电脑。深度学习框架有很多，Google希望将TensorFlow做成行业的标准。</p>
-<p>TensorBoard是神经网络的调试工具，它运行在浏览器上。</p>
-<h1 id="Anaconda安装"><a href="#Anaconda安装" class="headerlink" title="Anaconda安装"></a>Anaconda安装</h1><ol>
-<li>Windows,MacOS,Linux都已经支持Tensorflow</li>
-<li>Windows用户只能使用python3.5(64bit).MacOS,Linux支持python2.7和Python3.3+</li>
-<li>有GPU可以安装带GPU版本的，没有GPU就安装CPU版本的</li>
-<li>推荐安装Anaconda,pip版本大于8.1</li>
-</ol>
-<p><a href="https://www.anaconda.com/distribution/" target="_blank" rel="noopener">Anaconda安装网址</a>,安装完成后可以使用Jupyter来编写代码。</p>
-<h1 id="Jupyter的使用"><a href="#Jupyter的使用" class="headerlink" title="Jupyter的使用"></a>Jupyter的使用</h1><h2 id="修改Jupyter-Notebook默认工作路径"><a href="#修改Jupyter-Notebook默认工作路径" class="headerlink" title="修改Jupyter Notebook默认工作路径"></a>修改Jupyter Notebook默认工作路径</h2><p>在命令行中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+            <p>tf.keras是Tensorflow 2.0的核心高阶API，</p>
+<h1 id="线性回归实例"><a href="#线性回归实例" class="headerlink" title="线性回归实例"></a>线性回归实例</h1><h2 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h2><p>单变量线性回归算法（比如x代表学历，f(x)代表收入）：</p>
+<p>$$f(x) = ax + b$$</p>
+<p>我们使用<code>f(x)</code>这个函数来映射输入特征和输出值。</p>
 
-<p><strong>jupyter_notebook_config.py</strong>这个文件如果没有，需要先运行jupyter notebook生成一个配置文件（需要先添加环境变量）</p>
-<p><a href="https://cloud.tencent.com/developer/ask/148499" target="_blank" rel="noopener">https://cloud.tencent.com/developer/ask/148499</a></p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://www.bilibili.com/video/av35974848?from=search&seid=5108728984359701498" target="_blank" rel="noopener">TensorFlow视频教程</a></li>
-</ol>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/06/Lecture05/" itemprop="url">Angle Estimation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T22:27:01+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
+                    <span itemprop="name">Radar</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在本节我们要解决下面问题：</p>
+<ul>
+<li><p>雷达前面有一个物体，它要如何估算物体的到达角？</p>
+</li>
+<li><p>如果在不同的角度存在多个物体，但可能具有相同距离和相同的相对速度，会怎么样？</p>
+</li>
+<li><p>雷达的最大角度视场有哪些决定因素？</p>
+</li>
+<li><p>雷达的角度分辨率取决于什么？</p>
+</li>
+</ul>
+<p><img src="/2019/10/06/Lecture05/1.png" alt="1"></p>
+<h1 id="到达角估计基础"><a href="#到达角估计基础" class="headerlink" title="到达角估计基础"></a>到达角估计基础</h1><p>回忆一下之前的模块内容，IF信号的相位对物体距离的微小变化非常敏感，具体而言，物体距离的微小变化$\Delta d$会导致相位变化$\omega = \frac{4\pi \Delta d}{\lambda}$。</p>
+<p>角度估算利用率类似的概念。角度估算需要至少2个RX天线。这是利用物体相对每个天线的差分距离。那么，发射天线发射一个Chrip，它在物体上进行反射，可以想象一束射线从物体到达第一个RX天线，另一束射线从物体到达第二个RX天线。在该示例中，达到第二个RX天线的射线必须传播稍微远一点的距离，即额外的距离$\Delta d$，才能到达那里。该额外的距离会导致额外的相位$\omega = \frac{2\pi \Delta d}{\lambda}$，这便是该天线处的信号和该天线处的信号之间的相位差。我们可以看到这两个表达式非常类似，实际上，除了因数2之外，它们几乎是相同的。</p>
+<p><img src="/2019/10/06/Lecture05/2.png" alt="2"></p>
+<p>那么这两个表示式为什么具有因数2的差异？下图说明了额外距离与到达角的相关性。假设与两个天线之间的距离d相比，物体足够远，从而可以假设物体到达RX天线的射线是平行的。图中的d指两个连续天线之间的距离，$\theta$是物体相对于雷达的到达角度。$dsin(\theta)$是与第一个天线相比，第二个天线的额外距离。发射器天线发射一个线性调频脉冲帧，每个天线会接收该数据。每个天线会处理该数据，以创建一个2D-FFT矩阵，其中包含与物体的距离和速度相对应的峰值。</p>
+<p><img src="/2019/10/06/Lecture05/3.png" alt="3"></p>
+<p>下图是与该接收器相对应的2D-FFT峰值，以及与该接收器相对应的另一个2D-FFT矩阵。注意，峰值的位置几乎与这两个2D-FFT相同。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Lecture04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/06/Lecture04/" itemprop="url">Some System Design topics</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-06T16:08:04+08:00">
+                2019-10-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/Radar/" itemprop="url" rel="index">
+                    <span itemprop="name">Radar</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本节对之前的知识加以整合。尝试设计一个发射信号，该信号满足一些有关距离分辨率、最大距离、速度分辨率、最大速度的指定要求，感受一下其中涉及到的一些权衡取舍。</p>
+<p>现在，我们知道可以使用距离FFT来解析处于不同距离的物体。然后通过一个帧中的后续chrip上执行多普勒FFT，来解析相对于雷达可能具有相同距离但是具有不同速度的物体。</p>
+<p>下图是对所学内容的总结：左上角有一个帧，多个chrip在帧中传输，与其中的每个作业对应的ADC样本可以通过存储为矩阵的行实现可视化。因此，这里的每个行都与来自特定chrip的样本对应。然后对每个行执行距离FFT，它可解析测量范围之内的物体。标记2是距离FFT的结果，可以看到，第3个和第8个距离单元中都有物体。注意，x轴实际上是与距离FFT单元对应的频率，但由于距离与IF频率成正比，因此可以等效地将该轴绘制为距离轴。随后会沿着这些距离FFT结果列执行多普勒FFT，这将在速度维度解析物体。标记3是多普勒FFT的结果，可以看到，第3个距离单元有两个具有不同速度的物体，第8个距离单元有3个具有不同速度的物体。重申一下，这里的y轴实际上是多普勒FFT对应的离散角频率，但由于这些离散角频率与速度成正比，因此可以等效地将该轴绘制为速度轴。执行FFT，然后再执行多普勒FFT的整个过程统称为<strong>2D-FFT</strong>。</p>
+<p><img src="/2019/10/06/Lecture04/1.png" alt="1"></p>
+<p>需要注意的一个问题是，大多数FMCW Radar实现中，通常在每个chrip的ADC数据变得可用时以内联方式执行FFT。因此，可以将每个chrip的ADC数据视为在DSP处进行接收，然后DSP执行距离FFT，并将距离FFT存储在某个存储器中，它可以时L3存储器或DDR，具体取决于系统。另一个要注意的问题是，在所有距离FFT都变得可用时才能执行多普勒FFT，与就是说，当所有这些行都被填充时。因此系统中应具有足够的存储器，用于存储与某个帧对应的所有距离FFT的内容。</p>
+<p>我们现在尝试设计一个能够满足特定终端用户要求的FMCW信号。</p>
+<p><img src="/2019/10/06/Lecture04/2.png" alt="1"></p>
 
           
         
@@ -1892,7 +2138,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1940,7 +2186,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1951,7 +2197,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1962,7 +2208,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

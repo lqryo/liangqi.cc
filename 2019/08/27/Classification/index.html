@@ -83,7 +83,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Classification">
 <meta property="og:url" content="http://yoursite.com/2019/08/27/Classification/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:description" content="Classification的应用可以有银行信用评估、医疗诊断、手写辨识等。他们的输入输出如下  Credit Scoring Input:income,savings,profession,age,past financial history… Output:accept or refuse   Medical Diagnosis Input:current symptoms,age,gende">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/08/27/Classification/1.png">
@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/27/Classification/6.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/27/Classification/7.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/27/Classification/8.png">
-<meta property="og:updated_time" content="2019-09-28T00:35:19.613Z">
+<meta property="og:updated_time" content="2019-11-05T02:32:38.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Classification">
 <meta name="twitter:description" content="Classification的应用可以有银行信用评估、医疗诊断、手写辨识等。他们的输入输出如下  Credit Scoring Input:income,savings,profession,age,past financial history… Output:accept or refuse   Medical Diagnosis Input:current symptoms,age,gende">
@@ -134,7 +134,7 @@
 
 
 
-  <title>Classification | 学习笔记</title>
+  <title>Classification | Qi-Liang'blog</title>
   
 
 
@@ -164,7 +164,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -280,7 +280,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -382,47 +382,47 @@
 <h1 id="Ideal-Alternatives"><a href="#Ideal-Alternatives" class="headerlink" title="Ideal Alternatives"></a>Ideal Alternatives</h1><ul>
 <li>Function(Model)</li>
 </ul>
-<p>$$f(n) =<br>\begin{cases}<br>g(x)&gt;0,  &amp; \text{Output = class 1} \\<br>else, &amp; \text{Output = class 2}<br>\end{cases}<br>$$</p>
+<p>$$f(x) =<br>\begin{cases}<br>g(x)&gt;0,  &amp; \text{Output = class 1} \\<br>else, &amp; \text{Output = class 2}<br>\end{cases}<br>$$</p>
 <ul>
-<li><p>Loss function<br>$$L(f) = \sum_n\delta(f(x^n)\neq \hat{y}^n)$$<br>f在训练集上得到不正确结果(分类次数)的次数。</p>
+<li><p>Loss function<br>$$L(f) = \sum_n\delta(f(x^n)\neq \hat{y}^n)$$<br>$f$在训练集上得到不正确结果(分类次数)的次数。</p>
 </li>
 <li><p>Find the best function</p>
 </li>
 </ul>
 <p>注意$L(f)$没办法微分，我们不能用Gradient Descent来解。以后会讲它其实可用<strong>Perceptron</strong>和<strong>SVM</strong>来解。<br>我们先来讲另一个解法，该方法是通过几率的观点来看待。<br><img src="/2019/08/27/Classification/2.png" alt="2"><br>如上图有两个盒子，它们都有篮球和绿球，假设我们随机从某个盒子中抽取一个球出来，它是蓝色的，那么这个蓝色的球从Box1和Box2中抽取出来的几率分别是多少？<br>假设从Box1中抽取的几率为$P(B_1) = 2/3$,从Box2中抽取的几率为$P(B_2) = 1/3$,并且<br>$$P(Blue|B_1) = 4/5$$ $$P(Green|B_1) = 1/5$$ $$P(Blue|B_2) = 2/5$$ $$P(Green|B_2) = 3/5$$<br>有了上面的信息，那我们可以轻易计算<strong>得到一个篮球，它是从Box1中抽取出来的几率</strong>：<br>$$P(B_1|Blue) = \frac{P(Blue|B_1)P(B_1)}{P(Blue|B_1)P(B_1)+P(Blue|B_2)P(B_2)}$$</p>
-<p>以上这些和分类有什么关系呢？<br>我们把Box1和Box2换成Class 1和Class 2，给我们一个x,比如说某一只宝可梦，它是从某一个class里面Sample的几率是多少呢？我们需要知道以下值</p>
+<p>以上这些和分类有什么关系呢？<br>我们把Box1和Box2换成Class 1和Class 2，给我们一个$x$,比如说某一只宝可梦，它是从某一个class里面Sample的几率是多少呢？我们需要知道以下值</p>
 <ul>
 <li>$P(C_1)$ ：从Class1中抽一个样本出来的几率</li>
 <li>$P(C_2)$ ：从Class2中抽一个样本出来的几率</li>
 <li>$P(x|C_1)$ :从Class1中抽出x的几率</li>
 <li>$P(x|C_2)$ :从Class2中抽出x的几率</li>
 </ul>
-<p>有了上面的值，我们就可以计算出x属于Class1的几率$P(C_1|x)$ :<br>$$P(C_1|x) = \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}$$<br>有了$P(C_1|x)$，我们就可以比较x属于不同class的几率，几率最大的就是输出的结果。</p>
-<p>所以现在的问题就是：我们要从train data里面将<strong>$P(C_1)$</strong>、<strong>$P(C_2)$</strong>、<strong>$P(x|C_1)$</strong>、<strong>$P(x|C_2)$</strong> 的值估算出来。这一整套的想法就叫做<strong>Generative Model</strong>。之所以叫这个名字，是因为我们有了这个model的话，就可以用它来Generate一个x,即可以计算某一个x出现的几率，如果我们知道每一个x出现的几率，知道x出现的distribution,那么我们就可以用这个distribution来sample出x。x的几率计算如下<br>$$P(x) = P(x|C_1)P(C_1) + P(x|C_2)P(C_2)$$</p>
+<p>有了上面的值，我们就可以计算出$x$属于Class1的几率$P(C_1|x)$ :<br>$$P(C_1|x) = \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}$$<br>有了$P(C_1|x)$，我们就可以比较$x$属于不同class的几率，几率最大的就是输出的结果。</p>
+<p>所以现在的问题就是：我们要从train data里面将<strong>$P(C_1)$</strong>、<strong>$P(C_2)$</strong>、<strong>$P(x|C_1)$</strong>、<strong>$P(x|C_2)$</strong> 的值估算出来。这一整套的想法就叫做<strong>Generative Model</strong>。之所以叫这个名字，是因为我们有了这个model的话，就可以用它来Generate一个$x$,即可以计算某一个$x$出现的几率，如果我们知道每一个$x$出现的几率，知道$x$出现的distribution,那么我们就可以用这个distribution来sample出$x$。$x$的几率计算如下<br>$$P(x) = P(x|C_1)P(C_1) + P(x|C_2)P(C_2)$$</p>
 <h2 id="Prior"><a href="#Prior" class="headerlink" title="Prior"></a>Prior</h2><p>我们先来算$P(C_1)$和$P(C_2)$，它们被称为Prior。<br>以宝可梦为例，假设Class1为水系宝可梦，Class2为一般系。先把宝可梦中ID&lt;400的作为train data,其余的作为testing data。其中有79只水系，61只一般系，于是：<br>$$P(C_1) = 79/(79+61) = 0.56$$ $$P(C_2) = 61/(79+61) = 0.44$$</p>
 <h2 id="Probability-from-Class"><a href="#Probability-from-Class" class="headerlink" title="Probability from Class"></a>Probability from Class</h2><p>接下来如何计算$P(x|C_1)$呢？我们可以用一个向量来表示每一只宝可梦，简单起见，取<strong>Defense</strong>和<strong>SP Defense</strong>两个属性，即用一个二维向量来表示。每一个宝可梦用一个二维平面上的点表示，如下图<br><img src="/2019/08/27/Classification/3.png" alt="3"><br>现在的问题是如果给我们一个新的点，这个点没有出现在training data里面，如一个新的宝可梦海龟，那么从水系的宝可梦的抽出一个宝可梦，它是海龟的几率是多少。<br>我们可以这样考虑，水系的宝可梦都是从一个Gaussian Distribution里面Sample出来的，我们得到的79个training data也是从这个Gaussian Distribution里面Sample出来的，现在的问题是如何通过这79个点来最大限度的估测出这个Gaussian Distribution。</p>
-<h3 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h3><p>Gaussian Distribution的向量形式如下，其中输入x是向量，输出是sample出x的概率，$\mu$是mean,$\Sigma$是covariance matrix.(<strong>The shape of the function determines by mean $\mu$ and covariance matrix $\Sigma$</strong>)<br>$$f_{\mu,\Sigma}(x) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu) \right\rbrace$$</p>
-<p>在当前例子中x就是宝可梦对应的向量，越接近中心点$\mu$的点被sample的几率越大，现在的问题就是如何寻找$\mu$和$\Sigma$.</p>
+<h3 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h3><p>Gaussian Distribution的向量形式如下，其中输入$x$是向量，输出是sample出$x$的概率，$\mu$是mean,$\Sigma$是covariance matrix.(<strong>The shape of the function determines by mean $\mu$ and covariance matrix $\Sigma$</strong>)<br>$$f_{\mu,\Sigma}(x) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu) \right\rbrace$$</p>
+<p>在当前例子中$x$就是宝可梦对应的向量，越接近中心点$\mu$的点被sample的几率越大，现在的问题就是如何寻找$\mu$和$\Sigma$.</p>
 <h3 id="Maximum-Likelihood"><a href="#Maximum-Likelihood" class="headerlink" title="Maximum Likelihood"></a>Maximum Likelihood</h3><p>上述的79个点可以从任意的Gaussian里被Sample出来，但是不同的Gaussian,它Sample出这79个点的可能性（<strong>Likelihood</strong>）是不一样的。换句话说，给我们一个Gaussian的$\mu$和$\Sigma$，我们可以算出它Sample出这79个点的几率。计算公式如下<br>$$L(\mu,\Sigma) = f_{\mu,\Sigma}(x^1)f_{\mu,\Sigma}(x^2)f_{\mu,\Sigma}(x^3)\cdots f_{\mu,\Sigma}(x^{79})$$<br>我们要找出$(\mu^{\star},\Sigma^{\star})$使得$L(\mu,\Sigma)$的值最大,即</p>
 <p>$$ \mu^{\star},\Sigma^{\star} = \mathop{argmax}_{\mu,\Sigma}L(\mu,\Sigma)$$</p>
 <p>解得：<br>$$\mu^{\star} = \frac{1}{79}\sum_{n=1}^{79}x^n$$ $$\Sigma^{\star} = \frac{1}{79}\sum_{n=1}^{79}(x^n - \mu^{\star})(x^n-\mu^{\star})^T$$</p>
-<p>接着，只要算出$P(C_1|x)&gt;0.5$,我们便可以说x是属于Class 1。在Training data上得到的结果如下<br><img src="/2019/08/27/Classification/4.png" alt="4"><br>将得到的分界线apply到test data上，结果如下<br><img src="/2019/08/27/Classification/5.png" alt="5"><br>然而我们得到的正确率只有47%。可能是因为代表宝可梦向量的维数太低。（在2维空间无法分开，在7维空间中可能会被分开）。<br>在7维空间中进行分类，$\mu$是一个7维向量，$\Sigma$是一个$7\times7$的矩阵。然而，我们依旧只得到了54%的正确率。</p>
-<h2 id="Modifying-Model"><a href="#Modifying-Model" class="headerlink" title="Modifying Model"></a>Modifying Model</h2><p>我们要怎么改进呢？<br>其实上面介绍的这种模型是比较少见的，我们不常看到给每一个Gaussian都有自己的mean和covariance matrix,更常见的作法是<strong>不同的Gaussian可以共享同一给covariance matrix</strong>,如下图。<br><img src="/2019/08/27/Classification/6.png" alt="6"><br>因为随着维度的增大，covariance matrix的参数个数增长是非常大的（$n^2$），如果分别给不同的Gaussian不同的$\Sigma$,那参数就更多了，参数多就会导致overfitting。现在我们要做的是找到$\mu^1$,$\mu^2$,$\Sigma$,使得$L(\mu^1,\mu^2,\Sigma)$的值最大<br>$$ L(\mu^1,\mu^2,\Sigma) = f_{\mu^1,\Sigma}(x^1)f_{\mu^1,\Sigma}(x^2)\cdots f_{\mu^1,\Sigma}(x^{79})f_{\mu^2,\Sigma}(x^{80})f_{\mu^2,\Sigma}(x^{81})\cdots f_{\mu^2,\Sigma}(x^{140}) $$ </p>
+<p>接着，只要算出$P(C_1|x)&gt;0.5$,我们便可以说$x$是属于Class 1。在Training data上得到的结果如下<br><img src="/2019/08/27/Classification/4.png" alt="4"><br>将得到的分界线apply到test data上，结果如下<br><img src="/2019/08/27/Classification/5.png" alt="5"><br>然而我们得到的正确率只有47%。可能是因为代表宝可梦向量的维数太低。（在2维空间无法分开，在7维空间中可能会被分开）。<br>在7维空间中进行分类，$\mu$是一个7维向量，$\Sigma$是一个$7\times7$的矩阵。然而，我们依旧只得到了54%的正确率。</p>
+<h2 id="Modifying-Model"><a href="#Modifying-Model" class="headerlink" title="Modifying Model"></a>Modifying Model</h2><p>我们要怎么改进呢？<br>其实上面介绍的这种模型是比较少见的，我们不常看到给每一个Gaussian都有自己的mean和covariance matrix,更常见的作法是<strong>不同的Gaussian可以共享同一个covariance matrix</strong>,如下图。<br><img src="/2019/08/27/Classification/6.png" alt="6"><br>因为随着维度的增大，covariance matrix的参数个数增长是非常大的（$n^2$），如果分别给不同的Gaussian不同的$\Sigma$,那参数就更多了，参数多就会导致overfitting。现在我们要做的是找到$\mu^1$,$\mu^2$,$\Sigma$,使得$L(\mu^1,\mu^2,\Sigma)$的值最大<br>$$ L(\mu^1,\mu^2,\Sigma) = f_{\mu^1,\Sigma}(x^1)f_{\mu^1,\Sigma}(x^2)\cdots f_{\mu^1,\Sigma}(x^{79})f_{\mu^2,\Sigma}(x^{80})f_{\mu^2,\Sigma}(x^{81})\cdots f_{\mu^2,\Sigma}(x^{140}) $$ </p>
 <p>$\mu^1$与$\mu^2$的算法与上面相同，将训练数据加起来取平均即可。$\Sigma$的计算略有区别:<br>$$ \Sigma = \frac{79}{140}\Sigma^1 + \frac{61}{140}\Sigma^2 $$</p>
 <p>仍用2维向量表示宝可梦，这次得到的结果如下图<br><img src="/2019/08/27/Classification/7.png" alt="7"><br>此时我们发现分界线boundary从原来的曲线变为了直线，所以这样的模型我们也称为<strong>Linear Model</strong>，正确率从原来的54%变为了73%</p>
-<h3 id="Probability-Distribution"><a href="#Probability-Distribution" class="headerlink" title="Probability Distribution"></a>Probability Distribution</h3><p>为什么要现在Gaussian Distribution，其实也可以选择别的分布。<br>假设样本${\bf x} = \begin{bmatrix}{x_{1}}&amp;{x_{2}}&amp;{\cdots}&amp;{x_{n}}\end{bmatrix}^T$的每一个维从几率模型产生的几率是independent的，于是$P(x|C_1)$可以写成:<br>$$ P(x|C_1) = P(x_1|C_1)P(x_2|C_1)\cdots P(x_n|C_1) $$</p>
+<h3 id="Probability-Distribution"><a href="#Probability-Distribution" class="headerlink" title="Probability Distribution"></a>Probability Distribution</h3><p>为什么要选择Gaussian Distribution，其实也可以选择别的分布。<br>假设样本${\bf x} = \begin{bmatrix}{x_{1}}&amp;{x_{2}}&amp;{\cdots}&amp;{x_{n}}\end{bmatrix}^T$的每一个维从几率模型产生的几率是independent的，于是$P(x|C_1)$可以写成:<br>$$ P(x|C_1) = P(x_1|C_1)P(x_2|C_1)\cdots P(x_n|C_1) $$</p>
 <p>每一维的几率分布是independent,从$x_1$到$x_n$产生的几率都是一维的Gaussian,这样相当于原来高维度的Gaussian，它的covariance matrix变成Diagnoal matrix(不是对角线的地方值都是0),这个就可以减少参数，得到一个更简单的模型。尝试了这个模型，它的结果不太好，还是太简单了。不同维度之间的covariance看来还是必要的。</p>
 <p>假设某个feature是binary的，那么它就不太可能是用Gaussain产生的（<strong>For binary features,you may assume they are from Bernoulli distributions</strong>）<br>如果假设所有的feature之间都是independent的，这种分类方法叫做<strong>Naive Bayes Classifier</strong></p>
 <h2 id="Posterior-Probability"><a href="#Posterior-Probability" class="headerlink" title="Posterior Probability"></a>Posterior Probability</h2><p>接下来我们对Posterior Probability进行分析，<br>$$<br>\begin{equation}<br>\begin{split}<br>P(C_1|x) &amp;= \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}\\<br>&amp;= \frac{1}{1 + \frac{P(x|C_2)P(C_2)}{P(x|C_1)P(C_1)}}\\<br>&amp;= \frac{1}{1+exp(-z)}<br>&amp;= \sigma(z)<br>\end{split}<br>\nonumber<br>\end{equation}<br>$$</p>
 <p>其中<br>$$z = In\frac{P(x|C_1)P(C_1)}{P(x|C_2)P(C_2)}$$</p>
-<p>$\sigma(z)$称为<strong>Sigmoid function</strong>，函数图像如下<br><img src="/2019/08/27/Classification/8.png" alt="8"><br>我们来看一下z长什么样子<br>$$z = In\frac{P(x|C_1)}{P(x|C_2)}+In\frac{P(C_1)}{P(C_2)} $$</p>
+<p>$\sigma(z)$称为<strong>Sigmoid function</strong>，函数图像如下<br><img src="/2019/08/27/Classification/8.png" alt="8"><br>我们来看一下$z$长什么样子<br>$$z = In\frac{P(x|C_1)}{P(x|C_2)}+In\frac{P(C_1)}{P(C_2)} $$</p>
 <p>其中<br>$$In\frac{P(C_1)}{P(C_2)} = \frac{\frac{N_1}{N_1+N_2}}{\frac{N_2}{N_1+N_2}} = \frac{N_1}{N_2}$$<br>$$P(x|C_1) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma^1|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1) \right\rbrace$$<br>$$P(x|C_2) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma^2|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2) \right\rbrace$$</p>
 <p>整理可得<br>$$In\frac{P(x|C_1)}{P(x|C_2)} = In\frac{|\Sigma^2|^{1/2}}{|\Sigma^1|^{1/2}} - \frac{1}{2}[(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1)-(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2)]$$</p>
 <p>又有<br>$$(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1) = x^T(\Sigma^1)^{-1}x - 2(\mu^1)^T(\Sigma^1)^{-1}x + (\mu^1)^T(\Sigma^1)^{-1}\mu^1$$<br>$$(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2) = x^T(\Sigma^2)^{-1}x - 2(\mu^2)^T(\Sigma^2)^{-1}x + (\mu^2)^T(\Sigma^2)^{-1}\mu^2$$</p>
 <p>所以<br>$$z = In\frac{|\Sigma^2|^{1/2}}{|\Sigma^1|^{1/2}} - \frac{1}{2}x^T(\Sigma^1)^{-1}x + (\mu^1)^T(\Sigma^1)^{-1}x - \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}x^T(\Sigma^2)^{-1}x - (\mu^2)^T(\Sigma^2)^{-1}x + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$$</p>
 <p>考虑到$\Sigma_1 = \Sigma_2 = \Sigma$,上式可以简化成<br>$$z = (\mu^1-\mu^2)^T\Sigma^{-1}x - \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$$</p>
-<p>我们令${\bf w^T} = (\mu^1-\mu^2)^T\Sigma^{-1}$,$b = \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$.w是向量，b是一个scalar</p>
-<p>所以就有<br>$$P(C_1|x) = \sigma({\bf w}\cdot {\bf x}+b)$$</p>
+<p>我们令${\bf w^T} = (\mu^1-\mu^2)^T\Sigma^{-1}$,$b = \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$.$\bf{w}$是向量，b是一个scalar</p>
+<p>所以就有<br>$$P(C_1|\bf{x}) = \sigma({\bf w}\cdot {\bf x}+b)$$</p>
 <p>从上面的式子我们可以看出来为什么我们将$\Sigma^1$与$\Sigma^2$合并，得到的boundary会是一条直线。<br>在generative model里面，我们做的事情是用某些方法来找到$N_1$,$N_2$,$\mu^1$,$\mu^2$,$\Sigma$的值，找出这些后我们就能算出${\bf w}$和$b$,从而再算出几率。</p>
 <p>但是为什么要这么麻烦呢？既然我们只需要找到${\bf w}$和$b$,何必要舍近求远来求$N_1$,$N_2$,$\mu^1$,$\mu^2$,$\Sigma$的值，可不可以直接来求${\bf w}$和$b$？这个就是下一节<strong>Logistic Regression</strong>要涉及的内容</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
@@ -548,7 +548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -559,7 +559,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -570,7 +570,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

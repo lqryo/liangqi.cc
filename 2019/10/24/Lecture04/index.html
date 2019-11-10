@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工作空间(workspace)是一个存放工程开发相关文件的文件夹。可以理解为windows里面使用vs创建工程的第一步。ROS里面的工程就是我们所说的工作空间。后面所有的源码、配置文件、编译出来的可执行文件都是在工作空间里面放置的。工作空间里面有4个主要的文件夹  src:代码空间（Source Space），放置功能包，所有功能包的代码、配置文件、launch文件都放置在该文件夹下。  buil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建工作空间与功能包">
+<meta property="og:url" content="http://yoursite.com/2019/10/24/Lecture04/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="工作空间(workspace)是一个存放工程开发相关文件的文件夹。可以理解为windows里面使用vs创建工程的第一步。ROS里面的工程就是我们所说的工作空间。后面所有的源码、配置文件、编译出来的可执行文件都是在工作空间里面放置的。工作空间里面有4个主要的文件夹  src:代码空间（Source Space），放置功能包，所有功能包的代码、配置文件、launch文件都放置在该文件夹下。  buil">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/24/Lecture04/1.png">
+<meta property="og:updated_time" content="2019-11-09T01:58:12.707Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="创建工作空间与功能包">
+<meta name="twitter:description" content="工作空间(workspace)是一个存放工程开发相关文件的文件夹。可以理解为windows里面使用vs创建工程的第一步。ROS里面的工程就是我们所说的工作空间。后面所有的源码、配置文件、编译出来的可执行文件都是在工作空间里面放置的。工作空间里面有4个主要的文件夹  src:代码空间（Source Space），放置功能包，所有功能包的代码、配置文件、launch文件都放置在该文件夹下。  buil">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/24/Lecture04/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/24/Lecture04/">
+
+
+
+
+
+  <title>创建工作空间与功能包 | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/24/Lecture04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">创建工作空间与功能包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-24T13:14:28+08:00">
+                2019-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Embedded System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Embedded-System/ROS/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>工作空间(workspace)是一个存放工程开发相关文件的文件夹。可以理解为windows里面使用vs创建工程的第一步。ROS里面的工程就是我们所说的工作空间。后面所有的源码、配置文件、编译出来的可执行文件都是在工作空间里面放置的。工作空间里面有4个主要的文件夹</p>
+<ul>
+<li><p><strong>src</strong>:代码空间（Source Space），放置功能包，所有功能包的代码、配置文件、launch文件都放置在该文件夹下。</p>
+</li>
+<li><p><strong>build</strong>:编译空间（Build Space）,放置在编译过程中所产生的中间文件。</p>
+</li>
+<li><p><strong>devel</strong>:开发空间（Development Space），放置编译生成的可执行文件，一些库，包括一些脚本等等。</p>
+</li>
+<li><p><strong>install</strong>:安装空间（Install Space），放置用install指令安装成功后的结果。开发空间与安装空间里面的内容是有一定重复的。devel是开发过程中，install是开发结束后分享给用户的结果文件。</p>
+</li>
+</ul>
+<h1 id="创建工作空间"><a href="#创建工作空间" class="headerlink" title="创建工作空间"></a>创建工作空间</h1><p>怎样在系统里面去创建一个工作空间？有如下几个步骤</p>
+<h2 id="创建工作空间-1"><a href="#创建工作空间-1" class="headerlink" title="创建工作空间"></a>创建工作空间</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~/catkin_ws/src</span><br><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws/src</span><br><span class="line">$ catkin_init_workspace</span><br></pre></td></tr></table></figure>
+
+<p>上面指令中的<code>catkin_ws</code>名称可以自己替换，但是<code>src</code>名称不能改。<code>catkin_init_workspace</code>命令将当前文件夹初始化，变成一个ROS的workspace，这是一个属性的变化。指令执行完之后，会看到在src文件夹下有一个<code>CMakeLists.txt</code>文件，说明工作空间创建成功。</p>
+<h2 id="编译工作空间"><a href="#编译工作空间" class="headerlink" title="编译工作空间"></a>编译工作空间</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws/</span><br><span class="line">$ catkin_make</span><br></pre></td></tr></table></figure>
+
+<p>在ROS的工作空间做编译首先要回到ROS工作空间的根目录，即<code>catkin_ws</code>。<code>catkin_make</code>命令是ROS里面catkin编译工具所提供的编译器的指令，通过这个指令会根据配置来编译src下面所有功能包的源码，结果会放到devel和install里面。执行之后会看到根目录下产生了build和devel两个文件夹。如果要产生install文件夹，可以使用<code>catkin_make install</code>命令。</p>
+<h2 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">source</span> devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="检查环境变量"><a href="#检查环境变量" class="headerlink" title="检查环境变量"></a>检查环境变量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$ROS_PACKAGE_PATH</code>是ROS本身的环境变量，通过这个环境变量来查找ROS所有功能包的路径。</p>
+<h1 id="创建功能包"><a href="#创建功能包" class="headerlink" title="创建功能包"></a>创建功能包</h1><p>在创建代码的时候一定要创建一个功能包，功能包是我们放置ROS里面源码的一个最小单元，所有源码必须全部放到功能包里面，不能直接放到src下面去编译。创建功能包的指令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg &lt;package_name&gt; [depend1] [depend2] [depend3]</span><br></pre></td></tr></table></figure>
+
+<p>其中，<code>&lt;package_name&gt;</code>是要创建的功能包的名字，<code>[depend]</code>是在编译的时候需要依赖ROS里面哪些其他的功能包。</p>
+<p>在src目录下执行下面命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ catkin_create_pkg test_pkg roscpp rospy std_msgs</span><br></pre></td></tr></table></figure>
+
+<p>因为要写C++程序，添加<code>roscpp</code>依赖包，要写python程序，添加<code>rospy</code>依赖包，要使用ros定义的标准消息结构，添加<code>std_msgs</code>依赖包。</p>
+<p>上面命令运行成功后会在src文件夹中看到<code>test_pkg</code>文件夹，里面的内容如下：</p>
+<p><img src="/2019/10/24/Lecture04/1.png" alt="1"></p>
+<p><code>CMakeLists.txt</code>和<code>package.xml</code>是每个功能包必须要存在的文件，这两个文件才标志这该文件夹为功能包而不是一个普通文件夹。<code>package.xml</code>文件描述的是跟功能包相关的信息，比如功能包的名字、版本号、依赖的功能包等。<code>CMakeLists.txt</code>是用来描述功能包的编译规则，使用cmake语法。</p>
+<p>可以用如下命令来编译一个功能包</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/catkin_ws</span><br><span class="line">$ catkin_make</span><br><span class="line">$ <span class="built_in">source</span> ~/catkin_ws/devel/setup.bash</span><br></pre></td></tr></table></figure>
+
+<p><code>source ~/catkin_ws/devel/setup.bash</code>是针对catkin_ws工作空间的一个环境变量设置，只有设置这个环境变量之后，才能让系统去找到工作空间，并且找到工作空间中对应的工作包。</p>
+<blockquote>
+<p>注意，同一个工作空间下，不允许存在同名功能包。不同工作空间下，允许存在同名功能包。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/24/Lecture03/" rel="next" title="ROS命令行工具的使用">
+                <i class="fa fa-chevron-left"></i> ROS命令行工具的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/24/Lecture05/" rel="prev" title="发布者Publisher的编程实现">
+                发布者Publisher的编程实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建工作空间"><span class="nav-number">1.</span> <span class="nav-text">创建工作空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建工作空间-1"><span class="nav-number">1.1.</span> <span class="nav-text">创建工作空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译工作空间"><span class="nav-number">1.2.</span> <span class="nav-text">编译工作空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置环境变量"><span class="nav-number">1.3.</span> <span class="nav-text">设置环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查环境变量"><span class="nav-number">1.4.</span> <span class="nav-text">检查环境变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建功能包"><span class="nav-number">2.</span> <span class="nav-text">创建功能包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

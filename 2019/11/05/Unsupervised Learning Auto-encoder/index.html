@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="introduction什么是Auto-encoder呢？Auto-encoder的想法是，我们先去找一个encoder，这个encoder可以input一个东西，例如影响辨识，input一张784维的vector表示的digit。这个encoder它可能就是一个neural network，它的output就是一个code，这个code通常远比784维还要小，所以会有类似压缩的效果。这个code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsupervised Learning —— Auto-encoder">
+<meta property="og:url" content="http://yoursite.com/2019/11/05/Unsupervised Learning Auto-encoder/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="introduction什么是Auto-encoder呢？Auto-encoder的想法是，我们先去找一个encoder，这个encoder可以input一个东西，例如影响辨识，input一张784维的vector表示的digit。这个encoder它可能就是一个neural network，它的output就是一个code，这个code通常远比784维还要小，所以会有类似压缩的效果。这个code">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/14.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/15.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/16.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/17.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/18.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/19.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/20.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/21.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/22.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/23.png">
+<meta property="og:updated_time" content="2019-11-10T04:37:21.916Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsupervised Learning —— Auto-encoder">
+<meta name="twitter:description" content="introduction什么是Auto-encoder呢？Auto-encoder的想法是，我们先去找一个encoder，这个encoder可以input一个东西，例如影响辨识，input一张784维的vector表示的digit。这个encoder它可能就是一个neural network，它的output就是一个code，这个code通常远比784维还要小，所以会有类似压缩的效果。这个code">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/05/Unsupervised%20Learning%20Auto-encoder/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/05/Unsupervised Learning Auto-encoder/">
+
+
+
+
+
+  <title>Unsupervised Learning —— Auto-encoder | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/Unsupervised Learning Auto-encoder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unsupervised Learning —— Auto-encoder</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-05T17:29:38+08:00">
+                2019-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="introduction"><a href="#introduction" class="headerlink" title="introduction"></a>introduction</h1><p>什么是Auto-encoder呢？Auto-encoder的想法是，我们先去找一个encoder，这个encoder可以input一个东西，例如影响辨识，input一张784维的vector表示的digit。这个encoder它可能就是一个neural network，它的output就是一个code，这个code通常远比784维还要小，所以会有类似压缩的效果。这个code代表input这张image的某种compact，某种精简有效的representation。</p>
+<p>现在的问题是，我们做的是unsupervised learning，可以找到一大堆的image当作NN encoder的input，但是我们没有任何的output，即不知道一个image应该变成什么样的code。要learn一个network需要有input和output，所有只有input没办法去learn。</p>
+<p>我们先做另外一件事情，learn一个decoder，这个decoder做的事情是：input一个vector，它就通过这个decoder output一张image。但是我们也没有办法train NN的decoder，因为只有output。这两个network,encoder和decoder，每个我们都无法单独去train。但我们可以把它接起来，然后一起train。也就是说，我们接一个neural network，input一个image，中间变成code，再把code通过decoder变成原来的image，就可以把encoder和decode同时学出来。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/1.png" alt="1"></p>
+<h1 id="Starting-from-PCA"><a href="#Starting-from-PCA" class="headerlink" title="Starting from PCA"></a>Starting from PCA</h1><p>我们之前在PCA里面其实看过非常类似的概念。PCA实际上做的事情是，input一张image $x$(通常我们会把$x$减掉它的平均$\bar{x}$当作input，但这里我们把它省略掉，这样并不会它奇怪，因为通常在做NN的时候，拿到data首先就会做normalize，把它变成mean是0，variance是1，所以就不用再减掉$\bar{x}$了)，$x$乘上一个weight,通过NN的一个layer，得到component的weight $c$，$c$再乘上matrix $W^T$得到$\hat{x}$，$\hat{x}$是根据这些component的weight和component做reconstruction的结果。在PCA里面，我们要做的事情就是minimize input跟reconstruction的结果。如果它它当成neural network来看的话，input $x$就是input layer，output $\hat{x}$就是output layer，中间component weight就是hidden layer，在PCA里面它是linear的。中间的hidden layer我们通常称为<strong>Bottleneck layer</strong>,这么叫是因为我们现在要做dimension reduction,所以component的数目通常会比input的dimension还要小得多，所以如果把它当作一个layer来看的话，它是一个特别窄的layer。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/2.png" alt="2"></p>
+<h2 id="Deep-Auto-encoder"><a href="#Deep-Auto-encoder" class="headerlink" title="Deep Auto-encoder"></a>Deep Auto-encoder</h2><p>PCA是这么做的，其实也可以用gradient decent来做PCA。但PCA只有一个hidden layer，我们想能不能把它变更多的hidden layer？当然可以，就兜一个很深的neural network，它有很多很多的层，同样我们希望input $x$和output $\hat{x}$越接近越好。测试的方法完全没有什么特别，就是backpropagation。注意中间会有个特别窄的layer，这个特别窄的layer它有特别少的neuron，这些layer的output就代表了一组code。从input到Bottleneck layer的部分就是encoder，从Bottleneck layer的output到最后的$\hat{x}$就是decoder。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/3.png" alt="3"></p>
+<p>其实这个deep的auto encoder最早是Hinton提出(链接1),那个时候deep auto-encoder没有那么好train，有可能train之后结果就坏掉了，那个时候需要用RBM做layer-wise的initialization，然后才可能把deep auto-encoder train得比较好一点。如果是按照上面在PCA里面看到的，两边的layer的weight要互为transpose，在train的时候，我们可以做到这件事，只要把两边的weight tie起来，让他们在做training的时候永远保持他们的值是一样的。这样做的好处是现在auto-encoder的参数就少一半，比较不会有overfitting的情形。But symmetric is not necessary，没有什么理由两边的weight一定要互为transpose，所以现在常见的做法就是直接兜个neural network，然后用back propagation直接train下去。</p>
+<p>对手写数字辨识做PCA，把它从784维降到30维，然后再从30维reconstruct回784维。可以看到最后得到的image是比较模糊的。但如果是用deep Auto-encoder的话，把784维先扩展成1000维，再降到500维、250维、30维，最后再重新变为784维。我们发现如果用deep auto-encoder的话，它的结果看起来就非常的好。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/4.png" alt="4"></p>
+<p>如果我们不是把它降到30维，而是降到2维再去visualize的话，会发现，如果是做PCA，在二维的平面上，所有的digit是被混在一起。如下图，不同颜色代表了不同的数字。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/5.png" alt="5"></p>
+<p>但如果是用deep auto-encoder的话，就会发现这些数字是分开的，如下图：</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/6.png" alt="6"></p>
+<h1 id="Auto-encoder-——-Text-Retrieval"><a href="#Auto-encoder-——-Text-Retrieval" class="headerlink" title="Auto-encoder —— Text Retrieval"></a>Auto-encoder —— Text Retrieval</h1><p>Auto-encoder也可以用在文字处理上，比如我们会想要把一篇文章压成一个vector(code)，假设我们现在要做文字搜寻，在文字搜寻里有一种方法叫做<strong>vector space model</strong>,它就是把每篇文章都表示成空间中的一个vector，下图中每一个蓝点就是一篇文章。接下来，假设使用者输入一个查询的词汇，我们把查询的词汇也变成空间中的一个点。接下来就是计算输入的查询词汇跟每篇document之间的inner product或cosine similarity等等。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/7.png" alt="7"></p>
+<p>这个模型要work,取决于现在把一个document变成一个vector表示的好不好。把document表示是vector最trivial的方法叫做bag-of-word，它的vector的size就是lexicon的size，下图是”This is an apple”这个句子的bag-of-word。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/8.png" alt="8"></p>
+<p>有时候我们想要做到更好，会把它乘上inverse document frequency，每一维不只会用词汇在document出现的次数，还会再乘上一个weight，代表那个词汇的重要性。这个重要性可以用不同的方法去衡量，比如<strong>inverse document frequency</strong>。但是用这个模型很weak，它没有办法考虑任何semantic相关的东西，比如它不会知道北京大学指的就是北大，不会知道apple和orange都是水果等等，对它来说每一个词汇都是independent，词汇之间完全没有任何相关性。</p>
+<p>我们可以用auto-encoder让语义这件事情被考虑进来。举例来说，我们learn一个auto-encoder，它的input就是一个document或者query(一段文字)，把一个vector变成一个vector，把这个vector通过一个encoder，把它压成二维，结果如下图。右边每个点代表一个document，不同颜色的点代表不同的类，我们发现同类的document都集中在一起。当我要做搜寻的时候，输入一个查询词，就把query也通过这个encoder，变成一个二维的vector，然后看这个vector落在那个聚类里。auto-encoder的结果是非常惊人的，如果我们用LSA的话，得不到类似的结果。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/9.png" alt="9"></p>
+<h1 id="Auto-encoder-——-Similar-Image-Search"><a href="#Auto-encoder-——-Similar-Image-Search" class="headerlink" title="Auto-encoder —— Similar Image Search"></a>Auto-encoder —— Similar Image Search</h1><p>Auto-encoder也可以用在image的搜寻上面。以图找图，最简单的方式，就是拿一张image的query，计算跟其他database里面的image的相似程度。比如可以算他们在pixel上面的相似程度，得到最像的几张就是要retrieve的结果。如果只是这么做的话，在pixel-wise上做比较，其实得不到太好的结果。我们用Michael Jackson的照片算它和database里面其他image的相似度，找出来最像的照片如下，</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/10.png" alt="10"></p>
+<p>可以用deep auto-encoder把每一张image变成一个code，然后在code上面再去做搜寻。而且，因为今天做这件事情是unsupervised，所以要collect多少data都行。如下图，input一个$32\times 32$image，用RGB表示就是$32\times 32 \times 3$维，最后用一个256维的vector来表示这张image。然后把这个code通过另外一个decoder，再变回原来的image。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/11.png" alt="11"></p>
+<p>reconstruct的结果如下：</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/12.png" alt="12"></p>
+<p>如果不是在Pixel上面算相似度，而是在code上算相似度的话，就会得到比较好的结果。还是用Michael Jackson的image当作input,这次找到的都是人脸。虽然这些image在pixel level上看起来是不像的，但是通过很多hidden layer，把它转换成code的时候，在那个256维的空间是，它们是很像的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/13.png" alt="13"></p>
+<h1 id="Auto-encoder-——-Pre-training-DNN"><a href="#Auto-encoder-——-Pre-training-DNN" class="headerlink" title="Auto-encoder —— Pre-training DNN"></a>Auto-encoder —— Pre-training DNN</h1><p>Auto-encoder还可以用在pre-training上面，我们知道在train一个neural network的时候，有时候会烦恼怎么做参数initialization，有没有一些方法可以让我们找到一组比较好的initialization。这种找比较好的initialization的方法，就叫做pre-training。</p>
+<p>假设现在要做MNIST的recognition，input是784维，output是10维，如下。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/14.png" alt="14"></p>
+<p>在做pre-train的时候，先train一个auto-encoder，如下图，它input 784维，然后中间有个1000维的vector，然后再变回784维，希望input与output越接近越好。但是做这件事情的时候，需要稍微小心一点，因为我们在做auto-encoder的时候会希望code比dimension还要小，如果比dimension还要大，network可能就不会learn了，它只需要把原来的784维记住，放到1000维里面去，然后再解回来，就结束了。它会learn一个接近identity的matrix。所以如果hidden layer比input还要大的时候，需要加一个很强的regularization，比如对这1000维的output做L1的regularization，希望这1000维的output是sparse（这1000维里只有某几维有值，其他都是0）。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/15.png" alt="15"></p>
+<p>那我们现在先learn了一个auto-encoder，learn好以后，我们把784维到1000维的这个weight $W^1$保留下来，然后fix住它，接下来把所有database里面的digit通通变成1000维的vector。接下来，再learn另一个auto-encoder，它把1000维的vector变成1000维的code,然后再转回1000维的vector,learn这样的auto-encoder，让input与output越接近越好。然后把$W^2$也保存下来。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/16.png" alt="16"></p>
+<p>接下来fix住$W^2$的值，再learn第三个auto-encoder，learn好这个auto-encoder，得到它的weight $W^3$，再把$W^3$保留下来。接下来，$W^1$,$W^2$,$W^3$等于是再learn整个neural network的时候的initialization，最后再random initialize最后500到10维的weight，再用back propagation去调一遍，我们称这个步骤为fine tune，因为$W^1$,$W^2$,$W^3$都已经是很好的weight了。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/17.png" alt="17"></p>
+<p>Pre-training在过去如果要learn一个很deep的neural network的话可能是需要的，不过现在training的技术进步后，基本上network不用pre-training。但是pre-training有个妙用就是，如果今天有很多unlabeled data但只有少量labeled data，可以用大量的unlabeled data去把$W^1$,$W^2$,$W^3$先initialize好，那最后的labeled data就只需要稍微调整weight就好。所以pre-training这招在有大量unlabel data的时候还是有用的。</p>
+<h1 id="De-noising-auto-encoder"><a href="#De-noising-auto-encoder" class="headerlink" title="De-noising auto-encoder"></a>De-noising auto-encoder</h1><p>有个方法可以让auto-encoder做的更好，叫<strong>De-noising auto-encoder</strong>，它的概念其实很简单。把原来的input $x$加上一些noise变成$x^{\prime}$，然后把$x^{\prime}$ encode以后变成code $c$，再把$c$ decode回来变成$y$。要注意的是，现在的要让output与加了noise之前的input越接近越好。如果有做这件事情，learn出来的结果会比较robust，因为encoder现在不只learn到encode这件事，还learn到了把杂讯过滤掉这件事。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/18.png" alt="18"></p>
+<p>还有另外一招叫做<strong>Contractive auto-encoder</strong>。我们在learn code的时候，加上一个constrain，这个constrain是当input有变化的时候对这个code的影响是被minimize的。这件事情其实很像de-noising auto-encoder，只是从不同的角度来看。de-noising auto-encoder是说加了noise以后，还要再reconstruct回原来没有noise的结果。Contractive auto-encoder是希望当input变了，也就是加了noise以后，对这个code的影响是小的。它们做的事情其实是很类似的。</p>
+<p>另外还有很多non-linear dimension reduction的方法，比如<strong>Restricted Boltzmann Machine</strong>（它其实不是neural network）和<strong>deep belief network</strong>（不是neural network），它们其实都是graph co-model。</p>
+<h1 id="Auto-encoder-for-CNN"><a href="#Auto-encoder-for-CNN" class="headerlink" title="Auto-encoder for CNN"></a>Auto-encoder for CNN</h1><p>如果我们今天要处理的对象是image的话，我们知道要用CNN。CNN在处理image的时候会有一些convolution layers和pooling layers，用convolution layers和pooling layers交替，让image变得原来越小，最后去做flatten。</p>
+<p>今天如果是做auto-encoder的话，不只要有个encoder，还要有decoder。如果encoder的部分是做convolution与pooling交替操作，理论上decoder应该就是做跟encode相反的事情，如下图。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/19.png" alt="19"></p>
+<p>那么这个unpooling和deconvolution它们是什么呢？</p>
+<h2 id="CNN-Unpooling"><a href="#CNN-Unpooling" class="headerlink" title="CNN - Unpooling"></a>CNN - Unpooling</h2><p>pooling的操作如下，现在得到一个$4\times 4$的matrix，接下来把matrix里面pixel分成4个一组，从每组里面挑一个最大的。当如果要做unpooling的话，要做另一件事情，要记得刚刚在做pooling是从哪里取值，然后再做unpooling的时候，要把原来比较小matrix扩大，比如之前记得在做pooling的时候是从左上角pool值，unpooling的时候就把值放到左上角，其他不零。其实这不是unpooling唯一的做法，在keras里面做法是不一样的，它是直接repeat那些value，也是就不用去记之前pooling的位置。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/20.png" alt="20"></p>
+<h2 id="CNN-Deconvolution"><a href="#CNN-Deconvolution" class="headerlink" title="CNN - Deconvolution"></a>CNN - Deconvolution</h2><p>事实上，Deconvolution就是convolution，我们来解释一下这件事情。我们举一维的convolution（方便起见）当作例子，假设input有5个dimension，filter size为3，我们就把input的3个value分别乘上3个weight，得到一个output，再把这个filter shift一格，把3个value分别乘上3个weight得到下一个output，依次类推，这是convolution的操作。convolution是从3个值变为1个值，deconvolution应该是从1个值变为3个值，那么我们可以让一个值分别乘上3个weight变成3个值，重叠的地方就加起来。事实上，这件事情等同于是在做convolution，相当于input是3个value，我们把它做padding，旁边补零，检查两个方框里面output的5个值，不难发现它们其实是一样的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/21.png" alt="21"></p>
+<p>如果把convolution和deconvolution比较，他们的不同点在哪里？不同点在于它们的weight是相反的，如上图中，最左边是weight顺序是红蓝绿，最右边是绿蓝红。但它们做到operation一样都是convolution。所以在keras里面，根本不需要另外再写一个deconvolution的layer，</p>
+<h1 id="Sequence-to-sequence-Auto-encoder"><a href="#Sequence-to-sequence-Auto-encoder" class="headerlink" title="Sequence-to-sequence Auto-encoder"></a>Sequence-to-sequence Auto-encoder</h1><p>上面的auto-encoder，它的input通通都是fix-length的vector。但是很多东西，本质上不应该把它表示成vector，比如语音。一段声音讯号有长有短，它不是一个vector,一段文章有长有短也不是一个vector。虽然可以用bag-of-word把它变成一个vector，但这个方法会失去词汇和词汇之间的前后关系，这个是不好好。</p>
+<p>具体的<strong>Sequence-to-sequence Auto-encoder</strong>到RNN的时候再讲。</p>
+<h1 id="Other-application"><a href="#Other-application" class="headerlink" title="Other application"></a>Other application</h1><p>我们之前用encoder把原来的image变成小的dimension，但我们同时也train了decoder，这个decoder其实是有妙用的，可以拿decoder来产生新的image。也就是说把learn好的decoder拿出来，然后给他一个random的input number，他的output希望就是一张图。这件事情做起来其实是相当容易的，下面是用MNIST来train的结果，把784维的一个image通过一个hidden layer然后project到二维。再把二维通过一个hidden layer解回原来的image。在encoder部分，二维的vector画出来如下图左边，不同颜色的点代表不同的数字，然后接下来在红色的框框里等间隔的去sample一个二维的vector出来，然后把二维的vector丢到NN decoder里面，让它output一个image出来。这些二维的vector不见得是某个image compress以后的结果，它不见得原来有对应的image，它就是某个二维的vector，然后丢到decoder以后，看看它可以产生什么。我们发现在下图中红色框框内等距离做sample，得到的结果如右边所示，可以看到左上角比较差，因为它在红色方框内其实是没有image（input image的时候不会对应到这里），这个区域的vector sample出来，通过decoder解回来不是image，看起来怪怪的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/22.png" alt="22"></p>
+<p>那我们怎么知道要sample在哪个地方？因为我们必须先观察一下二维vector的分布，才能知道哪边是有值的，这样sample出来才比较有可能是一个image，<br>如果sample出来的是上图蓝色方框区域，那么得到的东西大概率不是一个image。但是要先分析二维的code分布感觉有点麻烦，那要怎么确保我们希望的region里面都是image？有一个很简单的做法就是在code上面加上regularization，在code上面直接加L2的regularization，让所有的node都比较接近0，接下来就在0附近sample，这样就比较有可能sample出来的vector都可以对应到数字。这样做的结果如下图，可以看到train出来的code都会集中在接近0的地方。接下来就以0为中心，然后等距离在红框内sample image，结果如下图右边，从这里可以观察到很多有趣的现象，例如从左到右横轴代表的是有没有圆圈，纵轴可能是表示倾斜程度。所以不只可做encoder，还可以用code来画image，这个image并不是从原来image database sample出来的，它是machine自己画出来的。</p>
+<p><img src="/2019/11/05/Unsupervised Learning Auto-encoder/23.png" alt="23"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.cs.toronto.edu/~hinton/science.pdf" target="_blank" rel="noopener">Reducing the Dimensionality ofData with Neural Networks</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/05/Unsupervised Learning Neighbor Embedding/" rel="next" title="Unsupervised Learning —— Neighbor Embedding">
+                <i class="fa fa-chevron-left"></i> Unsupervised Learning —— Neighbor Embedding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/09/Unsupervised Learning Deep Generative Model/" rel="prev" title="Unsupervised Learning —— Deep Generative Model">
+                Unsupervised Learning —— Deep Generative Model <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction"><span class="nav-number">1.</span> <span class="nav-text">introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Starting-from-PCA"><span class="nav-number">2.</span> <span class="nav-text">Starting from PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Auto-encoder"><span class="nav-number">2.1.</span> <span class="nav-text">Deep Auto-encoder</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-encoder-——-Text-Retrieval"><span class="nav-number">3.</span> <span class="nav-text">Auto-encoder —— Text Retrieval</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-encoder-——-Similar-Image-Search"><span class="nav-number">4.</span> <span class="nav-text">Auto-encoder —— Similar Image Search</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-encoder-——-Pre-training-DNN"><span class="nav-number">5.</span> <span class="nav-text">Auto-encoder —— Pre-training DNN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#De-noising-auto-encoder"><span class="nav-number">6.</span> <span class="nav-text">De-noising auto-encoder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-encoder-for-CNN"><span class="nav-number">7.</span> <span class="nav-text">Auto-encoder for CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN-Unpooling"><span class="nav-number">7.1.</span> <span class="nav-text">CNN - Unpooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CNN-Deconvolution"><span class="nav-number">7.2.</span> <span class="nav-text">CNN - Deconvolution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequence-to-sequence-Auto-encoder"><span class="nav-number">8.</span> <span class="nav-text">Sequence-to-sequence Auto-encoder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-application"><span class="nav-number">9.</span> <span class="nav-text">Other application</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

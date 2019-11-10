@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Dimension Reduction可分成两种，Generation(无中生有)和Reduction(化繁为简)。Unsupervised Learning可以分为两大类，一种是Clustering，一种是Dimension Reduction。 化繁为简的意思是，现在有很多种不同的input，比如一个function，它可以input看起来像树的东西，output都是抽象的树。也就是把本来比较">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsupervised Learning —— Linear Methods">
+<meta property="og:url" content="http://yoursite.com/2019/10/27/Unsupervised Learning Linear Methods/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="Dimension Reduction可分成两种，Generation(无中生有)和Reduction(化繁为简)。Unsupervised Learning可以分为两大类，一种是Clustering，一种是Dimension Reduction。 化繁为简的意思是，现在有很多种不同的input，比如一个function，它可以input看起来像树的东西，output都是抽象的树。也就是把本来比较">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/14.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/15.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/16.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/17.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/18.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/19.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/20.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/21.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/22.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/23.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/24.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/25.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/26.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/27.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/28.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/29.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/30.png">
+<meta property="og:updated_time" content="2019-11-04T11:46:18.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsupervised Learning —— Linear Methods">
+<meta name="twitter:description" content="Dimension Reduction可分成两种，Generation(无中生有)和Reduction(化繁为简)。Unsupervised Learning可以分为两大类，一种是Clustering，一种是Dimension Reduction。 化繁为简的意思是，现在有很多种不同的input，比如一个function，它可以input看起来像树的东西，output都是抽象的树。也就是把本来比较">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/27/Unsupervised%20Learning%20Linear%20Methods/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/27/Unsupervised Learning Linear Methods/">
+
+
+
+
+
+  <title>Unsupervised Learning —— Linear Methods | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/27/Unsupervised Learning Linear Methods/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Unsupervised Learning —— Linear Methods</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-27T10:06:33+08:00">
+                2019-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Dimension Reduction可分成两种，<strong>Generation</strong>(无中生有)和<strong>Reduction</strong>(化繁为简)。Unsupervised Learning可以分为两大类，一种是Clustering，一种是<strong>Dimension</strong> <strong>Reduction</strong>。</p>
+<p>化繁为简的意思是，现在有很多种不同的input，比如一个function，它可以input看起来像树的东西，output都是抽象的树。也就是把本来比较复杂的input,变成比较简单的output。在做unsupervised learning的时候，通常只会有function的其中一边。比如我们要找一个function，它可以把所有的树都变成抽象的树，但是我们所拥有的training data，就只有一大堆的各种不同的image，我们不知道它的output应该要长什么样。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/1.png" alt="1"></p>
+<p>另外一个Unsupervised Learning会做的事情是Generation。它做的事情是，找一个function,随机给它一个input，比如输入不同的数字，它就会output不同的树。在这个task里，我们要找的这个可以画图的function，只有这个function的output,但是没有这个function的input。（只有一大堆的image,但是不知道输入什么样的code才可以得到这些image）</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/2.png" alt="2"></p>
+<h1 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h1><p>假设我们要做image的clustering,就是有一大堆image，我们要把它们几类，每一个cluster就是一个标签，这样就把本来有些不同的image，都用同一个class来表示。、</p>
+<p>这里最重要的一个问题是，到底应该要有几个cluster。这个问题没有什么好的方法，就跟neural network要几层一样。</p>
+<h2 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h2><p>在Clustering方法里面，最常用的就是<strong>k-means</strong>。假设我们有一大堆的data，它们都是unlabeled的，$X = \{x^1,\cdots,x^n,\cdots,x^N\}$,其中每一个$x$可能代表一张image，我们要把它做成K个cluster。先找这些cluster的center，假如每一个object都是用vector来表示的话，那么center也是一样长度的vector。每一个cluster要找一个center,所以需要$c^1$到$c^K$个center。这些初始的center怎么来呢？可以从training data里面随机地找K个object出来，作为K个center。接下来，要对所有在training data里面的x，都要决定它属于1到K的哪一个cluster（看它与哪一个cluster center最接近）。之后再做update</p>
+<p>K-means步骤总结如下:</p>
+<ul>
+<li><p>Clustering $X=\{x^1,\cdots,x^2,\cdots,x^N\}$ into K clusters</p>
+</li>
+<li><p>Initialize cluster center $c^i,i=1,2,\cdots,K$(K random $x^n$ from X)</p>
+</li>
+<li><p>Repeat</p>
+</li>
+<li><ul>
+<li>For all $x^n$ in $X$:</li>
+</ul>
+</li>
+</ul>
+<p>$$b_i^n=<br>\begin{cases}<br>1&amp; x^n\text{ is most “close” to } c^i\\<br>0&amp; \text{Otherwise}<br>\end{cases}$$</p>
+<ul>
+<li><ul>
+<li>Updating all $c^i$:</li>
+</ul>
+</li>
+</ul>
+<p>$$c^i = \sum_{x^n}b^n_ix^n/\sum_{x^n}b_i^n$$</p>
+<p>之所以在做initialization的时候会直接从database里面去挑K个object出来做center，一个很重要的原因是，假设我们纯粹随机的，而不是从data point里面挑的，很有很能在第一次assign这个object的时候，就没有任何一个example跟某一个cluster很像，那么update的时候，程序会segmentation fault。</p>
+<h2 id="HAC"><a href="#HAC" class="headerlink" title="HAC"></a>HAC</h2><p>clustering有另外一个方法叫做<strong>Hierarchical Agglomerative Clustering(HAC)</strong>,这个方法是先建一个tree，假设现在有5个example，要把他做cluster，先做一个tree structure。即把这5个example两两去算它们的相似度，然后挑最相似的pair出来，将它们平均起来得到一个新的vector，现在就变成有4个example了。然后再把这4笔data两两去算他们的相似度，依次类推，这样就建立出一个tree structure。在这个tree里面，比较早的分支代表比较不像。接下来就是做clustering，选择一个threshold对tree structure进行切分，得到几个cluster，如下图。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/3.png" alt="3"></p>
+<p>HAC和K-means最大的差别就是如何决定cluster的数目，在K-means里面我们要决定K的值是多少，而HAC不直接决定几个cluster，而是要决定切在树的structure的哪里。</p>
+<h1 id="Distributed-Representation"><a href="#Distributed-Representation" class="headerlink" title="Distributed Representation"></a>Distributed Representation</h1><h2 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h2><p>但是，光只做cluster是非常卡的。在做cluster的时候，我们就是以偏概全，因为每一个object都必须要属于某一个cluster，但这样其实是比较粗糙的，应该要用一个vector来表示Object，这个vector里面的每一个dimension就代表了某一种特质，一种attribute。这件事情就叫做distributed representation。如果原来的object是一个非常high dimension的东西，比如image。那现在用它的attribute来描述，它就会从比较高维的空间变成比较低维的空间。这件事情就是Dimension Reduction。</p>
+<p>为什么Dimension Reduction可能是有用的？举例来说，假设data的分布如下图，用3D的空间来描述这些data其实是很浪费的，从直观上就能知道，其实可以把左边的data“摊开”，变成右边的样子，所以其实只需要在2D的空间，就可以描述3D的information。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/4.png" alt="4"></p>
+<p>再举一个比较具体的例子，我们考虑MNIST，在MNIST里面，每一个input的digit是一个image,它都用$28\times 28$的dimension来描述它。但实际上多数$28\times 28$的dimension的vector,把它转成一个image，看起来都不像一个数字。所以在这个$28\times 28$的空间里面，是digit的vector，其实是很少的。要描述一个digit，或许根本不需要$28\times 28$维。</p>
+<p>比如下面有一堆3，这堆3如果是从Pixel来看待它的话，要用$28\times 28$来描述每一个image。而实际上这些3只需要用一个维度就可以来表示，它们都可以用中间的3选择某一个角度得到。所以只需要一维就可以描述这些image。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/5.png" alt="5"></p>
+<p>要怎么做Dimension Reduction呢？我们要找一个function，这个function的input是一个vector $\bf{x}$，它的output是另外一个vector $\bf{z}$。z的维度要比x小。在Dimension Reduction里面，最简单的方法是<strong>Feature Selection</strong>。这个方法比较简单，我们将data的分布拿出来看一下，本来在二维的平面上，但我们发现其实都集中在$x_2$的dimension而已，$x_1$这个dimension没什么用，把它拿掉，这样就做到了Dimension Reduction这件事情。这个方式不是总是有用，因为有时候任何一个dimension都不能拿掉。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/6.png" alt="6"></p>
+<h2 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h2><p>另外一个方法是<strong>Principle Component Analysis(PCA)</strong>,它做的事情是，假如function是一个很简单的linear function，input $\bf{x}$与output $\bf{z}$之间的关系就是一个linear的transform:</p>
+<p>$$\bf{z} = W\bf{x}$$</p>
+<p>现在要做的，就是根据一大堆的\bf{x},把W找出来（我们现在不知道\bf{z}长什么样）。</p>
+<p>为了找出W，我们现在考虑一个比较简单的one dimensional的case，即\bf{z}是一维的。z是一个scalar，那么W其实就是一个row vector,用$w^1$表示。于是就有：</p>
+<p>$$z_1 = w^1\cdot x$$</p>
+<p>另外还有如下很必要的假设：</p>
+<p>$$||w^1||_2 = 1$$</p>
+<p>有了上面假设，那么$z_1$就意味着$x$在$w^1$上面的投影值。所以我们现在做的事情就是把一堆$x$透过$w^1$把它投影变成$z_1$，这样就得到一堆$z^1$（project all the data points $x$ onto $w^1$,and obtain a set of $z_1$）。现在的问题是，这个$w_1$应该长什么样子？我们要选哪一个$w^1$呢？</p>
+<p>假设下面是$x$的分布，每一个点代表一只宝可梦，横坐标为攻击力，纵坐标为防御力。如果我们要把二维投影到一维，应该要选什么样的$w^1$？选择不同的$w^1$方向，最后得到的结果会是不一样的。我们的目标是：希望选一个$w^1$，它经过projection后得到的$z_1$的分布是越大越好的。下图中选择红色箭头方向会有比较大的variance，所以$w^1$的方向应该指向该方向。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/7.png" alt="7"></p>
+<p>如果我们用equation来表示的话，我们要去maximize的对象是$z_1$的variance：</p>
+<p>$$Var(z_1) = \sum_{z_1}(z_1 - \bar{z_1})^2\ \ \ \ \ \  ||w^1||_2 = 1$$</p>
+<p>但是我们可能不是只要投影到1维，比如想要投影到一个二维的平面。</p>
+<p>$$z_1 = w^1\cdot x$$  $$z_2 = w^2\cdot x$$</p>
+<p>其中$z_1$和$z_2$串起来就是$\bf{z}$。找$z_2$与找$z_1$一样，首先我们希望$w^2$的2-norm是1，并且$z_2$的分布越大越好。但如果只是让$Var(z_2)$越大越好，那找出来的不就是$w^1$吗，所以还需要再加一个constraint，这个constraint是：$w^2$要与$w^1$垂直（orthogonal）,即$w^1\cdot w^2=0$。</p>
+<p>要project到几维是需要我们自己决定的（和cluster、hidden layer的决定一样）。如果要project到$K$维，就需要找$w^1$到$w^K$,最后的$\bf{W}$如下</p>
+<p>$$\bf{W} =\begin{bmatrix}<br>{(w^1)^T}\\<br>{(w^2)^T}\\<br>{\vdots}\\<br>{(w^K)^T}\\<br>\end{bmatrix}$$</p>
+<blockquote>
+<p>找出来的$\bf{W}$是一个orthogonal matrix。因为的行向量长度为1并且两两正交。</p>
+</blockquote>
+<p>接下来的问题是怎么解出$w^1$到$w^K$，这里要用到<strong>Lagrange multiplier</strong>，（其实也可以将PCA描述成一个neural network，然后用Gradient Descent的方法来解），方法如下图：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/8.png" alt="8"></p>
+<p>$w^1$的解法如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/9.png" alt="9"></p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/10.png" alt="10"></p>
+<p>上图中第二个微分式子为：$(w^1)^TSw^2 - \alpha (w^1)^Tw^2 -\beta (w^1)^Tw^1 = 0$</p>
+<h3 id="PCA-decorrelation"><a href="#PCA-decorrelation" class="headerlink" title="PCA - decorrelation"></a>PCA - decorrelation</h3><p>$\bf{z} = Wx$</p>
+<p>上式有一个神奇的地方，就是$z$的covariance会是一个diagonal matrix（$Cov(z) = D$）。也就是说，如果我们今天做PCA，原来的data distribution可能是下图左边的样子，做完PAC以后，会做decorrelation，会让不同的dimension间的convariance是0。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/11.png" alt="11"></p>
+<p>这样做有时候会有帮助，假设现在的PCA所得到的新的feature，即$\bf{z}$是一种新的feature，这个新的feature是要给其他Model用的，而这个model假设是一个generative model，用Gaussian来描述某一个class的distribution。而在做这个Gaussian假设的时候，假设input data，它的covariance是diagnoal（不同的dimension之间没有correlation），这样可以减少参数量。把原来的data做PCA之后，在丢给其他的model，其他的model就可以假设现在的input data的dimension间没有corelation，所以它就可以用比较简单的Model来处理input data，这样就可以避免overfitting的情形。</p>
+<p>这件事情的证明也是非常trivial的。</p>
+<p>$$Con(z) = \sum(z - \bar{z})(z - \bar{z})^T = WSW^T$$ $$S = Cov(x)$$</p>
+<p>所以有：</p>
+<p>$$Cov(z) = WS[w^1\ \cdots \ w^K] = W[Sw^1\ \cdots \ Sw^K] = W[\lambda_1w^1\ \cdots \ \lambda_Kw^K]$$ $$ = [\lambda_1Ww^1\ \cdots \ \lambda_KWw^K] = [\lambda_1e_1\ \cdots \ \lambda_Kw_K]$$</p>
+<p>以上部分或许不是太容易理解，我们从另外一个角度来看PCA。另一个比较直观的PCA如下，假设我们考虑的是手写数字，这些数字其实是由一些basic component所组成，这些component就可能代表笔画。举例来说，人手写的数字可能由这些basic component所组成，把这些component加起来以后，就可以得到一个数字。这些basic component其实就是一个个的vector，假设我们现在考虑的是MNIST的话，MNIST的一张image是$28\times 28$pixel，也就是$28\times 28$维的一个vector，这些component其实也就是$28\times 28$维的vector，把这些vector加起来以后，所得到的vector就代表了一个digit，</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/12.png" alt="12"></p>
+<p>整理一下有下式：</p>
+<p>$$x - \bar{x} \approx c_1u^1 + c_2u^2 + \cdots + c_Ku^K = \hat{x}$$</p>
+<p>现在假设我们不知道这些$u^1$到$u^K$这$K$个vector长什么样子，要怎么找这K个vector出来呢？我们要做的事情就是找出$u^1$到$u^K$，使得$x - \bar{x}$与$\hat{x}$越接近越好。它们中间的差，没有办法用component来描述的部分，叫做<strong>reconstruction error</strong>。我们要找K个vector，来minimize这个reconstruction error。reconstruction error写成$L$，它的公式如下：</p>
+<p>$$L = \min_{\{u^1,\cdots,u^K\}} \sum \left|\left|((x - \bar{x}) - (\sum^K_{k=1}c_ku^k))\right|\right|_2 \tag{1}$$</p>
+<p>先来回顾一下PCA，在PCA里，我们要找一个matrix $W$,原来的vector $\bf{x}$乘上$W$以后，就得到Dimension Reduction以后的结果$\bf{z}$，下式中的$w_1$到$w_K$都是covariance matrix的eigenvector。事实上，如果要解式子(1)，找出$u^1$到$u^K$，$w^1$到$w^K$，就是由PCA找出来的这个解，其实就是可以让式子(1)最小化。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/13.png" alt="13"></p>
+<p>用一个比较简单的方式来证明。我们现在在database里面有一大堆的$x$，现在假设有一个$x^1$，有：</p>
+<p>$$x^1 - \bar{x} \approx c_1^1u^1 + c_2^1u^2 + \cdots$$</p>
+<p>database里面不只有$x^1$，所以可以表示如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/14.png" alt="14"></p>
+<p>上图中Matrix X的column的数目就是data的数目，我们希望左右两边的matrix越接近越好。如何解这个问题呢？在线代里面，每一个matrix X,都可以用SVD，把它拆成一个3个Matrix的乘积。如下，其中$k$是component的数目。矩阵$U$对应上面左边的矩阵($u^1$到$u^K$组成)，矩阵$\Sigma$和$V$的乘积对应上面右边的矩阵($c_n^m$组成)。如果我们用SVD的方法将$X$拆成这三个matrix相乘的结果，那么右边这三个Matrix相乘的结果跟左边这个matrix它们之间的Frobenius的norm是会被minimize的。也就是说，用SVD提供给我们的一个matrix拆解方法，<br>它跟左边的matrix是最接近的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/15.png" alt="15"></p>
+<p>解出来的结果是，U的k个column其实就是一组orthonormal的vector，这组orthonormal的vector，它们是$XX^T$的eigenvector。而这里总共有K个orthonormal的vector，这K个vector就对应到$XX^T$最大的k个eignenvalue的eigenvector。$XX^T$就是covariance matrix，我们之前PCA找出来的那一些$w$就是covariance matrix的eigenvector，而我们做SVD，解出来的U的每一个column，就是covariance matrix的eigenvector。所以U这个解，其实就是PCA的出来的解。即PCA得到的w其实就是component。</p>
+<h3 id="Autoencoder"><a href="#Autoencoder" class="headerlink" title="Autoencoder"></a>Autoencoder</h3><p>我们现在已经知道，从PCA找出来的$w^1$到$w^K$就是K个component($u^1$到$u^K$),根据component linear combination的结果$\hat{x}$：</p>
+<p>$$\hat{x} = \sum^K_{k=1}c_kw^k$$</p>
+<p>我们希望$\hat{x}$与$x - \bar{x}$越接近越好。我们现在已经根据SVD，找出来W，那么$c_k$的值到底应该是多少？这个问题其实是在说，现在有$K$维的vector，它们做span以后，得到一个space，现在用$c_1$到$c_K$对他做linear combination，怎样才能最接近$x-\bar{x}$。因为$w^1$到$w^K$是orthonormal的，所以要得到$c_k$其实很简单，只要把$x - \bar{x}$与$w^k$做inner product，得到的就是$c_k$：</p>
+<p>$$c^k = (x-\bar{x})\cdot w^k$$</p>
+<p>上面做linear combination的事情，其实可以想成用neural network来表示。假设$x - \bar{x}$就是一个vector，这边写成一个3维的vector,假设K=2,我们先算出$c_1$和$c_2$（innear product）,也就是把$x - \bar{x}$的每一个component乘上w^1的每一个component，就得到$c_1$，这就好像是说，$x - \bar{x}$是neuron network的input，$c_1$是一个neuron，$w_1^1$、$w_2^2$是neuron的weight，这个neuron它是一个linear的neuron，它没有activation function。我们希望这个neural network的output跟$x - \bar{x}$越接近越好。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/16.png" alt="16"></p>
+<p>我们会发现，其实PCA可以表示成一个neural network，这个neural network只有一个hidden layer，这个hidden layer是linear的activation function。我们train这个neural network的criterion是要让output与input越接近越好。这个东西就叫做<strong>Autoencoder</strong>。</p>
+<blockquote>
+<p>假设现在的weight不是用PCA找eigenvector的方法，而是直接用neural network通过Gradient Descent训练得到$w^1$到$w^K$,那么这个结果会和用PCA得到的结果一样吗？</p>
+</blockquote>
+<p>其实是会不一样的，PCA解出来的W，它们是orthonormal的。如果用neural network训练得到的结果，没有办法保证会是垂直的。我们在前面的SVD证明里面已经说PCA导出来的这组解$w^1$到$w^K$，它可以让我们的reconstruction error被minimize。如果用Gradient descent的方法去硬解一发，其实也不可能比PCA找出来的reconstruction error还要小。</p>
+<p>所以，如果是在linear的情况下，或许就会直接用PCA来找W，是比较快的。用neural network或许是比较麻烦的。但是用neural network的好处是它可以是deep的，这就是之后会讲的<strong>deep autoencoder</strong>。</p>
+<h3 id="Weakness-of-PCA"><a href="#Weakness-of-PCA" class="headerlink" title="Weakness of PCA"></a>Weakness of PCA</h3><p>PCA其实有一些很明显的弱点。一个就是，因为它是unsupervised，所以今天假如给它一大堆点，没有label，那对PCA来说，假设把它project到一维上，PCA会找一个可以让data variance最大的那一个dimension，如下图。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/17.png" alt="17"></p>
+<p>但是有一个可能是，或许这两组data point，它们分别代表了两个class，如果用PCA这个方法来做Dimension Reduction的话,就会使得这两个蓝色和橙色的class被merge在一起。它们在PCA上找出来的single dimension上，完全被混在一起，无法分别。这个时候可能就需要引入label data。<strong>LDA(linear discriminant analysis)</strong>是考虑这个labeled data的一个降维方法，但它是supervised的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/18.png" alt="18"></p>
+<p>另外一个PCA的弱点是它是linear的，如下图点的分布像是S形的，我们期待做dimension reduction以后，可以把S形的曲面，把它拉直，但这件事情对PCA来说是做不到的。因为将S形的曲面拉直是一个non-linear的transformation。把S行的曲面做PCA，得到的结果如下：</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/19.png" alt="19"></p>
+<hr>
+<p>一个实际的例子，假设每只宝可梦可以用一个6维的vector来表示，我们现在来用PCA来分析它。在用PCA的时候常常会问的一个问题是，需要有多少个component。到底要把它project到几维，资讯量才足够呢？这个取决于你想要做什么。假设要做visualization，因为现在每一个宝可梦都是6维，没有办法了解这些宝可梦之间的特性有什么样的关系，所以可能就会想把它project到二维，就比较容易分析。要用多少principle component，就好像是neural network要有几层layer，每层layer要有多个neuron一样，这个是要我们自己决定的。一个常见的方法是，计算每一个principle component的$\lambda$，我们知道每一个principle component就是一个eigenvector，这个eigenvector又对应一个eigenvalue，也就是$\lambda$。这个eigenvalue代表我们用这个principle component去做dimension reduction的时候，在principle component的dimension上，它的variance有多大，那个variance就是$\lambda$。今天这个宝可梦的data总共有6维，所以它的covariance matrix是6维，所以可以找出6个eigenvector和6个eigenvalue。我们现在来计算一下每个eigenvalue的ratio（把每个eigenvalue除以6个eigenvalue的总和），得到的结果如下，从中可以看出第五个和第六个principle component它们的作用其实是比较小的。用这两个dimension来做projection的时候，project出来的variance其实是很小的。这表示，现在宝可梦的这些特性在第五个和第六个principle component上是没有太多information。所以，如果我们今天要分析宝可梦的data的话，感觉只需要前面4个principle component就好了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/20.png" alt="20"></p>
+<p>做了PCA以后，得到的4个principle component如下，每一个principle component是一个六维的vector。那么每一个principle component它做的事情是什么呢？可以看到第一个principle component每一个dimension都是正的，所以它代表这只宝可梦的强度。第2个principle component它在Def是正值，在Speed处是负值，也就是宝可梦防御力提升的时候，它的速度会下降。其他的principle component也有各自的功能。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/21.png" alt="21"></p>
+<p>用PCA做手写数字辨识的话，每一个component都是一个image。用PCA得到前30个component如下，用这些component做linear combination，就可以得到所有的数字。所以这些component就叫做Eigen-digit。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/22.png" alt="22"></p>
+<p>同理，如果做人脸辨识的话，找出来的principle component就叫做Eigen-face。</p>
+<h3 id="NMF"><a href="#NMF" class="headerlink" title="NMF"></a>NMF</h3><p>注意principle component不一定是要加起来，也可以减掉它们，所以component不一定都是类似笔画的东西，如Eigen-face每一个就是一张完整的脸。如果要得到类似笔画的东西，要用到另外一个技术<strong>NMF(Non-negative matrix factorization)</strong></p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/23.png" alt="23"></p>
+<p>之前说过，PCA可以看作是对matrix X做SVD，SVD就是一种矩阵分解的技术。它分解出来的两个两个matrix的值，可以是正的，也可以是负的。如果用NMF的话，我们会强迫所有的component的weight都是正的，这样的好处就是，现在一张iamge必须由component叠加得到，而不能是由复杂的东西减去一部分得到。另外，所有的component的每一个dimension，也都必须是正的。</p>
+<ul>
+<li><p>Non-negative matrix factorization(NMF)</p>
+<ul>
+<li><p>Forcing $a_1,a_2,\cdots$ be non-negative</p>
+<ul>
+<li>additive combination</li>
+</ul>
+</li>
+<li><p>Forcing $w^1,w^2,\cdots$ be non-negative</p>
+<ul>
+<li>More like “parts of digits”</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>NMF在手写数字辨识上得到的的principal component如下，现在的component就可以看作是笔画了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/24.png" alt="24"></p>
+<h1 id="Matrix-Factorization"><a href="#Matrix-Factorization" class="headerlink" title="Matrix Factorization"></a>Matrix Factorization</h1><p>有时候会有两种object，它们之间是受到某种共通的latent factor去操控的。假设我们现在调查每个人手上公仔的数目，下面的A到E代表5个人，</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/25.png" alt="25"></p>
+<p>我们会发现，在上面的matrix中，每个table里的block并不是随机出现的。例如，买凉宫春日公仔的人，会比较有可能有御坂美琴的公仔。这是因为，每一个人跟每一个角色背后是有一些共同的特性，一些共同的factor来操控(There are some common factors behind otakus and characters)。</p>
+<p>动漫宅或许可以分为两种，萌傲娇和萌天然呆，每一个人，其实就是在这两种属性的组合。每一个角色，也有这两种属性，所以也可以用一个二维的vector来描述它。如果某一个人萌的属性跟某一个角色他本身所具有的属性是match的话（即它们背后的vector很像，比如inner product的值很大），那么这个人就会买很多对应角色的公仔。所以它们匹配的程度取决于他们背后这个latent factor是不是匹配的。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/26.png" alt="26"></p>
+<p>问题在于一个人的属性分配是没有办法直接被观察的（没有人在意阿宅心里在想什么(<em>^_^</em>)），另外也没有办法知道每个动漫人物背后的属性是什么。我们有的只是动漫人物跟阿宅中间的关系，我们需要凭借这个关系，去推论出每一个人跟每一个动漫人物他们背后的latent factor。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/27.png" alt="27"></p>
+<p>我们现在做一个假设：Matrix X里面的每一个element都来自于两个vector的inner product</p>
+<p>$$r^A\cdot r^1 \approx 5$$  $$r^B\cdot r^1 \approx 4$$  $$r^C\cdot r^1 \approx 1$$</p>
+<p>用数学式表示的话如下图，$K$是latent factor的数目，它的值我们是每办法知道的，上面我们将人分成萌傲娇和萌天然呆其实是不精确的分析方式，如果我们有更多的data的话，应该可以更精准知道要有多少factor。但是实际上要有多少factor这件事必须要试出来，就像是principal component的数目或neural network的层数一样。如下图，我们要做的事情就是找一组$r^A$到$r^E$和一组$r^1$到$r^4$，将右边两个matrix相乘后，结果和Matrix X越接近越好。我们可以用SVD来解，$\Sigma$并到左边或右边都可以。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/28.png" alt="28"></p>
+<p>有时候可能会遇到一个问题，就是有一些information是missing的。比如我们并不知道ABC手上有没有小野寺的公仔，有可能只是在他所在的地区没有发行这个公仔而已。所以不知道如果发行的话，他到底会不会买。所以下表中有些数据是问号，这样再做SVD就会有点卡。如果在matrix X上有一些missing value的话，我们还是可以做的。我们就用Gradient Descent的方法来做它。我们写一个loss function，如下图，其重点在于，在summation over这些element的时候，可以避开这些missing data，我们只算值有定义的部分。剩下的部分用Gradient descent就可以了。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/29.png" alt="29"></p>
+<p>算出了$r^1$到$r^4$和$r^A$到$r^E$,即每个人和每个角色对应的vector，有了这些data后，就可以预测missing value（将相应的vector做inner product），即每个人会买相应公仔的数目。所以这种方法，常用在推荐系统里面。（例如预测某个人会不会喜欢某部电影）</p>
+<p>其实，上面的model可以做更精致一点。A背后的latent factor乘上1背后的latent factor，得到的结果就是table上面的数值。但事实上，可能还会有别的因素会操纵他的数值。更精确的写法如下：</p>
+<p>$$r^A \cdot r^1 \approx 5  \rightarrow r^A \cdot r^1 + b_A + b_1 \approx 5 $$</p>
+<p>$b_A$是与A有关的scalar，它代表A有多喜欢买公仔。$b_1$是与1有关的scalar，它代表该角色的公仔有多想让别人购买。这件事情是和属性无关的。改一下要minimize的式子：</p>
+<p>$$L = \sum_{(i,j)}(r^i\cdot r^j + b_i + b_j - n_{ij})^2$$</p>
+<p>用Gradient descent找出$r^i$、$r^j$、$b_i$、$b_j$的值。如果想要知道更多，可以参考链接2，它是Matrix Factorization在Netflix上面的应用。</p>
+<h2 id="Matrix-Factorization-for-Topic-analysis"><a href="#Matrix-Factorization-for-Topic-analysis" class="headerlink" title="Matrix Factorization for Topic analysis"></a>Matrix Factorization for Topic analysis</h2><p>Matrix Factorization的另一个应用是<strong>Topic analysis</strong>。将Matrix Factorization用在Topic analysis上面的话就叫做<strong>Latent semantic analysis(LSA)</strong>。它的技术和上面所讲是一模一样的，只不过是换了名词而已。charater换成了document,otakus换成了word，table里面的值就是Term frequency，即每个word在document里面出现的次数。有时候，我们不知会用Term frequency,而是会把Term frequency再乘上一个weight，代表这个term本身有多重要。通常怎么evaluate一个term重不重要呢？有很多方法，一个常用的就是<strong>inverse document frequency</strong>。</p>
+<p><img src="/2019/10/27/Unsupervised Learning Linear Methods/30.png" alt="30"></p>
+<p>在这个task里面，如果今天把这个matrix做分解的话，就会找到每一个documnet背后的latent factor，和每一个词汇背后的latent factor。这里的latent factor可能指的是topic，即某一个document（或word），它背后要谈的主题有多少部分与财经有关，有多少部分与政治有关等等。</p>
+<p>Topic analysis的方法多如牛毛，他们基本的精神是差不多的，但是有很多各种各样的变化，常见的是<strong>Probability latent semantic analysis(PLSA)</strong>和<strong>latent Dirichlet allocation(LDA)</strong></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><p><a href="https://www.researchgate.net/publication/2538030_Algorithms_for_Non-negative_Matrix_Factorization" target="_blank" rel="noopener">Algorithm for Non-negative Matrix Factorization</a></p>
+</li>
+<li><p><a href="https://datajobs.com/data-science-repo/Recommender-Systems-[Netflix].pdf" target="_blank" rel="noopener">MATRIX FACTORIZATION TECHNIQUES FOR RECOMMENDER SYSTEMS</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/25/Semi-supervised Learning/" rel="next" title="Semi-supervised Learning">
+                <i class="fa fa-chevron-left"></i> Semi-supervised Learning
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/27/blog01/" rel="prev" title="Linux Windows双系统安装问题记录">
+                Linux Windows双系统安装问题记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Clustering"><span class="nav-number">1.</span> <span class="nav-text">Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means"><span class="nav-number">1.1.</span> <span class="nav-text">K-means</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HAC"><span class="nav-number">1.2.</span> <span class="nav-text">HAC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Distributed-Representation"><span class="nav-number">2.</span> <span class="nav-text">Distributed Representation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dimension-Reduction"><span class="nav-number">2.1.</span> <span class="nav-text">Dimension Reduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA"><span class="nav-number">2.2.</span> <span class="nav-text">PCA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PCA-decorrelation"><span class="nav-number">2.2.1.</span> <span class="nav-text">PCA - decorrelation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Autoencoder"><span class="nav-number">2.2.2.</span> <span class="nav-text">Autoencoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weakness-of-PCA"><span class="nav-number">2.2.3.</span> <span class="nav-text">Weakness of PCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NMF"><span class="nav-number">2.2.4.</span> <span class="nav-text">NMF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Matrix-Factorization"><span class="nav-number">3.</span> <span class="nav-text">Matrix Factorization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Matrix-Factorization-for-Topic-analysis"><span class="nav-number">3.1.</span> <span class="nav-text">Matrix Factorization for Topic analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

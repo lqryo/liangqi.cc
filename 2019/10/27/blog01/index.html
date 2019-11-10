@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装了windows和Linux双系统，Linux版本为Ubuntu18.04TLS。 连接有线校园网下载锐捷客户端Linux版本，解压。进入到rjsupplicant目录下，在终端运行如下命令： 1$ sudo ./rjsupplicant.sh -u username -p password -d 1  将username和password替换为校园网的用户名和密码即可。 安装显卡驱动显卡为G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Windows双系统安装问题记录">
+<meta property="og:url" content="http://yoursite.com/2019/10/27/blog01/index.html">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
+<meta property="og:description" content="安装了windows和Linux双系统，Linux版本为Ubuntu18.04TLS。 连接有线校园网下载锐捷客户端Linux版本，解压。进入到rjsupplicant目录下，在终端运行如下命令： 1$ sudo ./rjsupplicant.sh -u username -p password -d 1  将username和password替换为校园网的用户名和密码即可。 安装显卡驱动显卡为G">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/blog01/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/blog01/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/blog01/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/blog01/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/27/blog01/5.png">
+<meta property="og:updated_time" content="2019-10-28T04:43:03.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Windows双系统安装问题记录">
+<meta name="twitter:description" content="安装了windows和Linux双系统，Linux版本为Ubuntu18.04TLS。 连接有线校园网下载锐捷客户端Linux版本，解压。进入到rjsupplicant目录下，在终端运行如下命令： 1$ sudo ./rjsupplicant.sh -u username -p password -d 1  将username和password替换为校园网的用户名和密码即可。 安装显卡驱动显卡为G">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/27/blog01/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/27/blog01/">
+
+
+
+
+
+  <title>Linux Windows双系统安装问题记录 | Qi-Liang'blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi-Liang'blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">stay young,stay simple</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/27/blog01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux Windows双系统安装问题记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-27T10:53:48+08:00">
+                2019-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>安装了windows和Linux双系统，Linux版本为Ubuntu18.04TLS。</p>
+<h1 id="连接有线校园网"><a href="#连接有线校园网" class="headerlink" title="连接有线校园网"></a>连接有线校园网</h1><p>下载锐捷客户端Linux版本，解压。进入到<code>rjsupplicant</code>目录下，在终端运行如下命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ./rjsupplicant.sh -u username -p password -d 1</span><br></pre></td></tr></table></figure>
+
+<p>将username和password替换为校园网的用户名和密码即可。</p>
+<h1 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h1><p>显卡为GeForce GTX 2070，Linux自带的显卡驱动显示不了2K的分辨率。</p>
+<ol>
+<li><p>首先卸载系统里低版本的英伟达显卡驱动</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get purge nvidia*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把显卡驱动加入PPA</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo add-apt-repository ppa:graphics-drivers</span><br><span class="line">$ sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查找英伟达显卡驱动最新版本号</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-cache search nvidia</span><br></pre></td></tr></table></figure>
+
+<p>使用终端命令查看Ubuntu推荐的驱动版本(后面带有recommended)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ubuntu-drivers devices</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>然后打开系统里的软件和更新，点击附加驱动，选择上面推荐的驱动版本<br><img src="/2019/10/27/blog01/1.png" alt="1"></p>
+</li>
+<li><p>安装完成后重启系统即可，会发现多了一个名为NVIDIA X Server Settings的显卡驱动应用。</p>
+</li>
+</ol>
+<h1 id="安装中文输入法"><a href="#安装中文输入法" class="headerlink" title="安装中文输入法"></a>安装中文输入法</h1><ol>
+<li><p>首先卸载电脑中存在的ibus输入法</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove `ibus*`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装fcitx输入法配置框架</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install fcitx-bin fcitx-table</span><br></pre></td></tr></table></figure>
+
+<p>然后打开设置中心，选择<strong>Region &amp; Language &gt; Manage Installed Languages</strong>(会提示The language support is not installed completely,选择Remind me Later)。在<strong>Keyboard input method system:</strong>中选择<strong>fcitx</strong>。</p>
+<p><img src="/2019/10/27/blog01/2.png" alt="2"></p>
+<p>这时候重启电脑可以看到右上角的fcitx的设置图标。然后开始安装搜狗输入法，进入官网下载安装包，双击安装即可。</p>
+<ol start="3">
+<li>选用搜狗输入法</li>
+</ol>
+<p>在终端运行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fcitx-configtool</span><br></pre></td></tr></table></figure>
+
+<p>如果未安装图形配置界面，则需执行命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install <span class="string">'fcitx-config-gtk'</span></span><br></pre></td></tr></table></figure>
+
+<p>出现如下界面，点击减号按钮将自带的拼音输入法清除，然后点击加号按钮，搜索我们自己安装的输入法，选择即可。<br><img src="/2019/10/27/blog01/3.png" alt="3"></p>
+<p>可以按<strong>Ctrl+Space</strong>来快速切换不同的输入法</p>
+<h1 id="声音"><a href="#声音" class="headerlink" title="声音"></a>声音</h1><p>插入耳机没有声音，发现是耳机插在了mic接口，改查spk接口后问题解决。</p>
+<h1 id="截屏"><a href="#截屏" class="headerlink" title="截屏"></a>截屏</h1><p>Ubuntu18.04中有自带的截图工具Screenshot，为了方便使用，将截图快捷键设置成熟悉的<strong>ctrl+alt+a</strong></p>
+<p>在右上角选择系统设置，<strong>Ｄevices-&gt;Keyboard</strong>，将<strong>Save a screenshot of an area to Pictures</strong>改为Ｃtrl+alt+a即可。<br><img src="/2019/10/27/blog01/4.png" alt="4"></p>
+<h1 id="安装vs-code"><a href="#安装vs-code" class="headerlink" title="安装vs code"></a>安装vs code</h1><p>从vs官网下载最新版本，运行下面命令安装即可</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i code_1.39.2-1571154070_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>如果安装过程中有如下错误<br><img src="/2019/10/27/blog01/5.png" alt="5"></p>
+<p>执行以下命令即可</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt --fix-broken install</span><br><span class="line">$ sudo dpkg -i code_1.39.2-1571154070_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://blog.csdn.net/m0_37343696/article/details/79268886" target="_blank" rel="noopener">Linux系统下锐捷客户端连接方法</a></li>
+<li><a href="安装英伟达显卡驱动">Ubuntu 18.04</a></li>
+<li><a href="https://www.cnblogs.com/zhuangmingnan/p/9496499.html" target="_blank" rel="noopener">Ubuntu 18.04LTS安装搜狗输入法</a></li>
+<li><a href="https://www.jianshu.com/p/502b267ee658" target="_blank" rel="noopener">Ubuntu 18.04安装vscode</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/27/Unsupervised Learning Linear Methods/" rel="next" title="Unsupervised Learning —— Linear Methods">
+                <i class="fa fa-chevron-left"></i> Unsupervised Learning —— Linear Methods
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/28/blog02/" rel="prev" title="Vim基础">
+                Vim基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Liang Qi">
+            
+              <p class="site-author-name" itemprop="name">Liang Qi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#连接有线校园网"><span class="nav-number">1.</span> <span class="nav-text">连接有线校园网</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装显卡驱动"><span class="nav-number">2.</span> <span class="nav-text">安装显卡驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装中文输入法"><span class="nav-number">3.</span> <span class="nav-text">安装中文输入法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#声音"><span class="nav-number">4.</span> <span class="nav-text">声音</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#截屏"><span class="nav-number">5.</span> <span class="nav-text">截屏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装vs-code"><span class="nav-number">6.</span> <span class="nav-text">安装vs code</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liang Qi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

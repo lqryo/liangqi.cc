@@ -83,10 +83,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Backpropagation">
 <meta property="og:url" content="http://yoursite.com/2019/09/04/Backpropagation/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:description" content="当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？ Gradient Descent我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$ 选一个初始的参数$\theta^0$,计算$\theta^0$对L">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/2.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/3.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/4.png">
@@ -99,11 +99,11 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/11.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/12.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/04/Backpropagation/13.png">
-<meta property="og:updated_time" content="2019-09-15T15:04:42.757Z">
+<meta property="og:updated_time" content="2019-11-06T02:04:32.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Backpropagation">
 <meta name="twitter:description" content="当我们用Gradient Descent方法来train一个neural network的时候，具体应该怎么做？ Gradient Descent我们先来回顾一下Gradient Descent，假设我们的neural network有一堆参数$$\theta=\{w_1,w_2,\cdots,b_1,b_2,\cdots\}$$ 选一个初始的参数$\theta^0$,计算$\theta^0$对L">
-<meta name="twitter:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/09/04/Backpropagation/1.jpg">
 
 
 
@@ -139,7 +139,7 @@
 
 
 
-  <title>Backpropagation | 学习笔记</title>
+  <title>Backpropagation | Qi-Liang'blog</title>
   
 
 
@@ -169,7 +169,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -285,7 +285,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -378,7 +378,7 @@
 <p>假设有两个函数$y=g(x)$和$z=h(y)$,如果给$x$一个很小的变化,$y$会跟着有变化，从而影响$z$的变化:<br>$$\Delta x\rightarrow \Delta y\rightarrow \Delta z$$</p>
 <p>如果我们要计算$x$对$z$的微分，可以拆成两项：<br>$$\frac{dz}{dx}=\frac{dz}{dy}\frac{dy}{dx}$$</p>
 <ul>
-<li><strong>Case 2</strong><br>如果有3个函数，$x=g(s)$,$y=h(s)$,$z=k(x,y)$<br><img src="/2019/09/04/Backpropagation/1.png" alt="1"><br>$s$对$z$的微分可以写成：<br>$$\frac{dz}{ds}=\frac{\partial z}{\partial x}\frac{dx}{ds}+\frac{\partial z}{\partial y}\frac{dy}{ds}$$</li>
+<li><strong>Case 2</strong><br>如果有3个函数，$x=g(s)$,$y=h(s)$,$z=k(x,y)$<br><img src="/2019/09/04/Backpropagation/1.jpg" alt="1"><br>$s$对$z$的微分可以写成：<br>$$\frac{dz}{ds}=\frac{\partial z}{\partial x}\frac{dx}{ds}+\frac{\partial z}{\partial y}\frac{dy}{ds}$$</li>
 </ul>
 <h1 id="Backpropagation"><a href="#Backpropagation" class="headerlink" title="Backpropagation"></a>Backpropagation</h1><p>回到Neural network的Training，我们知道Loss function: $L(\theta)=\sum_{n=1}^NC^n(\theta)$<br><img src="/2019/09/04/Backpropagation/2.png" alt="2"><br>把$L(\theta)$对某一个参数$w$做偏微分：<br>$$\frac{\partial L(\theta)}{\partial w} = \sum_{n=1}^N\frac{\partial C^n(\theta)}{\partial w}$$</p>
 <p>我们下面讨论$\frac{\partial C^n(\theta)}{\partial w}$该如何计算<br><img src="/2019/09/04/Backpropagation/3.png" alt="3"><br>如上图所示的network，我们先只考虑某一个neuron,如下<br><img src="/2019/09/04/Backpropagation/4.png" alt="4"><br>现在我们拿$w$当作例子（$b$也是一样的）<br>$$\frac{\partial C}{\partial w}=\frac{\partial z}{\partial w}\frac{\partial C}{\partial z}$$</p>
@@ -392,13 +392,13 @@
 <p>我们可以从另外的角度来看待上面的式子。假设有一个特殊的neuron如下(不在原来的network里面),<br><img src="/2019/09/04/Backpropagation/7.png" alt="7"><br>它的两个输入是$\frac{\partial C}{\partial z^{\prime}}$和$\frac{\partial C}{\partial z^{\prime\prime}}$,weight是$w_3$和$w_4$,“sigmoid function”是将输入的值乘上常数$\sigma^{\prime}(z)$</p>
 <p>$\sigma^{\prime}(z)$ is a constant because $z$ is already determined in the forward pass.</p>
 <p>为了计算$\frac{\partial C}{\partial z^{\prime}}$和$\frac{\partial C}{\partial z^{\prime\prime}}$，我们假设下面两个case</p>
-<ol>
+<ul>
 <li><strong>case 1:Output Layer</strong><br>如下图中的两个红色neuron,他们的output就是整个network的output<br><img src="/2019/09/04/Backpropagation/8.png" alt="8"><br>$$<br>\frac{\partial C}{\partial z^{\prime}}=<br>\frac{\partial y_1}{\partial z^{\prime}}\frac{\partial C}{\partial y_1}<br>$$<br>$\frac{\partial y_1}{\partial z^{\prime}}$取决于所定义的”sigmoid function”,$\frac{\partial C}{\partial y_1}$取决于Cost function的定义。<br>同样的可以算出<br>$$<br>\frac{\partial C}{\partial z^{\prime\prime}}=<br>\frac{\partial y_2}{\partial z^{\prime\prime}}\frac{\partial C}{\partial y_2}<br>$$</li>
-</ol>
+</ul>
 <p>这样我们就可以算出蓝色neuron的$\frac{\partial C}{\partial z}$</p>
-<ol start="2">
+<ul>
 <li><strong>case 2:Not output Layer</strong><br>红色的neuron不是整个network的output，例如下图<br><img src="/2019/09/04/Backpropagation/9.png" alt="9"><br>根据前面的推导，如果我们知道$\frac{\partial C}{\partial z_a}$和$\frac{\partial C}{\partial z_b}$,我们就能算出$\frac{\partial C}{\partial z^{\prime}}$,如下<br><img src="/2019/09/04/Backpropagation/10.png" alt="10"></li>
-</ol>
+</ul>
 <p>但是如何计算$\frac{\partial C}{\partial z_a}$和$\frac{\partial C}{\partial z_b}$呢？如果他们不是最后一层的neuron的话，我们再计算他们后面的neuron.(Compute $\frac{\partial C}{\partial z}$ recursively.)</p>
 <p>为了提高计算效率，我们从后往前计算（Compute $\frac{\partial C}{\partial z}$ for all activation function inputs z.Compute $\frac{\partial C}{\partial z}$ from the output layer）,如下<br><img src="/2019/09/04/Backpropagation/11.png" alt="11"><br>我们先算$z_5$、$z_6$的偏微分，然后再计算$z_3$、$z_4$的偏微分，因为前面的微分要依赖后面的微分。计算方式如下图<br><img src="/2019/09/04/Backpropagation/12.png" alt="12"></p>
 <h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>先做Forward Pass，再做Backward Pass.<br><img src="/2019/09/04/Backpropagation/13.png" alt="13"></p>
@@ -517,7 +517,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -528,7 +528,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -539,7 +539,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

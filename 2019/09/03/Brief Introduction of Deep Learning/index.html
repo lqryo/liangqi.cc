@@ -84,7 +84,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Brief Introduction of Deep Learning">
 <meta property="og:url" content="http://yoursite.com/2019/09/03/Brief Introduction of Deep Learning/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:description" content="Deep Learning的应用实在太多了，随便Google就有一大堆。 Ups and downs of Deep Learning 1958:Perceptron(linear model) 1969:Perceptron has limitation 1980s:Multi-layer perceptron Do not have significant difference from DN">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/09/03/Brief%20Introduction%20of%20Deep%20Learning/1.png">
@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/03/Brief%20Introduction%20of%20Deep%20Learning/10.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/03/Brief%20Introduction%20of%20Deep%20Learning/11.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/03/Brief%20Introduction%20of%20Deep%20Learning/12.png">
-<meta property="og:updated_time" content="2019-09-13T01:59:00.691Z">
+<meta property="og:updated_time" content="2019-11-06T02:01:51.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Brief Introduction of Deep Learning">
 <meta name="twitter:description" content="Deep Learning的应用实在太多了，随便Google就有一大堆。 Ups and downs of Deep Learning 1958:Perceptron(linear model) 1969:Perceptron has limitation 1980s:Multi-layer perceptron Do not have significant difference from DN">
@@ -139,7 +139,7 @@
 
 
 
-  <title>Brief Introduction of Deep Learning | 学习笔记</title>
+  <title>Brief Introduction of Deep Learning | Qi-Liang'blog</title>
   
 
 
@@ -169,7 +169,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -285,7 +285,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -382,7 +382,7 @@
 </ul>
 <h1 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h1><p>和Machine Learning一样，Deep Learning一样也是那3个步骤：<br><strong>Step 1</strong>: define a set of function<br><strong>Step 2</strong>: goodness of function<br><strong>Step 3</strong>: pick the best function<br>Network parameter $\theta$: all the weights and biases in the “neurons”</p>
 <h2 id="Neural-Network"><a href="#Neural-Network" class="headerlink" title="Neural Network"></a>Neural Network</h2><p>上面Step1中定义的function set其实就是Neural Network。我们可以用不同的方法来连接Neural Network。怎么连接是我们手动来设计的（Different connection leads to different network structures），</p>
-<h3 id="Fully-Connect-Feedforward-Network"><a href="#Fully-Connect-Feedforward-Network" class="headerlink" title="Fully Connect Feedforward Network"></a>Fully Connect Feedforward Network</h3><p>Fully Connect Feedforward Network是最常见的连接方式。每一个Neuron有一组weights和一个bias,weights和bias是我们根据training data来找出来的，如下图：<br><img src="/2019/09/03/Brief Introduction of Deep Learning/1.png" alt="2"><br>一个Network确定了参数，它就是一个function。如果一个network，只给出了结构，还没有确定参数，它就是function set。（<strong>Given network structure,define a function set</strong>）<br>当我们用Neuron network来决定function set的时候，这个function set是比较大的，它包含了很多以前做linear regression和logistic regression所没法包含的function.</p>
+<h3 id="Fully-Connect-Feedforward-Network"><a href="#Fully-Connect-Feedforward-Network" class="headerlink" title="Fully Connect Feedforward Network"></a>Fully Connect Feedforward Network</h3><p>Fully Connect Feedforward Network是最常见的连接方式。每一个Neuron有一组weights和一个bias,weights和bias是我们根据training data来找出来的，如下图：<br><img src="/2019/09/03/Brief Introduction of Deep Learning/1.png" alt="1"><br>一个Network确定了参数，它就是一个function。如果一个network，只给出了结构，还没有确定参数，它就是function set。（<strong>Given network structure,define a function set</strong>）<br>当我们用Neuron network来决定function set的时候，这个function set是比较大的，它包含了很多以前做linear regression和logistic regression所没法包含的function.</p>
 <p>更一般的neural network如下<br><img src="/2019/09/03/Brief Introduction of Deep Learning/2.png" alt="2"><br><strong>Fully Connect</strong>表示两个Layer之间的Neuron是两两互相连接的，<strong>Feedforward</strong>表示传递方向是由后往前传<br><img src="/2019/09/03/Brief Introduction of Deep Learning/3.png" alt="3"><br>注意其中的Input Layer不是由Neuron所组成的。</p>
 <p>那么deep learning中的deep是什么意思呢？Deep = Many hidden layers。</p>
 <h2 id="Matrix-Operation"><a href="#Matrix-Operation" class="headerlink" title="Matrix Operation"></a>Matrix Operation</h2><p>Network的运作我们常常用Matrix Operation来表示。例如下面的Neuron network,<br><img src="/2019/09/03/Brief Introduction of Deep Learning/4.png" alt="4"><br>第一个hidden layer所做的运算如下<br>$$\sigma\left(<br>\begin{bmatrix}1&amp;-2\\-1&amp;1\end{bmatrix}\begin{bmatrix}1\\-1\end{bmatrix}<br>+\begin{bmatrix}1\\0\end{bmatrix}<br>\right) = \begin{bmatrix}0.98\\0.12\end{bmatrix}$$</p>
@@ -409,7 +409,7 @@
 <p>然后加起来得到Total Loss:<br>$$L = \sum_{n=1}^NC^n$$</p>
 <p>最后找到使得L值最小的参数$\theta^{\star}$。找到$\theta^{\star}$所用到的方法就是Gradient Descent,其过程如下图<br><img src="/2019/09/03/Brief Introduction of Deep Learning/11.png" alt="11"><br>一个neural network可能有数百万个参数，我们不可能为每一个参数都算微分，这样太花时间了，有一个很有效的计算微分的方式就是<strong>Backpropagation</strong></p>
 <h1 id="Why-deep"><a href="#Why-deep" class="headerlink" title="Why deep"></a>Why deep</h1><p>有如下理论。<br><strong>Universality Theorem</strong></p>
-<p>任何连续的function都可以用一个hidden layer的neural network来表示（只要这个network的neuron越多）<br>Any continuous function f $f:R^N\rightarrow R^M$ can be realized by a network with one hidden layer<br><img src="/2019/09/03/Brief Introduction of Deep Learning/12.png" alt="12"><br>既然一层hidden layer就可以表示成任何function，那我们做deep的意义何在，难道只是一个噱头吗？Why “Deep” neural network not “Fat” neural network?这个在以后会做解</p>
+<p>任何连续的function都可以用一个hidden layer的neural network来表示（只要这个network的neuron越多）<br>Any continuous function f $f:R^N\rightarrow R^M$ can be realized by a network with one hidden layer<br><img src="/2019/09/03/Brief Introduction of Deep Learning/12.png" alt="12"><br>既然一层hidden layer就可以表示成任何function，那我们做deep的意义何在，难道只是一个噱头吗？Why “Deep” neural network not “Fat” neural network?这个在以后会做解释。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">Neural Networks and Deep Learning</a></li>
 </ol>
@@ -534,7 +534,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -545,7 +545,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -556,7 +556,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

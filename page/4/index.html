@@ -80,12 +80,12 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="学习笔记">
+<meta property="og:title" content="Qi-Liang&#39;blog">
 <meta property="og:url" content="http://yoursite.com/page/4/index.html">
-<meta property="og:site_name" content="学习笔记">
+<meta property="og:site_name" content="Qi-Liang&#39;blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="学习笔记">
+<meta name="twitter:title" content="Qi-Liang&#39;blog">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <title>学习笔记</title>
+  <title>Qi-Liang'blog</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">学习笔记</span>
+        <span class="site-title">Qi-Liang'blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -259,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/01/Logistic Regression/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/01/Lecture06/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -268,7 +268,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/01/Logistic Regression/" itemprop="url">Logistic Regression</a></h1>
+                <a class="post-title-link" href="/2019/10/01/Lecture06/" itemprop="url">操作符重载与模板</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-01T19:58:17+08:00">
-                2019-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-01T00:28:03+08:00">
+                2019-10-01
               </time>
             
 
@@ -313,8 +313,19 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning</span>
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
                   </a>
                 </span>
 
@@ -352,71 +363,36 @@
       
         
           
-            <p>上一节我们讲到，要做Classification,我们要找的东西就是一个几率$P_{w,b}(C_1|x)$,如果$P_{w,b}(C_1|x)\geq 0.5$,就输出C1,否则就输出C2。如果用Gaussian,$P_{w,b}(C_1|x) = \sigma(z)$,其中:<br>$$\sigma(z) = \frac{1}{1+exp(-z)}$$<br>$$z = {\bf w}\cdot {\bf x} + b = \sum_i w_ix_i+b$$</p>
-<p>我们的function set就是所有不同的w和b集合起来的函数：<br>$$f_{w,b}(x) = P_{w,b}(C_1|x)$$</p>
-<p>我们用图像的方法来表示如下<br><img src="/2019/09/01/Logistic Regression/1.png" alt="1"><br>以上就是<strong>Logistic Regression</strong></p>
-<h1 id="Logistic-Regression-amp-Linear-Regression"><a href="#Logistic-Regression-amp-Linear-Regression" class="headerlink" title="Logistic Regression &amp; Linear Regression"></a>Logistic Regression &amp; Linear Regression</h1><p>我们来比较一下<strong>Logistic Regression</strong>和<strong>Linear Regression</strong>。我们知道Machine Learning有三个步骤</p>
-<h2 id="Step1-Model-function-set"><a href="#Step1-Model-function-set" class="headerlink" title="Step1 Model(function set)"></a>Step1 Model(function set)</h2><p>两者的function set如下<br><img src="/2019/09/01/Logistic Regression/2.png" alt="2"></p>
-<h2 id="Step2-Goodness-of-a-Function"><a href="#Step2-Goodness-of-a-Function" class="headerlink" title="Step2 Goodness of a Function"></a>Step2 Goodness of a Function</h2><p>我们要决定一个function的好坏。假设有N笔数据$x^1$到$x^N$以及它们对应的分类，假设这些data都是从$f_{w,b}(x)=P_{w,b}(C_1|x)$中产生，<strong>Given a set of w and b,what is its probability of generating the data</strong>?<br><img src="/2019/09/01/Logistic Regression/3.png" alt="3"></p>
-<p>对某一个w和b，产生上面N笔data的几率计算如下：<br>$$L(w,b) = f_{w,b}(x^1)f_{w,b}(x^2)(1-f_{w,b}(x^3))\cdots f_{w,b}(x^N)$$</p>
-<p>The most likely $w^{\star}$ and $b^{\star}$ is the one with the largest $L(w,b)$.<br>$$w^{\star},b^{\star} = \mathop{argmax}_{w,b}L(w,b)$$</p>
-<p>我们将上式做一下数学式上的转换,这样可以让计算变得容易点，如下：<br>$$w^{\star},b^{\star} = \mathop{argmax}_{w,b}L(w,b)$$ </p>
-<p>$$\Downarrow$$</p>
-<p>$$w^{\star},b^{\star} = \mathop{argmin}_{w,b}-InL(w,b)$$</p>
-<p>其中<br>$$-InL(w,b) = -Inf_{w,b}(x^1)-Inf_{w,b}(x^2)-Inf_{w,b}(1-f_{w,b}(x^3))\cdots $$</p>
-<p>为了能够用求和符号表示上面式子，我们做一个符号上的转换。用1表示Class 1,用0表示Class 2<br><img src="/2019/09/01/Logistic Regression/4.png" alt="4"><br>这样我们就可以把上面的式子表示成：<br>$$<br>\begin{equation}<br>\begin{split}<br>-InL(w,b) = &amp;-\left[\hat{y}^1Inf(x^1)+(1-\hat{y}^1In(1-f(x^1)))\right] \\<br>&amp;-\left[\hat{y}^2Inf(x^2)+(1-\hat{y}^2In(1-f(x^2)))\right] \\<br>&amp;-\left[\hat{y}^3Inf(x^3)+(1-\hat{y}^3In(1-f(x^3)))\right]\cdots<br>\end{split}<br>\end{equation}<br>$$</p>
-<p>所以就有<br>$$-InL(w,b) = \sum_n-\left[\hat{y}^nInf_{w,b}(x^n)+(1-\hat{y}^nIn(1-f_{w,b}(x^n)))\right]$$</p>
-<p>上面求和式子中的每一项称为<strong>Cross entropy between two Bernoulli distribution</strong>,Cross entropy代表的含义是这两个distribution有多接近,如果两个distribution一模一样，那么算出来的cross entropy就是0.<br><img src="/2019/09/01/Logistic Regression/5.png" alt="5"><br>$$H(p,q) = -\sum_xp(x)In(q(x))$$</p>
-<p>所以在Logistic Regression里面，我们就可以通过如下方式来定义（左边是Logistic Regression,右边是Linear Regression）<br><img src="/2019/09/01/Logistic Regression/6.png" alt="6"><br>其中Cross Entropy:<br>$$C(f(x^n),\hat{y}^n) = -\left[\hat{y}^nInf(x^n)+(1-\hat{y}^n)In(1-f(x^n))\right]$$</p>
-<p>这里先留一个问题，为什么我们不选择square error而要用cross entropy呢？</p>
-<h2 id="Step3-Find-the-best-function"><a href="#Step3-Find-the-best-function" class="headerlink" title="Step3 Find the best function"></a>Step3 Find the best function</h2><p>这一步很简单，用Gradient Descent找一个最好的函数即可。我们先来算$-InL(w,b)$对$w_i$的偏微分<br>$$<br>\frac{-InL(w,b)}{\partial w_i} = \sum_n-\left[\hat{y}^n\frac{Inf_{w,b}(x^n)}{\partial w_i}+(1-\hat{y}^n)\frac{In(1-f_{w,b}(x^n))}{\partial w_i}\right]<br>$$</p>
-<p>$$\frac{Inf_{w,b}(x^n)}{\partial w_i} = \frac{\partial Inf_{w,b}(x)}{\partial z}\frac{\partial z}{\partial w_i}$$</p>
-<p>注意：<br>$$f_{w,b}(x)=\sigma(z)=1/(1+exp(-z))$$<br>$$z = w\cdot x + b =\sum_iw_ix_i+b$$</p>
-<p>所以有</p>
-<p>$$<br>\begin{equation}<br>\begin{split}<br>\frac{\partial Inf_{w,b}(x)}{\partial z} &amp;= \frac{\partial In\sigma (z)}{\sigma z} \\<br>&amp;= \frac{1}{\sigma (z)}\frac{\partial \sigma(z)}{\partial z} \\<br>&amp;= \frac{1}{\partial (z)}\sigma (z)(1-\sigma (z)) \\<br>&amp;= (1-\sigma(z))<br>\end{split}<br>\end{equation}<br>$$</p>
-<p>同时<br>$$\frac{\partial z}{\partial w_i} = x_i$$</p>
-<p>同理可得</p>
-<p>$$<br>\begin{equation}<br>\begin{split}<br>\frac{In(1-f_{w,b}(x^n))}{\partial w_i} &amp;= \frac{In(1-f_{w,b}(x))}{\partial z}\frac{\partial z}{\partial w_i} \\<br>&amp;= \frac{In(1-\sigma (z))}{\sigma z}x_i \\<br>&amp;= -\frac{1}{1-\sigma(z)}\frac{\partial \sigma(z)}{\partial z}x_i \\<br>&amp;= -\frac{1}{1-\sigma(z)}\sigma(z)(1-\sigma(z))x_i \\<br>&amp;= -\sigma(z)<br>\end{split}<br>\end{equation}<br>$$</p>
-<p>最终整理可得到<br>$$<br>\begin{equation}<br>\begin{split}<br>-\frac{InL(w,b)}{\partial w_i} &amp;=\sum_n-\left[\hat{y}^n(1-f_{w,b}(x^n))x_i^n - (1-\hat{y}^n)f_{w,b}(x^n)x_i^n\right] \\<br>&amp;=\sum_n-\left[\hat{y}^n-\hat{y}^nf_{w,b}(x^n) -f_{w,b}(x^n)+\hat{y}^nf_{w,b}(x^n) \right]x_i^n \\<br>&amp;=\sum_n-(\hat{y}^n-f_{w,b}(x^n))x_i^n<br>\end{split}<br>\end{equation}<br>$$</p>
-<p>我们发现最后得到的结果是非常neat的。<br>用Gradient Descent来update<br>$$w_i \leftarrow w_i - \eta \sum_n-\left(\hat{y}^n-f_{w,b}(x^n)\right)x_i^n$$</p>
-<p>分析上式的含义，其中$\hat{y}^n-f_{w,b}(x^n)$代表目标与实际输出的差距，<strong>Larger difference,larger update</strong>,这个结果还是比较合理的。<br>到这里我们可以发现，Linear regression与Logistic regression它们做Gradient Descent的式子是一模一样的<br>$${\tt Logistic\ regression}: w_i \leftarrow w_i - \eta \sum_n-\left(\hat{y}^n-f_{w,b}(x^n)\right)x_i^n$$  $${\tt Linear\ regression}: w_i \leftarrow w_i - \eta \sum_n-\left(\hat{y}^n-f_{w,b}(x^n)\right)x_i^n$$</p>
-<p>唯一不同之处在于Logistic regression中$\hat{y}^n$一定是0或1，而Linear regression中$\hat{y}^n$可以是任意的real number.</p>
-<h1 id="Why-not-Square-Error"><a href="#Why-not-Square-Error" class="headerlink" title="Why not Square Error"></a>Why not Square Error</h1><p>回到前面提到的问题，Logistic Regression为什么不能用Square Error?<br>我们用Square Error看看会怎样，还是一样的3个步骤</p>
-<ol>
-<li><strong>step1</strong><br>$$f_{w,b}(x) = \sigma(\sum_iw_ix_i+b)$$</li>
-<li><strong>step2</strong><br>Training data:$(x^n,\hat{y}^n)$,$\hat{y}^n$:1 for class 1,0 for class 2<br>$$L(f)=\frac{1}{2}\sum_n\left(f_{w,b}(x^n)-\hat{y}^n\right)^2$$</li>
-<li><strong>step3</strong><br>$$<br>\begin{equation}<br>\begin{split}<br>\frac{\partial(f_{w,b}(x)-\hat{y})^2}{\partial w_i} &amp;=2(f_{w,b}(x)-\hat{y})\frac{\partial f_{w,b}(x)}{\partial z}\frac{\partial z}{\partial w_i} \\<br>&amp;= 2(f_{w,b}(x)-\hat{y})f_{w,b}(x)(1-f_{w,b}(x))x_i \\<br>\end{split}<br>\end{equation}<br>$$</li>
-</ol>
-<p>这里我们可以发现一个问题：<br>当$\hat{y}^n=1$,如果$f_{w,b}(x^n)=1$,这时得到的结果是perfect的(close to target),这个时候$\frac{\partial L}{\partial w_i}=0$,这是我们所期望的。<br>而当$\hat{y}^n=1$,如果$f_{w,b}(x^n)=0$,这时得到的结果是不够好的(far from target),然而这个时候却依然有$\frac{\partial L}{\partial w_i}=0$<br>对于$\hat{y}^n=0$依然存在上面问题。<br>如果我们把参数的变化对Total Loss做图的话，选择Cross Entropy跟Square Error的图像如下，其中黑色的是Cross Entropy,红色的是Square Error<br><img src="/2019/09/01/Logistic Regression/7.png" alt="7"><br>可以发现，对于Cross Entropy，距离目标越远，微分值越大，参数update时变化越大，这个是符合我们期望的。<br>对于Square Error，无论是距离目标远或近，微分值都比较小，这样参数update的速度是非常慢的。</p>
-<h1 id="Discriminative-v-s-Generative"><a href="#Discriminative-v-s-Generative" class="headerlink" title="Discriminative v.s. Generative"></a>Discriminative v.s. Generative</h1><p>上面Logistic Regression的方法我们称之为<strong>Discriminative</strong>方法，而上一章所讲的几率模型称为<strong>Generative</strong>方法。<br>在几率模型中，只要我们将covariance matrix设成是共享的，它们两者的Model其实是一模一样的：<br>$$P(C_1|x)=\sigma(wx\cdot +b)$$<br>Discriminative可以直接将w和b找出来，而用Generative方法要先找到$\mu^1$,$\mu^2$$\sigma^{-1}$,然后再计算下面式子<br>$$w^T = (\mu^1-\mu^2)^T\Sigma^{-1}$$</p>
-<p>$$b=-\frac{1}{2}(\mu^1)^T(\Sigma)^{-1}\mu^1+\frac{1}{2}(\mu^2)^T(\Sigma)^{-1}\mu^2+In\frac{N_1}{N_2}$$</p>
-<p>思考一下，用Discriminative和Generative两种方法求得的w和b是相同的吗？答案是不同！<br><strong>The same model(function set),but different function is selected by the same training data.</strong><br>在Discriminative里面，我们没有做对probability distribution做任何的假设，而在Generative里面，我们有对probability distribution做出某些假设（例如Gaussain、Navie Bayes）<br>那么用哪一种方法找到的w和b是比较好的呢？Discriminative的表现常常要比Generative要好。我们用下面的例子来说明<br><img src="/2019/09/01/Logistic Regression/8.png" alt="8"><br>假设我们有一笔training data如上，每一个data有2个feature,总共有$1+3\times 4=13$个data.其中Class1的data两个feature都是1，Class2的training data有3种不同类型。<br>现在如果给我们一个testing data,它的两个feature值都是1，作为人来判断，显然它是属于Class 1的。<br>但是Naive Bayes会怎么认为吗？所谓Naive Bayes即假设所有的feature产生的几率是independent:<br>$$P(x|C_i)=P(x_1|C_i)P(x_2|C_i)$$</p>
-<p>接着我们算Prior:<br>$$P(C_1)=\frac{1}{13}$$ $$P(C_2)=\frac{12}{13}$$</p>
-<p>另外<br>$$P(x_1=1|C_1)=1$$ $$P(x_2=1|C_1)=1$$<br>$$P(x_1=1|C_2)=\frac{1}{3}$$ $$P(x_2=1|C_2)=\frac{1}{3}$$ </p>
-<p>还是给一个两个feature值都是1的Testing data,可以算出它属于Class 1的几率是：<br>$$P(C_1|x)=\frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}=\frac{1\times 1\times \frac{1}{13}}{1\times 1\times \frac{1}{13}+\frac{1}{3}\times \frac{1}{3}\times \frac{12}{13}}&lt;0.5$$ </p>
-<p>Navie Bayes认为该data居然是属于Class 2!!这和我们的直觉是相反的！<br>对于Navie Bayes来说，data的两个feature是independent产生的，在Class 2之所以没有观测到所给的test data,是因为我们sample的不够多。</p>
-<p>这再一次说明，Generative跟Discriminative的差别就在于，<strong>Generative Model它有自己做了某些假设</strong>，即它有自己“脑补”某些事情。通常情况下，“脑补”可能不是一件好的事情，但是如果是在data很少的情况下，“脑补”有时候也是有用的。有些时候Generative Model也是有优势的。比如我们的train data很少，因为Discriminative Model完全没有做任何假设，它是看着data说话的，所以它的performance受data量的影响很大。Generative Model受Data量影响相对较少。</p>
-<p>Benefit of generative model</p>
-<ul>
-<li>With the assumption of probability distribution,less training data is needed</li>
-<li>With the assumption of prabability distribution,more robust to the noise</li>
-<li>Priors and class-dependent probabilities can be estimated from different sources.</li>
-</ul>
-<h1 id="Multi-class-Classification"><a href="#Multi-class-Classification" class="headerlink" title="Multi-class Classification"></a>Multi-class Classification</h1><p>之前我们以二分类为例子，如果要分的类别大于2呢？假设有3个Class，每个Class都有自己的${\bf w}$和b，如下<br>$$C_1:w^1,b_1\quad z_1=w^1\cdot x+b_1$$ $$C_2:w^2,b_2\quad z_2=w^2\cdot x+b_2$$ $$C_3:w^3,b_3\quad z_3=w^3\cdot x+b_3$$</p>
-<p>接下来我们把$z_1$、$z_2$、$z_3$丢进一个<strong>softmax</strong> function,这个function做的事情如下<br><img src="/2019/09/01/Logistic Regression/9.png" alt="9"><br><em>Probability</em></p>
-<ul>
-<li>$1&gt;y_i&gt;0$</li>
-<li>$\sum_iy_i=1$</li>
-</ul>
-<p>原来的$z_1$、$z_2$、$z_3$可以是任何值，做完softmax以后，output的值一定是介于1和0之间。softmax会对最大的值做<strong>强化</strong>，使大的值和小的值之间的差距会被拉的更开。$y_i=P(C_i|x)$,即得到input x是属于$C_i$的几率。<br>为什么要用softmax function是可以推导出来的，这里不做探讨(google maximum entropy)。</p>
-<p>总结上面所做的事情，如下<br><img src="/2019/09/01/Logistic Regression/10.png" alt="10"><br>$y$与$\hat{y}$都是一个probability distribution,$\hat{y}$我们可以设成如下<br>$$if\ x\in class1 \quad \quad \hat{y}=\begin{bmatrix}1&amp;0&amp;0\end{bmatrix}^T$$ $$if\ x\in class2 \quad \quad \hat{y}=\begin{bmatrix}0&amp;1&amp;0\end{bmatrix}^T$$ $$if\ x\in class3 \quad \quad \hat{y}=\begin{bmatrix}0&amp;0&amp;1\end{bmatrix}^T$$</p>
-<h1 id="Limitation-of-Logistic-Regression"><a href="#Limitation-of-Logistic-Regression" class="headerlink" title="Limitation of Logistic Regression"></a>Limitation of Logistic Regression</h1><p>Logistic Regression其实是有非常强的限制，假设有下面这个case,<br><img src="/2019/09/01/Logistic Regression/11.png" alt="11"><br>我们用Logistic Regression对上面的class1和class2做分类，发现这件事情是办不到的（即让两个红色点的输出几率大于0.5，而两个蓝色点的几率小于0.5），其原因是Logistic Regression的Boundary就是一条直线,而无论我们怎么去画一条直线，都不能将红色的点划在一边，而蓝色的点划在另一边。<br><img src="/2019/09/01/Logistic Regression/12.png" alt="12"> </p>
-<h2 id="Feature-Transformation"><a href="#Feature-Transformation" class="headerlink" title="Feature Transformation"></a>Feature Transformation</h2><p>为解决上面问题，还是用Logistic Regression,我们可以用<strong>Feature Transformation</strong>。我们可以对不好的feature进行一些转换，使得Logistic Regression变得好处理。<br>我们将$\begin{bmatrix}x_1&amp;x_2\end{bmatrix}^T$转化成$\begin{bmatrix}x_1^{\prime}&amp;x_2^{\prime}\end{bmatrix}^T$</p>
-<p>我们定义$x_1^{\prime}$是点到$\begin{bmatrix}0&amp;0\end{bmatrix}^T$的距离，$x_2^{\prime}$是点到$\begin{bmatrix}1&amp;1\end{bmatrix}^T$的距离，经过这样的转换，我们可以对转换后的点找到一条Boundary<br><img src="/2019/09/01/Logistic Regression/13.png" alt="13"><br>然后，要找到一个Transform是比较麻烦的（Not always easy to find a good transformation）。<strong>我们期望这个Transformation是由机器自己产生的</strong>。</p>
-<h2 id="Cascading-logistic-regression-models"><a href="#Cascading-logistic-regression-models" class="headerlink" title="Cascading logistic regression models"></a>Cascading logistic regression models</h2><p>为了让机器自己产生Transformation,我们将多个logistic regression串联起来，如下图<br><img src="/2019/09/01/Logistic Regression/14.png" alt="14"><br>前面两个logistic regression负责坐标转换，使得不同分类的点可以被一条直线分开，最后的logistic regression负责分类。</p>
-<p>所以将某些logistic regression的输出作为其他logistic regression的输入，这样叠在一起，它就变得powerful。<br><img src="/2019/09/01/Logistic Regression/15.png" alt="15"><br>其中每一个logistic regression称为<strong>Neuron</strong>,把这些Neuron串起来，就叫做<strong>Neural Network</strong></p>
+            <h1 id="Operator-Overloading"><a href="#Operator-Overloading" class="headerlink" title="Operator Overloading"></a>Operator Overloading</h1><p>操作符重载，下面的例子是<code>stl_list.h</code>文件中<code>_List_iterator</code>的定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>, <span class="title">class</span> _<span class="title">Ref</span>, <span class="title">class</span> _<span class="title">Ptr</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> _<span class="title">List_iterator</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Tp&amp;,_Tp*&gt;             iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,<span class="keyword">const</span> _Tp&amp;,<span class="keyword">const</span> _Tp*&gt; const_iterator;</span><br><span class="line">  <span class="keyword">typedef</span> _List_iterator&lt;_Tp,_Ref,_Ptr&gt;             _Self;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">typedef</span> bidirectional_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp value_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Ptr pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Ref reference;</span><br><span class="line">  <span class="keyword">typedef</span> _List_node&lt;_Tp&gt; _Node;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">size_t</span> size_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span> difference_type;</span><br><span class="line"></span><br><span class="line">  _Node* _M_node;</span><br><span class="line"></span><br><span class="line">  _List_iterator(_Node* __x) : _M_node(__x) &#123;&#125;</span><br><span class="line">  _List_iterator() &#123;&#125;</span><br><span class="line">  _List_iterator(<span class="keyword">const</span> iterator&amp; __x) : _M_node(__x._M_node) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>==(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node == __x._M_node; &#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>!=(<span class="keyword">const</span> _Self&amp; __x) <span class="keyword">const</span> &#123; <span class="keyword">return</span> _M_node != __x._M_node; &#125;</span><br><span class="line">  reference <span class="keyword">operator</span>*() <span class="keyword">const</span> &#123; <span class="keyword">return</span> (*_M_node)._M_data; &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SGI_STL_NO_ARROW_OPERATOR</span></span><br><span class="line">  pointer <span class="keyword">operator</span>-&gt;() <span class="keyword">const</span> &#123; <span class="keyword">return</span> &amp;(<span class="keyword">operator</span>*()); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __SGI_STL_NO_ARROW_OPERATOR */</span></span></span><br><span class="line"></span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>++() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_next);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>++(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    ++*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self&amp; <span class="keyword">operator</span>--() &#123; </span><br><span class="line">    _M_node = (_Node*)(_M_node-&gt;_M_prev);</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  _Self <span class="keyword">operator</span>--(<span class="keyword">int</span>) &#123; </span><br><span class="line">    _Self __tmp = *<span class="keyword">this</span>;</span><br><span class="line">    --*<span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> __tmp;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>我们看到迭代器重载了<code>*</code>,<code>-&gt;</code>,<code>++</code>等这些操作符，因为迭代器代表的就是一个泛化的指针，指针可以做的操作，iterator都需要重载一遍。</p>
+<h1 id="Template"><a href="#Template" class="headerlink" title="Template"></a>Template</h1><p>模板分为3大类：类模板，函数模板，成员模板</p>
+<h2 id="Class-Templates"><a href="#Class-Templates" class="headerlink" title="Class Templates"></a>Class Templates</h2><p>一个类模板的例子如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">complex</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">complex</span> (T r=<span class="number">0</span>,T i= <span class="number">0</span>):re(r),im(i)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">    <span class="keyword">complex</span>&amp; <span class="keyword">operator</span>+=(<span class="keyword">const</span> <span class="keyword">complex</span>&amp;);</span><br><span class="line">    <span class="function">T <span class="title">real</span> <span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> re;&#125;</span><br><span class="line">    <span class="function">T <span class="title">imag</span> <span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> im;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    T re,im;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Function-Templates"><a href="#Function-Templates" class="headerlink" title="Function Templates"></a>Function Templates</h2><p>一个函数模板的例子如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">stone</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  stone(<span class="keyword">int</span> w,<span class="keyword">int</span> h,<span class="keyword">int</span> we)</span><br><span class="line">  :_w(w),_h(h),_weight(we)&#123;&#125;</span><br><span class="line">  <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> stone&amp; rhs) <span class="keyword">const</span></span><br><span class="line">  &#123;<span class="keyword">return</span> _weight &lt; rhs._weight;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">int</span> _w,_h,_weight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span></span></span><br><span class="line"><span class="class"><span class="title">const</span> <span class="title">T</span>&amp; <span class="title">min</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">return</span> b&lt;a?b:a;  <span class="comment">//实参推导结果，T为stone,于是调用stone::operator&lt;()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码中stone类需要自己定义大小比较的操作。运行以下代码，编译器对function template进行<strong>实参推导</strong>（<strong>argument deduction</strong>）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stone r1(2,3),r2(2,3),r3;</span><br><span class="line">r3 = min(r1,r2);</span><br></pre></td></tr></table></figure>
+
+<p>和类模板一样，函数模板也是把它里面的一些类型暂定为一个符号而不写死，等到真正使用的时候才去把它确定下来。</p>
+<h2 id="Member-Templates"><a href="#Member-Templates" class="headerlink" title="Member Templates"></a>Member Templates</h2><p>成员模板比较复杂，目前解析STL源码不会用到，可参考底部链接。</p>
+<h2 id="泛化与特化"><a href="#泛化与特化" class="headerlink" title="泛化与特化"></a>泛化与特化</h2><h3 id="全特化"><a href="#全特化" class="headerlink" title="全特化"></a>全特化</h3><p>对于类模板，有一个独特的特性就是<strong>特化</strong>（<strong>Specialization</strong>）,泛化里面的<code>typename T</code>我们可以绑定任意类型。可是在设计类模板的时候，我们会有这样的想法，我们可能会设计出一个非常泛化的版本，但同时又希望，如果指定T是某一个特定的类型，可以提供另外一套更好的操作。</p>
+<p>举一个例子，在计算机图形学中，我们在屏幕上画一条线，直线上每一个点的坐标都是实数。但是在屏幕上每一个Pixel的坐标都是整数，所以屏幕上画出的直线其实是锯齿状的。于是就有计算机科学家提出一种算法，如果点的坐标都是整数的话，有一种画直线的方式会非常快。在这个例子里，直线的数学公式相当于泛化，而具体在屏幕上画直线相当于特化。</p>
+<p>在<code>type_traits.h</code>里面，对类模板<code>__type_traits</code>进行的特化。其中<code>__STL_TEMPLATE_NULL</code>是一个宏定义，替换为<code>template&lt;&gt;</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> __<span class="title">type_traits</span> &#123;</span> </span><br><span class="line">   <span class="keyword">typedef</span> __true_type     this_dummy_member_must_be_first;</span><br><span class="line">                   <span class="comment">/* Do not remove this member. It informs a compiler which</span></span><br><span class="line"><span class="comment">                      automatically specializes __type_traits that this</span></span><br><span class="line"><span class="comment">                      __type_traits template is special. It just makes sure that</span></span><br><span class="line"><span class="comment">                      things work if an implementation is using a template</span></span><br><span class="line"><span class="comment">                      called __type_traits for something unrelated. */</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/* The following restrictions should be observed for the sake of</span></span><br><span class="line"><span class="comment">      compilers which automatically produce type specific specializations </span></span><br><span class="line"><span class="comment">      of this class:</span></span><br><span class="line"><span class="comment">          - You may reorder the members below if you wish</span></span><br><span class="line"><span class="comment">          - You may remove any of the members below if you wish</span></span><br><span class="line"><span class="comment">          - You must not rename members without making the corresponding</span></span><br><span class="line"><span class="comment">            name change in the compiler</span></span><br><span class="line"><span class="comment">          - Members you add will be treated like regular members unless</span></span><br><span class="line"><span class="comment">            you add the appropriate support in the compiler. */</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __false_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Provide some specializations.  This is harmless for compilers that</span></span><br><span class="line"><span class="comment">//  have built-in __types_traits support, and essential for compilers</span></span><br><span class="line"><span class="comment">//  that don't.</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __STL_NO_BOOL</span></span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;bool&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* __STL_NO_BOOL */</span></span></span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;char&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">__STL_TEMPLATE_NULL <span class="class"><span class="keyword">struct</span> __<span class="title">type_traits</span>&lt;signed char&gt; &#123;</span></span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_default_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_copy_constructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_assignment_operator;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    has_trivial_destructor;</span><br><span class="line">   <span class="keyword">typedef</span> __true_type    is_POD_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// other specializations</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="偏特化"><a href="#偏特化" class="headerlink" title="偏特化"></a>偏特化</h3><p><strong>偏特化（Partial Specialization）</strong></p>
+<p>下面的例子中，vector类有两个模板参数，只绑定其中一个参数，这是偏特化的一种。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span> ,<span class="title">class</span> <span class="title">Alloc</span> = <span class="title">alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//偏特化</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">Alloc</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">vector</span>&lt;bool,Alloc&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="comment">//....</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>另外一种形式的偏特化是范围内的特化，在<code>stl_iterator.h</code>文件里有下列代码，它对模板类<code>iterator_traits</code>的指针参数和指向const的指针进行特化。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __STL_CLASS_PARTIAL_SPECIALIZATION</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Iterator</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span> &#123;</span></span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::iterator_category iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::value_type        value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::difference_type   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::pointer           pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> _Iterator::reference         reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;_Tp*&gt; &#123;</span>  <span class="comment">//偏特化</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp*                        pointer;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp&amp;                        reference;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> _<span class="title">Tp</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">struct</span> <span class="title">iterator_traits</span>&lt;const _Tp*&gt; &#123;</span>  <span class="comment">//偏特化</span></span><br><span class="line">  <span class="keyword">typedef</span> random_access_iterator_tag iterator_category;</span><br><span class="line">  <span class="keyword">typedef</span> _Tp                         value_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">ptrdiff_t</span>                   difference_type;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp*                  pointer;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">const</span> _Tp&amp;                  reference;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://medium.com/activating-robotic-minds/demystifying-cross-entropy-e80e3ad54a8" target="_blank" rel="noopener">Demystifying Cross-Entropy</a></li>
+<li><a href="https://zh.cppreference.com/w/cpp/language/member_template" target="_blank" rel="noopener">成员模板</a></li>
 </ol>
 
           
@@ -466,7 +442,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/Classification/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture05/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liang Qi">
@@ -475,7 +451,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="学习笔记">
+      <meta itemprop="name" content="Qi-Liang'blog">
     </span>
 
     
@@ -485,7 +461,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/27/Classification/" itemprop="url">Classification</a></h1>
+                <a class="post-title-link" href="/2019/09/30/Lecture05/" itemprop="url">OOP vs. GP</a></h1>
         
 
         <div class="post-meta">
@@ -497,8 +473,850 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-27T18:27:43+08:00">
-                2019-08-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T22:53:19+08:00">
+                2019-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>源码之前，了无秘密。</p>
+<h1 id="源代码分布-VC-GCC"><a href="#源代码分布-VC-GCC" class="headerlink" title="源代码分布(VC,GCC)"></a>源代码分布(VC,GCC)</h1><p>接下来我们就要分析STL的源代码，代码的版本是GNU C++ 2.9版本，有些小地方会和VC进行比较。GNU C在语言标准的实现上是最接近C++标准的。gcc的源码可以从底下链接下载，STL的实现就在libstdc++-v3目录里面，本博客讲解对应的版本是<code>gcc-2_95_release</code>。</p>
+<p>vs的STL所在默认目录如下，<br><img src="/2019/09/30/Lecture05/1.png" alt="1"></p>
+<h1 id="OOP与GP"><a href="#OOP与GP" class="headerlink" title="OOP与GP"></a>OOP与GP</h1><p>OOP（Object-Oriented programming）与GP(Generic Programming)两者的差别在哪里呢？<br>以标准库里面的List为例，List里面要存放数据本身，如果要对数据进行排序，按照OOP的思想，数据和操作数据的函数都会被放到类里面，所以list类里面有一个<code>sort()</code>方法。而GP是将datas和methods分开来，例如vector和deque容器里面没有sort方法，需要调用全局函数sort()，并且把操作的范围通过迭代器参数传到函数中。</p>
+<p>采用GP的好处如下：</p>
+<ul>
+<li>Containers和Algorithm团队可各自闭门造车，其间以Iterator沟通即可。</li>
+<li>Algorithms通过Iterators确定操作范围，并通过Iterators取用Container元素。</li>
+</ul>
+<p><img src="/2019/09/30/Lecture05/2.png" alt="2"></p>
+<p>为什么list类里面有自己的sort()函数呢？因为Algorithm中的sort在设计上面，需要迭代器是<strong>随机访问迭代器</strong>，而list在内存里面是用指针串起来的一个个节点，不是一个连续空间。换句话说，list的迭代器不能执行iterator+5这样的操作。</p>
+<p>所有algorithms，其内最终涉及元素本身的操作，无非就是比较大小。下面的代码分别通过字符串的字典序和字符长度来比较两个字符串大小。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">max</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>,<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> a &lt; b?b:a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>,<span class="title">class</span> <span class="title">Compare</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">inline</span> <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">max</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">a</span>,<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">b</span>,<span class="title">Compare</span> <span class="title">comp</span>)&#123;</span></span><br><span class="line">    <span class="keyword">return</span> comp(a,b)?b:a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">strLonger</span><span class="params">(<span class="keyword">const</span> <span class="built_in">string</span>&amp; s1,<span class="keyword">const</span> <span class="built_in">string</span>&amp; s2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> s1.size() &lt; s2.size();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"max of zoo and hello :"</span> &lt;&lt; max(<span class="built_in">string</span>(<span class="string">"zoo"</span>),<span class="built_in">string</span>(<span class="string">"hello"</span>)) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//zoo</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"longest of zoo and hello :"</span> &lt;&lt; max(<span class="built_in">string</span>(<span class="string">"zoo"</span>),<span class="built_in">string</span>(<span class="string">"hello"</span>),strLonger) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//hello</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://github.com/gcc-mirror/gcc" target="_blank" rel="noopener">gcc源码</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/30/Lecture04/" itemprop="url">分配器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T22:17:12+08:00">
+                2019-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>容器需要利用分配器来管理对内存的使用。在理想的情况下，编程者是不需要知道分配器的存在，因为容器都有一个默认的分配器。以下讲解的GNU C底下的分配器，与VC下的分配器存在区别。</p>
+<h1 id="使用分配器"><a href="#使用分配器" class="headerlink" title="使用分配器"></a>使用分配器</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">vector</span>:<span class="keyword">protected</span> _Vector_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">list</span>:<span class="keyword">protected</span> _List_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Tp&gt;&gt;</span><br><span class="line">    class <span class="built_in">deque</span>:<span class="keyword">protected</span> _Deque_base&lt;_Tp,_Alloc&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Key,<span class="keyword">typename</span> _Compare = <span class="built_in">std</span>::less&lt;_Key&gt;,</span><br><span class="line">        <span class="keyword">typename</span> _Alloc = <span class="built_in">std</span>::allocator&lt;_Key&gt;&gt;</span><br><span class="line">    class <span class="built_in">set</span></span><br></pre></td></tr></table></figure>
+
+<p>容器默认使用的分类器是<code>std::allocate&lt;&gt;</code>,要使用std::allocator以外的allocator,得自行<code>#include&lt;ext\...&gt;</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\array_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\mt_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\debug_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\pool_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\bitmap_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\malloc_allocator.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ext\new_allocator.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_list_with_special_allocator</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="built_in">string</span>,__gnu_cxx::malloc_allocator&lt;<span class="built_in">string</span>&gt;&gt; c2;</span><br><span class="line">    <span class="built_in">list</span>&lt;<span class="built_in">string</span>,__gnu_cxx::new_allocator&lt;<span class="built_in">string</span>&gt;&gt; c3;</span><br><span class="line">    <span class="comment">//....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样的容器使用不同的分配器，运行效率是不同的。调用allocator分配释放内存的代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p;</span><br><span class="line">allocator&lt;<span class="keyword">int</span>&gt; alloc1;</span><br><span class="line">p = alloc1.allocate(<span class="number">1</span>); <span class="comment">//分配 1*sizeof(int)大小的内存</span></span><br><span class="line">alloc1.deallocate(p,<span class="number">1</span>); <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">__gnu.cxx::malloc_allocator&lt;<span class="keyword">int</span>&gt; alloc2;</span><br><span class="line">p = alloc2.allocate(<span class="number">1</span>);</span><br><span class="line">alloc2.deallocate(p,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我们不需要去这样使用分配器，所有的内存管理函数，嵌套到最底层都是<code>malloc()</code>和<code>free()</code>，我们在malloc时指明要申请多少字节，在free()的时候并没有指明要释放多少字节。而分配器需要指明释放的字节数，这样就很麻烦。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/30/Lecture03/" itemprop="url">容器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T21:10:03+08:00">
+                2019-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="容器的结构与分类"><a href="#容器的结构与分类" class="headerlink" title="容器的结构与分类"></a>容器的结构与分类</h1><p>容器大致可以分为两类，<strong>序列容器（Sequence Containers）</strong>和<strong>关联容器（Associative Containers）</strong>,关联容器的元素有<strong>Key</strong>和<strong>Value</strong>。也有些分类将Unordered set/Multiset和Unordered Map/Multimap分为第三类<strong>Unordered Containers</strong>。Unordered是C11新出现的一种容器，Unordered可翻译为不定序，元素放到容器里面没有一定的次序。</p>
+<h2 id="Sequence-Containers"><a href="#Sequence-Containers" class="headerlink" title="Sequence Containers:"></a>Sequence Containers:</h2><p>Sequence Containers有以下5种容器：</p>
+<ol>
+<li><strong>Array</strong>  数组，一个连续空间，分配的空间是固定的，不能扩充</li>
+<li><strong>Vector</strong>  起点不能动，后端可以自动扩充</li>
+<li><strong>Deque</strong>  两端均可以扩充</li>
+<li><strong>List</strong>  双向链表，元素之间用指针串起来。</li>
+<li><strong>Forward-List</strong>  单向链表</li>
+</ol>
+<p><img src="/2019/09/30/Lecture03/1.png" alt="1"></p>
+<p>可想而知，List中每个元素带有2个指针（因为是双向的），Forward-List中每个元素只带有一个指针，所以List耗用的内存要比Forward-List大。（32位系统上一个指针占用4个字节）</p>
+<h2 id="Associative-Containers"><a href="#Associative-Containers" class="headerlink" title="Associative Containers"></a>Associative Containers</h2><p>对于要大量查找的数据，可以放到Associative Containers里面。<strong>Set</strong>的实现是一个二分树，在标准库里面，并没有规定Set或Map要用什么来实现，但由于红黑树非常好（它是一种高度平衡的二分数），所以各家编译器所带的标准库都用红黑树来做Set和Map。注意set的key就是value，即key和value不分。而Multiset和Multimap的key可以重复。</p>
+<p><img src="/2019/09/30/Lecture03/2.png" alt="2"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/30/Lecture02/" itemprop="url">STL体系结构基础介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T20:23:02+08:00">
+                2019-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="STL六大组件"><a href="#STL六大组件" class="headerlink" title="STL六大组件"></a>STL六大组件</h1><p>STL分为6大组件（Components）:</p>
+<ul>
+<li>容器（Containers)</li>
+<li>分配器（Allocators）</li>
+<li>算法（Algorithms）</li>
+<li>迭代器（Iterators）</li>
+<li>适配器（Adapters）</li>
+<li>仿函数（Functors）</li>
+</ul>
+<p>六个组件之间的关系如下,通常我们会用到的时Containers，Containers里面要放入数据，数据要占用内存，Containers已经帮我们把内存的问题全部解决掉，编程者不用自己考虑内存这件事情，这有赖于其背后的Allocator组件的支持。对Containers里面的数据进行操作，有些操作是在Containers类本身做的，但是还有更多的操作被独立出来变成一个一个的函数，放在Algorithms组件里面。Algorithms要访问Containers里面的元素，是通过Iterators来实现的。Iterators就好像是一种泛化的指针(它重载的指针的所有操作)。仿函数Functors的作用像是函数，Adapters可以对Containers、Iterators、Functors做转换。<br><img src="/2019/09/30/Lecture02/1.png" alt="1"></p>
+<p>下面是用一个程序来说明六大组件间的关联：<br><img src="/2019/09/30/Lecture02/2.png" alt="2"></p>
+<h1 id="前闭后开空间"><a href="#前闭后开空间" class="headerlink" title="前闭后开空间"></a>前闭后开空间</h1><p>把一堆数据放到容器里面，所有的容器都提供<code>begin()</code>和<code>end()</code>两个函数，注意<code>end()</code>指向的是容器最后一个元素的下一位置。<br><img src="/2019/09/30/Lecture02/3.png" alt="3"></p>
+<h2 id="range-based-for-statement"><a href="#range-based-for-statement" class="headerlink" title="range-based for statement"></a>range-based for statement</h2><p>从C11开始，增添了以下语法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(decl:coll)&#123; <span class="comment">//coll(collection)是比较广泛的容器</span></span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对容器的遍历有以下简洁写法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i :&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>&#125;)&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">double</span>&gt; vec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> elem:vec)&#123; <span class="comment">//elem的类型是iterator</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; elem &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span>&amp; elem:vec)&#123;</span><br><span class="line">    elem *= <span class="number">3</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/30/Lecture01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/30/Lecture01/" itemprop="url">认识headers、版本、重要资源</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-30T07:54:36+08:00">
+                2019-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">STL源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本部分内容介绍C++标准库的体系结构与内核分析。C标准库是一个个单一的函数，彼此之间几乎没有什么关联，而C++标准库主要分为6个部件，部件之间有很紧密的关系存在。</p>
+<p>STL中一个很重要的概念就是<strong>泛型编程</strong>（<strong>Generic Programming,GP</strong>）,所谓泛型编程就是使用template为主要工具来编写程序。STL就是泛型编程最成功的作品。</p>
+<h1 id="C-Standard-Library-amp-Standard-Template-Library"><a href="#C-Standard-Library-amp-Standard-Template-Library" class="headerlink" title="C++ Standard Library &amp; Standard Template Library"></a>C++ Standard Library &amp; Standard Template Library</h1><p>C++标准库与标准模板库有什么关系？C++标准库就是编译器提供好的一堆头文件，而不是编译好的库，所以完全可以看到源代码。标准库里面的大部分都是STL，STL可分为6大component，STL之外还有一些零零碎碎的小东西，它们非常重要，也很好用。</p>
+<p>所以，只要我们手上有编译器，就一定带着一个标准库，如上所述，它是以header files的形式呈现，可以看到所有的源代码。另外有以下几点要注意：</p>
+<ul>
+<li><p>C++标准库的header files不带后缀名（.h），例如<code>#include &lt;vector&gt;</code></p>
+</li>
+<li><p>新式C header files不带后缀名.h，例如<code>#include&lt;cstdio&gt;</code></p>
+</li>
+<li><p>旧式C header files（带有.h）仍然可用，例如<code>#include&lt;stdio.h&gt;</code></p>
+</li>
+<li><p>新式headers内的组件封装于<strong>namespace “std”</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>; <span class="comment">//or</span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cout</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>旧式headers内的组件不封装于<strong>namespace “std”</strong> 内</p>
+</li>
+</ul>
+<h1 id="C-标准库版本"><a href="#C-标准库版本" class="headerlink" title="C++标准库版本"></a>C++标准库版本</h1><p>不管你用哪一个开发平台，它所带哪一个编译器，它们都会带着一套标准库。这些标准库的用法几乎100%都是一样的。</p>
+<h1 id="重要资源"><a href="#重要资源" class="headerlink" title="重要资源"></a>重要资源</h1><p>C++标准库里面的东西太丰富，在用C++编程时，以下是比较重要的一些参考网站：</p>
+<ol>
+<li><a href="cplusplus.com">www.cplusplus.com</a></li>
+<li><a href="en.cppreference.com">en.cppreference.com</a></li>
+<li><a href="gcc.gnu.org">gcc.gnu.org</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/why deep/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/26/why deep/" itemprop="url">Why Deep</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T23:40:21+08:00">
+                2019-09-26
               </time>
             
 
@@ -559,83 +1377,718 @@
       
         
           
-            <p>Classification的应用可以有银行信用评估、医疗诊断、手写辨识等。他们的输入输出如下</p>
+            <h1 id="Deep-is-Better"><a href="#Deep-is-Better" class="headerlink" title="Deep is Better?"></a>Deep is Better?</h1><p>下图表示，network的层数越多，Error Rate越低。这说明network越deep，performance越好吗？但是仔细思考以下，network越深它的参数就越多，它能cover的function也就越多，那它的performance更好也是很正常的。</p>
+<p><img src="/2019/09/26/why deep/1.png" alt="1"></p>
+<p>如果正真要比较shallow和deep的network的performance，需要让Shallow和Deep model的参数是一样多的。这样的比较才是公平的。</p>
+<p><img src="/2019/09/26/why deep/2.png" alt="2"></p>
+<p>用上面的方式比较的结果如下</p>
+<p><img src="/2019/09/26/why deep/3.png" alt="3"></p>
+<p>我们发现$2\times 2K$的network比$1\times 16K$的network效果还要好，说明network的层数更多确实比仅仅增加参数要管用。那为什么会这样呢？有人认为deep learning就是一个暴力枚举的方法，弄一个很大的model，然后收集一大笔data，所以就能得到比较好的performance。但实际不是这样，因为从上表我们知道，单纯增加参数而只是让network变宽，对performance的帮助是比较小的。</p>
+<h1 id="Modularization"><a href="#Modularization" class="headerlink" title="Modularization"></a>Modularization</h1><p>但我们在做deep learning的时候，其实就是在做模组化这件事（<strong>Modularization</strong>）。就比如我们写代码的时候，并不是将所有的function都写在main function里面。我们会在main function里面去调用子函数，子函数里面也会去调用别的子函数。这样做的好处是有些函数是可以公用的。</p>
+<p>假设我们要用deep learning去做影像分类，要把image分成4类，如下，我们对这4类影像收集一些data，然后去train 4个classifer，就可以解决这个问题。但问题是，长头发的男生这个data可能是比较少的，这样train出来的长头发男生的classifier就比较弱。</p>
+<p><img src="/2019/09/26/why deep/4.png" alt="4"></p>
+<p>为了解决上面的问题，就可以用模组化的概念。假设我们先不是直接去解那个问题，而是把原来的问题切成比较小的问题。比如，我们learn一些classifier，这些classifier的工作是去detect有没有某一种的attribute出现。它不是直接去detect是长头发的男生还是长头发的女生，而是把这个问题切成比较小的问题。它只用判断image是男生还是女生，或只用判断image是长头发还是短头发。这样，虽然长头发的男生data很少，但是女生和男生都可以分别收集到足够的data，长发的人和短发的人也可以收集到足够多的data。这样我们train这些basic classifier的时候就不会太差。最后来解我们要真正处理的问题的时候，每一个classifier就去参考这些basic的attribute的输出，最后要下决定的那个classifier，它是把前面的basic的classifier当作module，去call它的output，而每一个classifier都共用同样的module。后面的classifier可以利用前面的classifier，所以只要用比较少的training data就可以把结果train好。</p>
+<p><img src="/2019/09/26/why deep/5.png" alt="5"></p>
+<p>每一个neuron其实就是一个classifier,第一层的neuron是最基础的classifier，而第二层是比较复杂的classifier，它用第一层classifier的output当作input，第三层的neuron又把第二层neuron当作module，依此类推。要注意的是，在做deep learning的时候，怎么做模组化这件事情是machine自动学到的。模组化的好处就是，就算我们training data没有那么多，我们也可以把task做好。这样就解释了deep learning所要的training data是比较少的。</p>
+<p>这可能和我们的认识有些矛盾。有人认为AI就等于big data+deep learning，所以deep learning会work，是因为big data的关系。其实并不是这样的。假设我们有真正很大的big data，打到可以把全世界的image通通收集起来，那还何必做machine learning呢？直接table lookup就好了。所以，machine learning和big data在某种程度上其实是相反的，我们之所以不能table lookup，就是因为我们没有足够的data,所以需要machine去做举一反三的事情。</p>
+<h1 id="Modularization-Speech"><a href="#Modularization-Speech" class="headerlink" title="Modularization - Speech"></a>Modularization - Speech</h1><p>deep learning在影像和语音上面的表现特别好。下面会说明为什么在语音上需要模组化的概念。</p>
+<p>先简单介绍一下人类语言的架构。人说的每一句话其实是由一串<strong>phoneme（音素）</strong>所组成，它是语言学家订出来的人类发音的基本单位。比如<em>what do you think</em>这就话的phoneme组成如下。同样的phoneme可能会有不太一样的发音。因为人类发音器官的限制，phoneme的发音会受到前后phone所影响，为了表达这件事情，我们会给同样的phoneme不同的model，这个东西就叫做<strong>tri-phone</strong>，tri-phone的表达方式是，比如下图的第一个uw，加上前面的phoneme d跟后面的phoneme y，第二个uw,加上前面的y和后面的th。tri-phone不是考虑3个phone的意思，tri-phone的意思是，现在一个phone，我们用不同的model来表示它。如果一个phone，它的context不一样，我们就用不同的model来描述这样的phoneme。一个phoneme可以拆成几个state，state的个数是需要我们自己定的。比如我们通常就定成3个state。</p>
+<p><img src="/2019/09/26/why deep/6.png" alt="6"></p>
+<p>以上是人类语言的基本架构，那要怎么做语音辨识呢？语音辨识非常的复杂，这里只讲语音辨识的第一步。第一步要做的事情是<strong>把acoustic feature转成state</strong>。这是一个单纯的classification problem。所谓的acoustic feature，简单讲就是,input声音讯号，它是一串wave form，在这个wave form上面取一个window，这个window通常不会取太大。把一个window里面用一个feature来描述这个window里面的特性，这个东西就是一个acoustic feature。在这个声音信号上面，会每隔一小段时间，就取一个window，所以一个声音信号就会变成一串<strong>vector sequence</strong>，这个就叫做<strong>acoustic feature sequence</strong>。在做语音辨识的第一阶段，需要做的事情就是，决定每一个acoustic feature它属于哪一个state。也就是要建一个classifier，例如这个classifier告诉我们第一个acoustic feature它属于state a。但是光只有这样子是没有办法做一个语音辨识系统的，这个东西只是state而已，我们还要把state转成phoneme，然后再把phoneme转成文字。接下来，还要用language model考虑同音异字的问题。</p>
+<p><img src="/2019/09/26/why deep/7.png" alt="7"></p>
+<p>比较一下过去在用deep learning之前和用deep learning之后，在语音辨识上的模型有什么不同，以便更能体会为什么deep learning在语音辨识上会有非常显著的成果。在语音辨识的第一个阶段，就是要做分类，也就是决定一个acoustic feature它属于哪一个state。传统的方法叫做<strong>HMM-GMM</strong>。这个方法是假设每一个属于某一个state的acoustic feature的分布是stationary的，所以可以用一个model来描述它。比如下图第一个state(第一当作中心的tri-phone的第一个state)，它可以用一个GMM来描述，另外一个state可以用另外一个GMM来描述。这个时候给一个feature，就可以算这个acoustic feature从每一个state产生出来的几率，这个东西就叫做<strong>Gaussian Mixture Model(GMM)</strong>。</p>
+<p><img src="/2019/09/26/why deep/8.png" alt="8"></p>
+<p>但如果仔细想一下，上面的方法其实根本不太会work，因为tri-phone的数目太多了。一般语言，中文英文，都有30到40个phoneme。在tri-phone里面，每一个phoneme，随着它context的不同，也要用不同的model,所以至少有$30^3$个tri-phone，而每一个tri-phone又有3个state，所以有数万个state。每一个state都要用一个GMM来描述，那参数太多了，training data根本不够。所以传统上，在deep learning之前怎么处理这件事呢？有一些state，其实它们会共用同样的model distribution，这件事情叫做<strong>tied_state</strong>。不同的state共用同样的distribution，意思就是说，假如我们在些程序的时候，不同的state的名称，就好像是pointer一样，不同的pointer,它们可能会指向同样的distribution。那到底哪些state要共用，而哪些不要共用，这就需要凭着经验和一些语言学的知识来决定。但是这样是不够的，如果只分state的distribution，要共用或不共用，这样太粗了，所以有人开始提出一些想法，比如如何让它部分共用等等。在deep learning流行之前，再前一个提出来的比较有创新的方法，叫做<strong>subspace GMM</strong>,其实它里面有模组化的影子。我们原来是每一个state就有一个distribution,而在subspace GMM里面，我们先把很多的Gaussian找出来，即先找一个Gaussian pool,每个state的information就是一个key，这个key告诉我们要从这个Gaussian的Pool里面挑哪些Gaussian出来，比能有某一个state 1挑第一、第三、第五个Gaussian，某一个state 2挑第一、第四、第六个Gaussian，如果这样做的话，这些state有些时候就可以shate部分的Gaussian，而有些时候就可以完全不share Gaussian，至于要share多少的Gaussian,这个东西可以是从training data里面学习得来。</p>
+<p><img src="/2019/09/26/why deep/9.png" alt="9"></p>
+<p>上面是在DNN火红之前的做法，但如果仔细想想，HMM-GMM方式，所有的phone或者state，是independent model的，这件事情对model人类的声音来说是不efficient的。人类的声音，不同的phoneme，虽然我们在分类的时候把它归类为不同的class，但这些phoneme之间并不是完全无关的，它们都是由人类的发音器官所generate出来的，它们中间是有根据人类发音器官发音方式具有某些关系的。</p>
+<p>举例来说，在下图中，画出了人类语言里面所有的母音。母音的发音其实只受三件事情的影响，一个是舌头的前后位置，一个是舌头上下的位置，还有一个就是嘴型。下图中有英文的5个母音：a、e、i、o、u，从图中可看出，i和u的差别是舌头放在前面和放在后面的差别。在图中同一个位置的母音，表示说舌头的位置是一样的，但是嘴型是不一样的。所以，因为不同的phoneme之间是有关系的，所以每一个phoneme都搞一个自己的model，这样做其实是没有效率的。</p>
+<p><img src="/2019/09/26/why deep/10.png" alt="10"></p>
+<p>如果用deep learning要怎么做呢？我们要learn一个deep neural network，这个deep neural network的input就是一个acoustic feature，它的output就是这个feature属于哪一个state的几率。这是一个很单纯的classification的问题。这里最关键的一点是，所有的state，都共用一个DNN。在整个辨识里面，就只有一个DNN而已,而没有每一个state都有一个DNN。有人可能会觉得，从GMM变到deep learning厉害的地方就是，本来GMM通常最多也就64个Gaussian mixture而已，那DNN有10层，每层1000个neuron，参数变多了，所以performance就变好了，这是一个暴力碾压的方法，其实也没什么。其实不是这样，在做HMM-GMM的时候，GMM只有64个mixture，好像觉得很简单，但是其实每一个state都有一个Gaussian mixture，所以真正合起来，它的参数是多的不得了的。如果仔细去算一下GMM用到参数和DNN用的参数，它们用的参数其实是差不多多的——DNN只用一个很大的model，GMM是用很多很小的model。但是DNN把所有的state通通用同一个model来做分类，会是比较有效率的做法。</p>
+<p><img src="/2019/09/26/why deep/11.png" alt="11"></p>
+<p>为什么这样是计较有效率的做法呢？举例来说，如果把一个DNN它的某一个hidden layer拿出来，比如说它有1000个neuron，没有办法去分析它，但是可以把那1000个neuron的output降维，降到2维。在下面的图中，每一个点代表了一个acoustic feature。它通过DNN以后，把output layer的output降到2维，可以发现它的分布如下。图中的颜色其实就是a、e、i、o、u这5个母音。我们会发现，这5个母音的分布，跟右上角母音的分布，其实几乎是一样的。所以，DNN做的事情，它的比较lower的layer做到事情并不是马上去侦测现在input的发音是属于哪一个phone或哪一个state，而是先观察，每当听到这个发音的时候，人是用什么样的方式在发这个声音的。它的舌头位置在哪里，位置高还是低，前还是后等等。这样，lower layer（靠近input的layer），先知道了发音的方式以后，接下来的layer，在根据这个结果去决定现在的发音是属于哪一个state或哪一个phone。所以，所有的phone会用同一组detector，也就是说这些lower的layer是一个人类发音方式的detector，而所有phone的侦测都是用同一个detector完成的，都share同一组参数。所以它这边有做到模组化这件事情。当做模组化的时候，是用比较有效率的方式来使用参数。</p>
+<p><img src="/2019/09/26/why deep/12.png" alt="12"></p>
+<h2 id="Universality-Theorem"><a href="#Universality-Theorem" class="headerlink" title="Universality Theorem"></a>Universality Theorem</h2><p>根据<strong>Universality Theorem</strong>，任何一个连续的function，都可以用一层足够宽neural network来完成。在90年代，这是很多人放弃做deep learning的一个原因。但是，这个理论只告诉我们可能性，但没有告诉我们要做到这件事情有多少效率。当我们只用一个hidden layer的时候，其实是没有效率的。当我们有hierarchy的structure，用这种方式来描述function的时候，它是比较有效率的。</p>
+<p><img src="/2019/09/26/why deep/13.png" alt="13"></p>
+<h1 id="Analogy"><a href="#Analogy" class="headerlink" title="Analogy"></a>Analogy</h1><p>这里举另一个例子。在逻辑电路里面，整个电路是由一堆逻辑门（与、或、非）所构成，在neural network里面，整个network是由一堆neuron所构成。对于逻辑电路，只要两层逻辑门，就可以表示任意的boolean function，在我们实际在设计电路的时候，根本不可能会这样做。因为当我们用hierarchy的架构的时候，这个时候拿来设计一个电路是比较有效率的。类比到neural network，其实意思是一样的。</p>
+<p><img src="/2019/09/26/why deep/14.png" alt="14"></p>
+<p>一个日常生活中的例子</p>
+<p><img src="/2019/09/26/why deep/15.png" alt="15"></p>
+<h2 id="More-Analogy"><a href="#More-Analogy" class="headerlink" title="More Analogy"></a>More Analogy</h2><p>用之前讲的例子来做比喻。假设现在input的点有4个，如下，红色的点是一类，蓝色的点是一类。如果没有hidden layer，而是一个linear的model,无论怎么做都没有办法把蓝色分在一边，把红色分在一边。但是当加了hidden layer以后，就做了一个feature的transformation，把原来的$x_1$和$x_2$投影到另一个平面变成$x_1^{\prime}$和$x_2^{\prime}$。其实这样做好像就是把原来的平面对折了一样，让两个蓝色的点重合在一起，就好像是剪窗花的时候将纸对折一样。当我们做deep learning的时候，其实是在用比较有效率的方式来使用data。</p>
+<p><img src="/2019/09/26/why deep/16.png" alt="16"></p>
+<p>下面是一个toy example。有一个function，它的input是$R^2$，output是0和1，如下图，它是一个地毯形状的function，红色区域输出是1，蓝色区域输出是0。现在我们用不同量的training example，在一个hidden layer和3个hidden layer的时候，会看到什么样的情形（通过调整使3个hidden layer的参数和1个hidden layer一样多）。结果如下图右边所示。</p>
+<p><img src="/2019/09/26/why deep/17.png" alt="17"></p>
+<p>我看可以看到当参数减少的时候，1层的network和3层的network结果都会变差，但是3层的hidden layer是比较有次序的崩坏，相比1层的hidden layer，它的结果还是比较好的。</p>
+<h1 id="End-to-end-Learning"><a href="#End-to-end-Learning" class="headerlink" title="End-to-end Learning"></a>End-to-end Learning</h1><p>使用deep learning的另外一个好处是可以做<strong>End-to-End learning</strong>，End-to-End learning的意思是，比如有时我们要处理的问题非常复杂，例如语言辨识。我们解一个machine learning的问题时，要做的事情就是先找一个hypothesis的function set，也就是找一个Model。当问题很复杂的时候，这个model会变成一个生产线。这个model要表示一个很复杂的function，这个很复杂的function是由很多比较简单的function串接在一起的。而当我们做End-to-End learning的时候，意思是只给model input和output，不必去考虑中间每一个function要怎么去分工，让machine自己去学中间每一个function它应该要做什么事情。在deep learning做这件事我们只需要叠一个很深的network，每一层就是一个sample function。</p>
+<p><img src="/2019/09/26/why deep/18.png" alt="18"></p>
+<p>比如在语言辨识里面，在shallow learning的时代，做语音辨识的过程是：先有一段声音讯号，然后做DTF把他变成spectrogram，<br>spectrogram通过filter bank得到output，再取log，然后再做DCT得到MFCC，把MFCC输入到GMM里面，最后可以得到语音辨识的结果（GMM换成DNN也会有非常显著的improvement）。在这整个生产线里面，只有最有的GMM是由training data学出来的，前面的部分都是人手定出来的（前人研究各种人类生理的知识后定出的function）。</p>
+<p><img src="/2019/09/26/why deep/19.png" alt="19"></p>
+<p>但是有了deep learning以后，我们可以把GMM前面的东西用Neural network取代掉。例如把deep neural network多加几层，就可以把DCT拿掉，这件事情现在已经是typical的做法了。过去MFCC这种feature是dominate语音辨识的，但是现在已经不是了，我们可以直接从log的output开始做，甚至可以从spectrogram开始做，使用deep learning，也可以得到更好的结果。</p>
+<p>有人会像能不能叠一个很深的network直接input就是time domain上的声音讯号，output直接就是文字，中间完全不要feature transform之类的。最后Google有一篇论文的结果是，它learning了一个很大的neural network，input就是声音讯号（wave phone），完全不做其他事情，最后可以做到和有做feature transform的结果打平，目前还没有做到能比feature transform更好，或许feature transform已经是讯号处理的极限了，其实deep learning出来的结果也就是feature transform。除了语音，影像也差不多，这里不再赘述。</p>
+<h1 id="Complex-Task"><a href="#Complex-Task" class="headerlink" title="Complex Task"></a>Complex Task</h1><p>通常我们真正在意的task，它是非常复杂的。在这种task里面，有时候非常像的input，会有很不一样的output。而有时候很不一样的input，他们的output是一样的。如有network只有一层的话，就只能做简单的transform，没有办法把一样的东西变得很不一样，或者把不一样的东西变得很像。</p>
+<p><img src="/2019/09/26/why deep/20.png" alt="20"></p>
+<p>要让原来input很像的东西结果看起来很不像，需要做很多层次的转换。下图是把MFCC投影到二维平面上，不同的颜色代表不同的人说的句子，这些句子是一样的。在语音上，我们会发现说同样的句子，不同的人说，它的声音讯号看起来是非常不一样的。所以有人看到这个图会觉得语音辨识不能做。如果今天learn一个neural network，如果只看第一层的hidden layer的output，会发现不同的人讲的同一个句子还是看起来不一样。</p>
+<p><img src="/2019/09/26/why deep/21.png" alt="21"></p>
+<p>但是如果看第8个hidden layer的output的时候，会发现不同的人说的同一个句子，自动地被align在一起。也就是说这个DNN在很多layer转换的时候，它把本来看起来很不一样的东西，它知道它们应该是一样的，所以经过很多layer转换以后，就把它们兜在一起了。如下图。</p>
+<p><img src="/2019/09/26/why deep/22.png" alt="22"></p>
+<p>在比如手写数字辨识的例子，input是$28\times 28$的pixel，在下图中，会发现4和9几乎是叠在一起的，没有办法把它们分开。但是我们看第一个hidden layer的output，这时候会发现4和9还是很像的。再看第二个hidden layer的output，发现4、7、9逐渐被分开，第3个hidden layer，它们被分开的更明显。</p>
+<p><img src="/2019/09/26/why deep/23.png" alt="23"></p>
+<h1 id="To-learn-more"><a href="#To-learn-more" class="headerlink" title="To learn more"></a>To learn more</h1><p>下面是更多要使用deep learning的理由</p>
 <ul>
-<li><strong>Credit Scoring</strong><ul>
-<li>Input:income,savings,profession,age,past financial history…</li>
-<li>Output:accept or refuse</li>
-</ul>
+<li><p>Do Deep Nets Really Need To Be Deep?(by Rich Caruana)</p>
 </li>
-<li><strong>Medical Diagnosis</strong><ul>
-<li>Input:current symptoms,age,gender,past medical history…</li>
-<li>Output:which kind of diseases</li>
-</ul>
+<li><p>Deep learning:Theoretical Motivatons(Yoshua Bengio)</p>
 </li>
-<li><strong>Handwriten charater recognition</strong></li>
-<li><strong>Face recognition</strong></li>
-</ul>
-<h1 id="Classification-as-Regression"><a href="#Classification-as-Regression" class="headerlink" title="Classification as Regression"></a>Classification as Regression</h1><p>我们可以将Classification的问题当作Regression来解吗？</p>
-<p>以Binary classification为例，在训练的时候，Class 1对应值1，Class 2对应值-1。在测试阶段，如果结果更靠近1，则分类为<br>class 1,如果结果更靠近-1，则分类为class 2.</p>
-<p>这么做会遇到的问题如下，如下图，<br><img src="/2019/08/27/Classification/1.png" alt="1"></p>
-<p>右边的图中绿色的线为classification的结果，紫色的线为Regression的结果，显然紫色的线并不是一个好的分类结果。太大于1的那些点反而还不好，它会去“惩罚”那些“太正确”的点。（<strong>Penalize to the examples that are “too correct”</strong>）</p>
-<h1 id="Ideal-Alternatives"><a href="#Ideal-Alternatives" class="headerlink" title="Ideal Alternatives"></a>Ideal Alternatives</h1><ul>
-<li>Function(Model)</li>
-</ul>
-<p>$$f(n) =<br>\begin{cases}<br>g(x)&gt;0,  &amp; \text{Output = class 1} \\<br>else, &amp; \text{Output = class 2}<br>\end{cases}<br>$$</p>
-<ul>
-<li><p>Loss function<br>$$L(f) = \sum_n\delta(f(x^n)\neq \hat{y}^n)$$<br>f在训练集上得到不正确结果(分类次数)的次数。</p>
+<li><p>Connections between physics and deep learning</p>
 </li>
-<li><p>Find the best function</p>
+<li><p>Why Deep Learning Works:Perspectives from Theoretical Chemistry</p>
 </li>
 </ul>
-<p>注意$L(f)$没办法微分，我们不能用Gradient Descent来解。以后会讲它其实可用<strong>Perceptron</strong>和<strong>SVM</strong>来解。<br>我们先来讲另一个解法，该方法是通过几率的观点来看待。<br><img src="/2019/08/27/Classification/2.png" alt="2"><br>如上图有两个盒子，它们都有篮球和绿球，假设我们随机从某个盒子中抽取一个球出来，它是蓝色的，那么这个蓝色的球从Box1和Box2中抽取出来的几率分别是多少？<br>假设从Box1中抽取的几率为$P(B_1) = 2/3$,从Box2中抽取的几率为$P(B_2) = 1/3$,并且<br>$$P(Blue|B_1) = 4/5$$ $$P(Green|B_1) = 1/5$$ $$P(Blue|B_2) = 2/5$$ $$P(Green|B_2) = 3/5$$<br>有了上面的信息，那我们可以轻易计算<strong>得到一个篮球，它是从Box1中抽取出来的几率</strong>：<br>$$P(B_1|Blue) = \frac{P(Blue|B_1)P(B_1)}{P(Blue|B_1)P(B_1)+P(Blue|B_2)P(B_2)}$$</p>
-<p>以上这些和分类有什么关系呢？<br>我们把Box1和Box2换成Class 1和Class 2，给我们一个x,比如说某一只宝可梦，它是从某一个class里面Sample的几率是多少呢？我们需要知道以下值</p>
-<ul>
-<li>$P(C_1)$ ：从Class1中抽一个样本出来的几率</li>
-<li>$P(C_2)$ ：从Class2中抽一个样本出来的几率</li>
-<li>$P(x|C_1)$ :从Class1中抽出x的几率</li>
-<li>$P(x|C_2)$ :从Class2中抽出x的几率</li>
-</ul>
-<p>有了上面的值，我们就可以计算出x属于Class1的几率$P(C_1|x)$ :<br>$$P(C_1|x) = \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}$$<br>有了$P(C_1|x)$，我们就可以比较x属于不同class的几率，几率最大的就是输出的结果。</p>
-<p>所以现在的问题就是：我们要从train data里面将<strong>$P(C_1)$</strong>、<strong>$P(C_2)$</strong>、<strong>$P(x|C_1)$</strong>、<strong>$P(x|C_2)$</strong> 的值估算出来。这一整套的想法就叫做<strong>Generative Model</strong>。之所以叫这个名字，是因为我们有了这个model的话，就可以用它来Generate一个x,即可以计算某一个x出现的几率，如果我们知道每一个x出现的几率，知道x出现的distribution,那么我们就可以用这个distribution来sample出x。x的几率计算如下<br>$$P(x) = P(x|C_1)P(C_1) + P(x|C_2)P(C_2)$$</p>
-<h2 id="Prior"><a href="#Prior" class="headerlink" title="Prior"></a>Prior</h2><p>我们先来算$P(C_1)$和$P(C_2)$，它们被称为Prior。<br>以宝可梦为例，假设Class1为水系宝可梦，Class2为一般系。先把宝可梦中ID&lt;400的作为train data,其余的作为testing data。其中有79只水系，61只一般系，于是：<br>$$P(C_1) = 79/(79+61) = 0.56$$ $$P(C_2) = 61/(79+61) = 0.44$$</p>
-<h2 id="Probability-from-Class"><a href="#Probability-from-Class" class="headerlink" title="Probability from Class"></a>Probability from Class</h2><p>接下来如何计算$P(x|C_1)$呢？我们可以用一个向量来表示每一只宝可梦，简单起见，取<strong>Defense</strong>和<strong>SP Defense</strong>两个属性，即用一个二维向量来表示。每一个宝可梦用一个二维平面上的点表示，如下图<br><img src="/2019/08/27/Classification/3.png" alt="3"><br>现在的问题是如果给我们一个新的点，这个点没有出现在training data里面，如一个新的宝可梦海龟，那么从水系的宝可梦的抽出一个宝可梦，它是海龟的几率是多少。<br>我们可以这样考虑，水系的宝可梦都是从一个Gaussian Distribution里面Sample出来的，我们得到的79个training data也是从这个Gaussian Distribution里面Sample出来的，现在的问题是如何通过这79个点来最大限度的估测出这个Gaussian Distribution。</p>
-<h3 id="Gaussian-Distribution"><a href="#Gaussian-Distribution" class="headerlink" title="Gaussian Distribution"></a>Gaussian Distribution</h3><p>Gaussian Distribution的向量形式如下，其中输入x是向量，输出是sample出x的概率，$\mu$是mean,$\Sigma$是covariance matrix.(<strong>The shape of the function determines by mean $\mu$ and covariance matrix $\Sigma$</strong>)<br>$$f_{\mu,\Sigma}(x) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu) \right\rbrace$$</p>
-<p>在当前例子中x就是宝可梦对应的向量，越接近中心点$\mu$的点被sample的几率越大，现在的问题就是如何寻找$\mu$和$\Sigma$.</p>
-<h3 id="Maximum-Likelihood"><a href="#Maximum-Likelihood" class="headerlink" title="Maximum Likelihood"></a>Maximum Likelihood</h3><p>上述的79个点可以从任意的Gaussian里被Sample出来，但是不同的Gaussian,它Sample出这79个点的可能性（<strong>Likelihood</strong>）是不一样的。换句话说，给我们一个Gaussian的$\mu$和$\Sigma$，我们可以算出它Sample出这79个点的几率。计算公式如下<br>$$L(\mu,\Sigma) = f_{\mu,\Sigma}(x^1)f_{\mu,\Sigma}(x^2)f_{\mu,\Sigma}(x^3)\cdots f_{\mu,\Sigma}(x^{79})$$<br>我们要找出$(\mu^{\star},\Sigma^{\star})$使得$L(\mu,\Sigma)$的值最大,即</p>
-<p>$$ \mu^{\star},\Sigma^{\star} = \mathop{argmax}_{\mu,\Sigma}L(\mu,\Sigma)$$</p>
-<p>解得：<br>$$\mu^{\star} = \frac{1}{79}\sum_{n=1}^{79}x^n$$ $$\Sigma^{\star} = \frac{1}{79}\sum_{n=1}^{79}(x^n - \mu^{\star})(x^n-\mu^{\star})^T$$</p>
-<p>接着，只要算出$P(C_1|x)&gt;0.5$,我们便可以说x是属于Class 1。在Training data上得到的结果如下<br><img src="/2019/08/27/Classification/4.png" alt="4"><br>将得到的分界线apply到test data上，结果如下<br><img src="/2019/08/27/Classification/5.png" alt="5"><br>然而我们得到的正确率只有47%。可能是因为代表宝可梦向量的维数太低。（在2维空间无法分开，在7维空间中可能会被分开）。<br>在7维空间中进行分类，$\mu$是一个7维向量，$\Sigma$是一个$7\times7$的矩阵。然而，我们依旧只得到了54%的正确率。</p>
-<h2 id="Modifying-Model"><a href="#Modifying-Model" class="headerlink" title="Modifying Model"></a>Modifying Model</h2><p>我们要怎么改进呢？<br>其实上面介绍的这种模型是比较少见的，我们不常看到给每一个Gaussian都有自己的mean和covariance matrix,更常见的作法是<strong>不同的Gaussian可以共享同一给covariance matrix</strong>,如下图。<br><img src="/2019/08/27/Classification/6.png" alt="6"><br>因为随着维度的增大，covariance matrix的参数个数增长是非常大的（$n^2$），如果分别给不同的Gaussian不同的$\Sigma$,那参数就更多了，参数多就会导致overfitting。现在我们要做的是找到$\mu^1$,$\mu^2$,$\Sigma$,使得$L(\mu^1,\mu^2,\Sigma)$的值最大<br>$$ L(\mu^1,\mu^2,\Sigma) = f_{\mu^1,\Sigma}(x^1)f_{\mu^1,\Sigma}(x^2)\cdots f_{\mu^1,\Sigma}(x^{79})f_{\mu^2,\Sigma}(x^{80})f_{\mu^2,\Sigma}(x^{81})\cdots f_{\mu^2,\Sigma}(x^{140}) $$ </p>
-<p>$\mu^1$与$\mu^2$的算法与上面相同，将训练数据加起来取平均即可。$\Sigma$的计算略有区别:<br>$$ \Sigma = \frac{79}{140}\Sigma^1 + \frac{61}{140}\Sigma^2 $$</p>
-<p>仍用2维向量表示宝可梦，这次得到的结果如下图<br><img src="/2019/08/27/Classification/7.png" alt="7"><br>此时我们发现分界线boundary从原来的曲线变为了直线，所以这样的模型我们也称为<strong>Linear Model</strong>，正确率从原来的54%变为了73%</p>
-<h3 id="Probability-Distribution"><a href="#Probability-Distribution" class="headerlink" title="Probability Distribution"></a>Probability Distribution</h3><p>为什么要现在Gaussian Distribution，其实也可以选择别的分布。<br>假设样本${\bf x} = \begin{bmatrix}{x_{1}}&amp;{x_{2}}&amp;{\cdots}&amp;{x_{n}}\end{bmatrix}^T$的每一个维从几率模型产生的几率是independent的，于是$P(x|C_1)$可以写成:<br>$$ P(x|C_1) = P(x_1|C_1)P(x_2|C_1)\cdots P(x_n|C_1) $$</p>
-<p>每一维的几率分布是independent,从$x_1$到$x_n$产生的几率都是一维的Gaussian,这样相当于原来高维度的Gaussian，它的covariance matrix变成Diagnoal matrix(不是对角线的地方值都是0),这个就可以减少参数，得到一个更简单的模型。尝试了这个模型，它的结果不太好，还是太简单了。不同维度之间的covariance看来还是必要的。</p>
-<p>假设某个feature是binary的，那么它就不太可能是用Gaussain产生的（<strong>For binary features,you may assume they are from Bernoulli distributions</strong>）<br>如果假设所有的feature之间都是independent的，这种分类方法叫做<strong>Naive Bayes Classifier</strong></p>
-<h2 id="Posterior-Probability"><a href="#Posterior-Probability" class="headerlink" title="Posterior Probability"></a>Posterior Probability</h2><p>接下来我们对Posterior Probability进行分析，<br>$$<br>\begin{equation}<br>\begin{split}<br>P(C_1|x) &amp;= \frac{P(x|C_1)P(C_1)}{P(x|C_1)P(C_1)+P(x|C_2)P(C_2)}\\<br>&amp;= \frac{1}{1 + \frac{P(x|C_2)P(C_2)}{P(x|C_1)P(C_1)}}\\<br>&amp;= \frac{1}{1+exp(-z)}<br>&amp;= \sigma(z)<br>\end{split}<br>\nonumber<br>\end{equation}<br>$$</p>
-<p>其中<br>$$z = In\frac{P(x|C_1)P(C_1)}{P(x|C_2)P(C_2)}$$</p>
-<p>$\sigma(z)$称为<strong>Sigmoid function</strong>，函数图像如下<br><img src="/2019/08/27/Classification/8.png" alt="8"><br>我们来看一下z长什么样子<br>$$z = In\frac{P(x|C_1)}{P(x|C_2)}+In\frac{P(C_1)}{P(C_2)} $$</p>
-<p>其中<br>$$In\frac{P(C_1)}{P(C_2)} = \frac{\frac{N_1}{N_1+N_2}}{\frac{N_2}{N_1+N_2}} = \frac{N_1}{N_2}$$<br>$$P(x|C_1) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma^1|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1) \right\rbrace$$<br>$$P(x|C_2) = \frac{1}{(2\pi)^{D/2}}\frac{1}{|\Sigma^2|^{1/2}}exp\left\lbrace -\frac{1}{2}(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2) \right\rbrace$$</p>
-<p>整理可得<br>$$In\frac{P(x|C_1)}{P(x|C_2)} = In\frac{|\Sigma^2|^{1/2}}{|\Sigma^1|^{1/2}} - \frac{1}{2}[(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1)-(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2)]$$</p>
-<p>又有<br>$$(x-\mu^1)^T(\Sigma^1)^{-1}(x-\mu^1) = x^T(\Sigma^1)^{-1}x - 2(\mu^1)^T(\Sigma^1)^{-1}x + (\mu^1)^T(\Sigma^1)^{-1}\mu^1$$<br>$$(x-\mu^2)^T(\Sigma^2)^{-1}(x-\mu^2) = x^T(\Sigma^2)^{-1}x - 2(\mu^2)^T(\Sigma^2)^{-1}x + (\mu^2)^T(\Sigma^2)^{-1}\mu^2$$</p>
-<p>所以<br>$$z = In\frac{|\Sigma^2|^{1/2}}{|\Sigma^1|^{1/2}} - \frac{1}{2}x^T(\Sigma^1)^{-1}x + (\mu^1)^T(\Sigma^1)^{-1}x - \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}x^T(\Sigma^2)^{-1}x - (\mu^2)^T(\Sigma^2)^{-1}x + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$$</p>
-<p>考虑到$\Sigma_1 = \Sigma_2 = \Sigma$,上式可以简化成<br>$$z = (\mu^1-\mu^2)^T\Sigma^{-1}x - \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$$</p>
-<p>我们令${\bf w^T} = (\mu^1-\mu^2)^T\Sigma^{-1}$,$b = \frac{1}{2}(\mu^1)^T(\Sigma^1)^{-1}\mu^1 + \frac{1}{2}(\mu^2)^T(\Sigma^2)^{-1}\mu^2 + In\frac{N_1}{N_2}$.w是向量，b是一个scalar</p>
-<p>所以就有<br>$$P(C_1|x) = \sigma({\bf w}\cdot {\bf x}+b)$$</p>
-<p>从上面的式子我们可以看出来为什么我们将$\Sigma^1$与$\Sigma^2$合并，得到的boundary会是一条直线。<br>在generative model里面，我们做的事情是用某些方法来找到$N_1$,$N_2$,$\mu^1$,$\mu^2$,$\Sigma$的值，找出这些后我们就能算出${\bf w}$和$b$,从而再算出几率。</p>
-<p>但是为什么要这么麻烦呢？既然我们只需要找到${\bf w}$和$b$,何必要舍近求远来求$N_1$,$N_2$,$\mu^1$,$\mu^2$,$\Sigma$的值，可不可以直接来求${\bf w}$和$b$？这个就是下一节<strong>Logistic Regression</strong>要涉及的内容</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li><a href="https://oysz2016.github.io/post/8611e6fb.html" target="_blank" rel="noopener">数学公式语法——MathJax教程</a></li>
-<li><a href="https://www.zybuluo.com/knight/note/96093" target="_blank" rel="noopener">MathJax使用LaTeX语法编写数学公式教程</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/33857596" target="_blank" rel="noopener">Hexo博客使用MathJax公式并解决Markdown渲染冲突问题</a></li>
-<li><a href="http://masikkk.com/article/hexo-13-MathJax/" target="_blank" rel="noopener">公式对齐</a></li>
-<li><a href="https://www.cnblogs.com/xuejianbest/p/10285243.html" target="_blank" rel="noopener">微积分常用符号</a></li>
-<li><a href="https://www.githang.com/2018/12/22/hexo-new-post-path/" target="_blank" rel="noopener">如何在Hexo中对文章md文件分类</a></li>
-<li><a href="https://blog.csdn.net/csdnSR/article/details/78300820" target="_blank" rel="noopener">修改hexo的主题nexT中的Pisces主题宽度</a></li>
-<li><a href="https://nipgeihou.com/Hexo/hexo_max_width/" target="_blank" rel="noopener">设置图片大小</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/26625249" target="_blank" rel="noopener">GitHub+Hexo搭建个人网站详细教程</a></li>
-<li><a href="https://blog.csdn.net/dajian790626/article/details/78595684" target="_blank" rel="noopener">hexo搭建Github博客上传后，网页显示404问题解决方案</a></li>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/20/Lecture01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/20/Lecture01/" itemprop="url">Tensorflow介绍与安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-20T22:49:44+08:00">
+                2019-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TensorFlow/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>TensorFlow分为CPU和GPU两个版本。TensorFlow是Google的第二代人工智能学习系统，它的底层是C++写的，使用的时候主要用Python，也可以用C++。支持CNN、RNN等算法，可以用于语言识别和图像处理等多个深度学习的领域。它可以在一个或者多个CPU或GPU中运行，它还可以运行在嵌入式系统中比如手机、平板电脑。深度学习框架有很多，Google希望将TensorFlow做成行业的标准。</p>
+<p>TensorBoard是神经网络的调试工具，它运行在浏览器上。</p>
+<h1 id="Anaconda安装"><a href="#Anaconda安装" class="headerlink" title="Anaconda安装"></a>Anaconda安装</h1><ol>
+<li>Windows,MacOS,Linux都已经支持Tensorflow</li>
+<li>Windows用户只能使用python3.5(64bit).MacOS,Linux支持python2.7和Python3.3+</li>
+<li>有GPU可以安装带GPU版本的，没有GPU就安装CPU版本的</li>
+<li>推荐安装Anaconda,pip版本大于8.1</li>
 </ol>
+<p><a href="https://www.anaconda.com/distribution/" target="_blank" rel="noopener">Anaconda安装网址</a>,安装完成后可以使用Jupyter来编写代码。</p>
+<h1 id="Jupyter的使用"><a href="#Jupyter的使用" class="headerlink" title="Jupyter的使用"></a>Jupyter的使用</h1><h2 id="修改Jupyter-Notebook默认工作路径"><a href="#修改Jupyter-Notebook默认工作路径" class="headerlink" title="修改Jupyter Notebook默认工作路径"></a>修改Jupyter Notebook默认工作路径</h2><p>在命令行中输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+
+<p><strong>jupyter_notebook_config.py</strong>这个文件如果没有，需要先运行jupyter notebook生成一个配置文件（需要先添加环境变量）</p>
+<p><a href="https://cloud.tencent.com/developer/ask/148499" target="_blank" rel="noopener">https://cloud.tencent.com/developer/ask/148499</a></p>
+<p>双击运行Jupyter，它会打开浏览器，接下来在浏览器上进行编程。</p>
+<h2 id="文件路径的设置"><a href="#文件路径的设置" class="headerlink" title="文件路径的设置"></a>文件路径的设置</h2><p>在路径<code>C:\Users\usename\.jupyter</code>里面找到<code>jupyter_notebook_config.py</code>文件，若没有该文件，运行以下命令：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+
+<p>而在本人电脑上运行该命令时，产生如下错误。<br><img src="/2019/09/20/Lecture01/1.png" alt="1"></p>
+<p>参考底下的链接2，将<code>D:\develop\Anaconda3\Library\bin</code>添加到环境变量，问题解决。<br><img src="/2019/09/20/Lecture01/2.png" alt="2"></p>
+<p>打开<code>jupyter_notebook_config.py</code>文件，找到如下行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## The directory to use for notebooks and kernels.</span></span><br><span class="line"><span class="comment">#c.NotebookApp.notebook_dir = ''</span></span><br></pre></td></tr></table></figure>
+
+<p><code>c.NotebookApp.notebook_dir</code>的值就是文件存放的路径，编写的文件都会存放在该路径下。这里我将上面代码修改成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## The directory to use for notebooks and kernels.</span></span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">u'E:/GitRep/Tensorflow'</span></span><br></pre></td></tr></table></figure>
+
+<p>改完后再次运行Jupyter Notebook，然而Jupyter Notebook并没有在我们指定的路径下打开：<br><img src="/2019/09/20/Lecture01/3.png" alt="3"></p>
+<p>发现从命令行进入Jupyter Notebook路径正常，而从快捷方式打开Jupyter Notebook就会路径不对。参考底下链接3，更改Jupyter Notebook的属性中的<strong>起始位置</strong>，并且去掉<code>&quot;%USERPROFILE%/&quot;</code>如下<br><img src="/2019/09/20/Lecture01/4.png" alt="4"></p>
+<p>现在从快捷方式打开也能显示正确路径了。我们点击New按钮，选择Python 3就能新建一个python文件。</p>
+<h2 id="Jupyter-Notebook基本操作"><a href="#Jupyter-Notebook基本操作" class="headerlink" title="Jupyter Notebook基本操作"></a>Jupyter Notebook基本操作</h2><p>快捷键</p>
+<ul>
+<li><strong>Shift+Enter</strong>  执行一个语句框中的所有语句</li>
+<li><strong>Tab键</strong>  变量名补全</li>
+</ul>
+<h1 id="Tensorflow的安装"><a href="#Tensorflow的安装" class="headerlink" title="Tensorflow的安装"></a>Tensorflow的安装</h1><h2 id="Windows安装Tensorflow"><a href="#Windows安装Tensorflow" class="headerlink" title="Windows安装Tensorflow"></a>Windows安装Tensorflow</h2><ul>
+<li><p><strong>CPU版本</strong>：管理员方式打开命令提示符，输入命令：<code>pip install tensorflow</code></p>
+</li>
+<li><p><strong>GPU版本</strong>：管理员方式打开命令提示符，输入命令：<code>pip install tensorflow-gpu</code></p>
+</li>
+</ul>
+<p>注意：要安装GPU版本，必须之前有安装CUDA。</p>
+<p>要更新Tensorflow，只需要先将Tensorflow卸载掉，然后重新安装即可：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall tensorflow</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tensorflow-2-0特点"><a href="#Tensorflow-2-0特点" class="headerlink" title="Tensorflow 2.0特点"></a>Tensorflow 2.0特点</h2><p>运行下面代码可以查看tensorflow的安装版本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+
+<p>本人安装的版本为2.0.0。Tensorflow 2.0在2019年1月发布了预览版，Tensorflow2.0专注于简洁性和易用性，相对于1.x版本陡峭的学习曲线（1.x版本API设计过于复杂），2.0使用Keras作为前端API，入门深度学习的难度大大降低，通过清理废弃的API和减少重复来简化API。</p>
+<p>2.0在训练方面，使用Keras和eager execution轻松构建模型。为研究提供强大的实验工具。eager execution是Tensorflow在1.8版之后增加的功能，但是它并不是1.x版本的默认实现，在Tensorflow 2.0里面，它默认使用eager模式即命令行模式，也就是可见即可得。运行一行命令，就能够得到结果。1.0版本并不是运行一行命令就能得到结果，它需要我们去建立一个session，通过session去建立图运算然后得到结果，这是1.0版本非常大的局限性。因为图运算的特点，我们首先要去建立好模型，知道运行session之间，我们都不知道这个模型到底怎么样，它有什么错误，这样会大大降低我们学习的效率。</p>
+<p>在研究方面，2.0也提供了强大的实验工具。我们可以使用<strong>Tf.keras</strong>创建复杂的拓扑，，包括使用残差层、自定义多输入/输出模型以及强制编写的正向传递。轻松创建自定义训练循环。低级TensorFlow API始终可用，并于更高级别的抽象一起工作，以实现完全可定制的逻辑。</p>
+<p>在部署方面，在任意平台上实现稳健的生产环境模型部署。不论是在服务器、边缘设备还是网页上，也不论使用什么语言或平台，TensorFlow总能让你轻易训练和部署模型。TensorFlow之所以能够这么轻松的部署，是因为它可以提供一种模型的保存方法，我们可以在windows上把模型训练好，把模型保存起来，然后将模型部署到网页上或安卓客户端。2.0通过标准化交换格式来改进跨平台和跨语言部署。</p>
+<ul>
+<li><p><strong>tf.keras</strong>:构建和训练模型的核心高级API。在构建模型时，首先就应该想到tf.keras。tf.keras包括两个部分，一个是<strong>单输入但输出Sequential顺序模型</strong>，另一个是<strong>函数式API</strong></p>
+</li>
+<li><p><strong>Eager模式</strong>：直接迭代和直观调试，Eager模式下求解梯度与自定义训练。</p>
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.bilibili.com/video/av62215565/?p=2" target="_blank" rel="noopener">TensorFlow安装</a></li>
+<li><a href="https://blog.csdn.net/qq_27158747/article/details/86006996" target="_blank" rel="noopener">jupyter在windows10下无法打开的解决</a></li>
+<li><a href="https://blog.csdn.net/u014552678/article/details/62046638" target="_blank" rel="noopener">总结：修改Anaconda中的Jupyter Notebook默认工作路径的三种方式</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/15/Convolutional Neural Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/15/Convolutional Neural Network/" itemprop="url">Convolutional Neural Network</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-15T23:47:08+08:00">
+                2019-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Why-CNN-for-Image"><a href="#Why-CNN-for-Image" class="headerlink" title="Why CNN for Image"></a>Why CNN for Image</h1><p>CNN常常被用在影像处理上面,为什么不直接用一般的neural network?我们在训练neural network的时候，会期待在network的structrue里面，每一个neuron会代表一个最基本的classifier。举例来说第一层的neuron是最简单的classifier,第二层是复杂一点的classifier，依此类推。<br><img src="/2019/09/15/Convolutional Neural Network/1.png" alt="1"></p>
+<p>当我们用一般的fully connected neural network来做影响处理的时候，往往会需要太多的参数。举例来说，假设一张100$\times$100的彩色图片，显然他有100$\times$100$\times$3个pixel,所以input vector是30000维，假设第一个hidden layer有1000个neuron，所以第一层hidden layer的参数就已经有30000$\times$1000了。CNN做的事情其实就是来简化这个neuron network架构（把fully connected里面的一些参数拿掉，就变成CNN）。</p>
+<p>为什么我们可以只用比较少的参数就可以做影像处理这件事情。有如下几个观察：</p>
+<ul>
+<li><p><strong>Property 1:Some patterns are much smaller than the whole image</strong>:A neuron does not have to see the whole image to discover the pattern.对一个neuron来说，假设它知道一个image里面有没有某个pattern出现，其实是不需要看整张iamge,而只用看iamge的一小部分，它就可以决定这件事情。所以每个neuron只用连接到小块的区域，而不需要连接到整张完整的图。</p>
+</li>
+<li><p><strong>Property 2:The same patterns appear in different regions</strong>:同样的Pattern可以出现在图的不同部分，但他们代表的是同样的含义，可以用同样的neuron来侦测出来。<br><img src="/2019/09/15/Convolutional Neural Network/2.png" alt="2"></p>
+</li>
+<li><p><strong>Property 3:Subsampling the pixels will not change the object</strong>:对一张图片可以做subsampling，例如将它的奇数行偶数列的pixel拿掉，变成原来1/4的大小，但这不会改变人对这张image的理解。<br><img src="/2019/09/15/Convolutional Neural Network/3.png" alt="3"></p>
+</li>
+</ul>
+<p>CNN的整个架构如下：<br><img src="/2019/09/15/Convolutional Neural Network/4.png" alt="4"><br>上面提到的Property 1和Property 2用Convolution的layer来处理，Property 3用Max Pooling的layer来处理。</p>
+<h1 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h1><p>如下图，假设现在Nerwork的input是一张6$\times$的黑白图,每个pixel只用0和1来描述。在Convolution layer里面，有一组<strong>filter</strong>，每一个filter其实就是一个matrix（例子中是3$\times$3的matrix），matrix里面每一个element的值就是network的parameter，它们不是靠人事先设计，而是要学习出来。3$\times$3的filter意味着它要侦测3$\times$3的pattern,即它不看整张image,而只看3$\times$3的范围内是否有某个Pattern的出现。<br><img src="/2019/09/15/Convolutional Neural Network/5.png" alt="5"></p>
+<p>Convolution的操作方式：将一个filter放到image的左上角，将image范围内的9个值和filter里的9个值做inner product，得到一个值。之后挪动filter的位置，至于要挪动多少，这个要事先设置参数<strong>stride</strong>来决定（示例中stride=1）,重复做内积和移动filter，知道filter移动到右下角。做完上述事情以后，本来是一个6$\times$6的image，经过convolution就得到一个4$\times$4的matrix。<br><img src="/2019/09/15/Convolutional Neural Network/6.png" alt="6"></p>
+<p>如果我们注意看filter的值，它的斜对角的地方都是1，所以它的工作就是看原image中有没有连续的左上到右下的连续的1出现，如果有的话，就输出值3。原image中出现了两处地方（左上角和左下角），这就表示这个filter要侦测的Pattern出现在了image的左上和左下。这件事情就考虑了Property 2，因为同一个pattern它出现在左上角和左下角的位置，我们都用filter 1就可以侦测出来，并不需要用不同的filter。<br><img src="/2019/09/15/Convolutional Neural Network/7.png" alt="7"></p>
+<p>在一个Convolution的layer里，会有一组filter。比如有一个filter 2，它和前面的filter有不同的参数，它做和filter 1一模一样的事情，这样我们得到另外一个4$\times$4的matrix，所有4$\times$4的matrix合起来就叫做<strong>Feature Map</strong><br><img src="/2019/09/15/Convolutional Neural Network/8.png" alt="8"></p>
+<h2 id="Colorful-image"><a href="#Colorful-image" class="headerlink" title="Colorful image"></a>Colorful image</h2><p>上述例子中的输入是黑白的image，如果是彩色的image呢(RGB)？一个彩色的image，就是3个matrix叠在一起，如下图。要处理彩色的image,这个时候的filter就不是一个matrix，filter也是3个matrix。所以对于彩色的image,input大小是3$\times$6$\times$6,filter的大小是3$\times$3$\times$3。在做convolution的时候，要将image的每个channel合在一起算，即一个filter同时就考虑了不同的channel。<br><img src="/2019/09/15/Convolutional Neural Network/9.png" alt="9"></p>
+<h2 id="Convolution-v-s-Fully-Connected"><a href="#Convolution-v-s-Fully-Connected" class="headerlink" title="Convolution v.s. Fully Connected"></a>Convolution v.s. Fully Connected</h2><p>Convolution与Fully Connected有什么关系，其实Convolution就是一个Fully Connected layer把一些weight拿掉而已，Feature Map就是一个hidden layer的output,如下图，通过减少每个neuron所连接的weight数量以及让neuron来share weight，达到减少参数的目的。<br><img src="/2019/09/15/Convolutional Neural Network/10.png" alt="10"></p>
+<h1 id="Max-Pooling"><a href="#Max-Pooling" class="headerlink" title="Max Pooling"></a>Max Pooling</h1><p>相较于convolution，Max Pooling比较简单，它就是做subsampling。如下图，根据filter 1和filter 2，我们得到两个4$\times$4的matrix。<br><img src="/2019/09/15/Convolutional Neural Network/11.png" alt="11"></p>
+<p>接下来我们将output 4个一组，每组里面可以选平均，也可以选最大值，或者其他方式。我们选最大值，如下：<br><img src="/2019/09/15/Convolutional Neural Network/12.png" alt="12"></p>
+<p>这里有个问题，选取最大值操作放到network里面不是就不能微分了吗？其实是有办法微分的，我们后面会介绍。</p>
+<p>所以我们做完一次Convolution和一个Max Pooling，就把原来6$\times$6的image变成一个2$\times$2的image。至于这个2$\times$2的image，它每一个pixel的深度（每一个pixel用几个value来表示），取决于有多少个filter，每一个filter代表一个channel。<br><img src="/2019/09/15/Convolutional Neural Network/13.png" alt="13"></p>
+<p>上面的操作可以重复很多次，通过一次Convolution和一个Max Pooling会得到一个新的image,它是一个比较小的image，对这个image再做一样的事情，就得到一个更小的image，<br><img src="/2019/09/15/Convolutional Neural Network/14.png" alt="14"></p>
+<p>可能有人会问这样的问题：假设第一个convolution有25个filter，得到25个feature map，第二个convolution有25个filter，那么做完是否会得到25$\times$25个feature map？其实不是这样，第二个convolution做完还是得到25个feature map，第二层的filter在考虑input的时候，是会考虑深度的，并不是每一个channel分开考虑（一次考虑所有的channel）。前面有多少个filter，后面还是会有多少个filter，</p>
+<h1 id="Flatten"><a href="#Flatten" class="headerlink" title="Flatten"></a>Flatten</h1><p>Flatten就是将feature map拉直，然后丢到一个Fully Connected Feedforward network，然后就结束了。<br><img src="/2019/09/15/Convolutional Neural Network/15.png" alt="15"></p>
+<h1 id="what-does-CNN-learn"><a href="#what-does-CNN-learn" class="headerlink" title="what does CNN learn"></a>what does CNN learn</h1><p>有人觉得CNN就像一个黑盒子，训练完以后我们也不知道得到了什么。如果有一个方法可以让我们轻易的理解CNN为什么做出这样的决策，那么它就不那么intelligent（因为人类可以轻易地理解）。</p>
+<p>但其实还是有很多方法可以分析的，我们来试着分析以下CNN到底学到了什么，以手写数字辨识为例。如下图，要分析第一个input layer的filter是比较不容易的，因为每一个filter是一个$3\times3$的matrix，它对应到$3\times3$范围内的9个pixel,所以只要看filter的值就知道它在detect什么东西，所以第一层的filter是很容易理解的。但是我们没有办法想象在做什么事情的是第二层filter，在第二层有50个$3\times3$的filter，这些filter的input并不是pixel，<strong>而是做完convolution再做max pooling的结果</strong>。所以这个$3\times3$的filter，就算把它的weight拿出来，也不知道它在做什么。另外这个$3\times3$的filter，它考虑的范围并不是9个pixel，而是更大的范围。</p>
+<p><img src="/2019/09/15/Convolutional Neural Network/16.png" alt="16"></p>
+<p>在第二个layer里的filter，每一个filter的输出都是一个matrix。假设我们现在把第k个filter拿出来，它是一个$11\times11$的matrix，里面每一个element记为$a_{ij}^k$,我们定义<strong>Degree of the activation of the k-th filter</strong>，它表示现在input的东西跟第k个activate有多相近。</p>
+<p>$$a^k = \sum_{i=1}^{11}\sum_{j=1}^{11}a_{ij}^k$$<br><img src="/2019/09/15/Convolutional Neural Network/17.png" alt="17"></p>
+<p>我们想知道第k个filter的作用是什么，所以我们想要找一张image，它可以让第k个filter被activate的程度最大。假设input image我们称之为x，现在的问题就是找一个x，它可以让上面定义的$a^k$最大:<br>$$x^{\star}=\mathop{argmax}_{k}a^k$$</p>
+<p>可以用gradient ascent算出$x^{\star}$(因为是求最大值，所以是ascent),就结束了。这相当于是吧x当作我们要找的参数对它去用gradient descent或ascent做update。原来在train这个CNN（或Neural network）的时候，input是固定的，而现在model的参数是固定的，我们要用gradient descent去update这个x。</p>
+<p>对于首先数字辨识，我们得到的结果如下。我们发现没有个filter做的事情就是detect不同角度的线条。<br><img src="/2019/09/15/Convolutional Neural Network/18.png" alt="18"></p>
+<p>我们现在可以full connected layer。做完convolution和Max pooling以后，接下来做flatten，将flatten的结果丢到neural network里面去。我们想知道在这个neural network里面，每一个neuron所做的工作是什么。我们可以如法炮制上面的做法，定义第j个neuron，它的output叫做$a_j$,然后找一张image x,将它丢到neural network里面去，它可以让$a_j$的值被maximize。结果如下，可以发下和上面的filter所观察到的情形是很不一样的。在上面的filter里面我们观察到的是类似纹路的东西，这是因为每个filter考虑的只是一个小小的region，所以它detect的是某一种texture。但现在每一个neuron，在做flatten以后，每一个neuron的工作就是去看整张图，所以每一个neuron可以让它最activate的图并不再是texture的样子，而是一个完整的图形（但也并不是数字）。<br><img src="/2019/09/15/Convolutional Neural Network/19.png" alt="19"></p>
+<p>如果我们考虑的是output呢？手写数字辨识output就是10维,每一维就对应一个数字，我们把某一维拿出来，找一张image，让那个维度的output最大。<br>$$x^{\star} = \mathop{argmax}_xy^i$$</p>
+<p>现在既然每一个output的每一个dimension就对应某一个数字，现在如果找一张图，它可以让对应到数字1的那个output layer的neuron的output最大，那么那一张图显然看起来像是一个数字1。然而实际上我们得到的结果如下：<br><img src="/2019/09/15/Convolutional Neural Network/20.png" alt="20"></p>
+<p>为什么会这样？我们把什么的每一张图再作为CNN的输入，CNN分类的结果确实分别对应了0到9！这个结果其实已经在很多地方都被观察到了。这个neuron network它所学到的东西，跟我们人类是非常不一样的。</p>
+<p>我们有没有办法让这个图看起来更像数字呢？我们知道一张图是不是数字是有一些基本假设的，我们应该对y做一些Regularization，对x做一些constrain。最简单的假设就是：对一个数字来所，只有一整张图的某一个小部分会有笔画，我们对x做一些限制如下，假设image里面的每一个pixel我们用$x_{i,j}$来表示，我们把所有$x_{i,j}$取绝对值加起来，这样做的目的是让有壁画的像素点尽可能少。（下面的式子绝对值是可以微分的，后面会讲。）</p>
+<p>$$x^{\star} = arg \max_{x}(y^i-\sum_{i,j}x_{i,j})$$</p>
+<p>加上上面的constrain，得到的图如下，这样得到的结果比较像数字。<br><img src="/2019/09/15/Convolutional Neural Network/21.png" alt="21"></p>
+<h2 id="Deep-Dream"><a href="#Deep-Dream" class="headerlink" title="Deep Dream"></a>Deep Dream</h2><p>上面的想法其实就是deep dream的精神，deep dream就是说如果给machine一张image,他会在image里面加上它看到的东西。把一张相片丢到CNN里面，然后把它的某一个hidden layer的filter，或是fully connected layer里面某一个hidden layer拿出来，它是一个vector，然后把这个vector里面正的值变得更大，负的值变得更小。然后我们用gradient descent的方法找一张image，让它在这个hidden layer的output是现在所设下的target。这么做的目的是让CNN夸大化它看到的东西（<strong>CNN exaggerates what it sees</strong>）<br><img src="/2019/09/15/Convolutional Neural Network/22.png" alt="22"></p>
+<h2 id="Deep-Style"><a href="#Deep-Style" class="headerlink" title="Deep Style"></a>Deep Style</h2><p>Deep Style是Deep Dream的进阶版本（<strong>Given a photo,make its style like famous paintings</strong>），Deep Style是input一张相片，然后让machine去修改这张图，让它有另外一张图的风格。如下图是让一张图具有呐喊的风格。<br><img src="/2019/09/15/Convolutional Neural Network/23.png" alt="23"></p>
+<p>它的大致做法是把原来的image丢给CNN，然后得到CNN的filter的output，它代表这张image里面里有什么样的content,然后将呐喊这张图也丢到CNN里面，也得到filter的output，但这个时候我们考虑的不是filter output的value是什么，而是在意filter和filter之间output的correlation，这个correlation就代表了一张image的style。接下来，用同一个CNN来找一张image，如下图，这个image它的content像左边这张相片，同时这张image的style像右边这张相片，<br><img src="/2019/09/15/Convolutional Neural Network/24.png" alt="24"></p>
+<h2 id="More-Application"><a href="#More-Application" class="headerlink" title="More Application"></a>More Application</h2><p>CNN不只可以应用到影像处理上，比如还能用到下围棋上面。我们用fully connected network也可以训练机器下围棋，如下图。<br><img src="/2019/09/15/Convolutional Neural Network/25.png" alt="25"><br>但是采用CNN我们可以得到更好的performance。</p>
+<h3 id="Why-CNN-for-playing-Go"><a href="#Why-CNN-for-playing-Go" class="headerlink" title="Why CNN for playing Go"></a>Why CNN for playing Go</h3><p>围棋有一些特性和影像处理是很相似的</p>
+<ul>
+<li>Some patterns are much smaller than the whole image<br>围棋里面一些局部的变化与全局是无关的，比如角上的死活,并不需要看到整个棋盘。Alpha Go uses 5$\times$5 for first layer</li>
+</ul>
+<ul>
+<li><p>The same patterns appear in different region<br>同一种棋形可以出现在棋盘的不同位置。他们代表同样的意义，所以可以用同一个detector来处理这些在不同位置的同样的Pattern。</p>
+</li>
+<li><p>Subsampling the pixels will not change the object<br>Subsampling对于围棋来说不太容易理解，丢掉奇数行偶数列对围棋来说显然不work，会不会在alpha go的CNN架构里面有什么特别的地方呢？其他它的里面确实没有用到Max pooling。</p>
+</li>
+</ul>
+<p>另外CNN也可以用在语音辨识和文字处理上。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.youtube.com/watch?v=M2IebCN9Ht4" target="_blank" rel="noopener">Deep Neural Networks are Easily Fooled</a></li>
+<li><a href="http://deepdreamgenerator.com/" target="_blank" rel="noopener">Deep Dream</a></li>
+<li><a href="https://dreamscopeapp.com/" target="_blank" rel="noopener">Deep Style</a></li>
+<li><a href="https://arxiv.org/abs/1508.06576" target="_blank" rel="noopener">A Neural Algorithm of Artistic Style</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/15/Tips for Deep Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liang Qi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi-Liang'blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/15/Tips for Deep Learning/" itemprop="url">Tips for Deep Learning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-15T23:14:47+08:00">
+                2019-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Recipe-of-Deep-Learning"><a href="#Recipe-of-Deep-Learning" class="headerlink" title="Recipe of Deep Learning"></a>Recipe of Deep Learning</h1><p>Deep Learning的三个step:<br><strong>step 1: define a set of function</strong><br><strong>step 2: goodness of function</strong><br><strong>step 3: pick the best function</strong><br>做完以上事情后，会得到一个Neural Network。接下来要做的事情就是，检查这个Neural Network在Training Data上有没有得到好的结果。如果没有的话，要回头看看上面3个step哪个出了问题，我们可以做什么修改。</p>
+<p>先检查train data的performance，其实是deep learning一个非常特别的地方。像其他的方法，例如K nearest neighbor或decision tree,它们做完以后在train data上的正确率就是100%。所以有人说，deep learning里面model的参数这么多，感觉很容易overfitting,但其实它不容易overfitting（nearest neighbor和decision tree在train data上正确率为100%,才容易overfitting）。在deep learning里面，overfitting并不是我们第一个会遇到的问题，它可能在training set上，根本没有一个好的正确率。</p>
+<p>假设我们在training set上已经得到好的performance了，接下来将network apply到testing set上，如果现在得到的结果不好的话，就是overfitting。过程如下图。<br><img src="/2019/09/15/Tips for Deep Learning/1.png" alt="1"></p>
+<h2 id="Do-not-always-blame-Overfitting"><a href="#Do-not-always-blame-Overfitting" class="headerlink" title="Do not always blame Overfitting"></a>Do not always blame Overfitting</h2><p>不是所有不好的performance就是overfitting，下面是文献中的图，横坐标是model update的次数，我们发现56层的network相比20层的network，它的performance比较差。有人可能会得到结论：56层的参数太多了，这个是overfitting，但是真的是这个吗？<br><img src="/2019/09/15/Tips for Deep Learning/2.png" alt="2"></p>
+<p>在我们得到overfitting的结论之前，先检查一下在training set上的结果，对某些方法来所（比如k nearest neighbor或decision tree）不用检查这些事，但是对neural network来说，是需要检查这些事情的。因为有可能在training data的结果如下图，20层的performance在training data上本来就比56层要好，为什么会这样呢？在做neural network training的时候，有太多太多的问题，可以让training的结果是不好的（比如local minimum的问题），所以可能56层的network卡在了local minimum的地方，从而得到了一个差的参数。这个并不是overfitting，而是根本就没有train好。理论上20层的network可以做到的事情，56层的network一定可以做到。所以56层的network比20层差并不是它能力不够，所以这个应该不是underfitting。<br><img src="/2019/09/15/Tips for Deep Learning/3.png" alt="3"></p>
+<p>所以在deep learning的文献上，如果当你读到一个方法的时候，永远要想一下说，这个方法是要解什么样的问题。因为在deep learning上有两个问题，一个是training set上的performace不好，一个是testing set上的performance不好。当只有一个方法propose的时候，它往往就是针对这两个问题的其中一个来做处理（例如dropout，dropout是在testing的结果不好的时候才会apply）。<br><img src="/2019/09/15/Tips for Deep Learning/4.png" alt="4"></p>
+<h2 id="Vanishing-Gradient-Problem"><a href="#Vanishing-Gradient-Problem" class="headerlink" title="Vanishing Gradient Problem"></a>Vanishing Gradient Problem</h2><p>如果是在training data上的结果不好，可以考虑是不是在做network架构设计的时候是否设计得当。举例来说，我们可能用的是比较不好的activation function，那么就需要换新的activation function。在1980年代的时候，比较常用的activation function是sigmoid function，如下图，当layer原来越多的时候，accuracy逐渐下降直到崩溃。<br><img src="/2019/09/15/Tips for Deep Learning/5.png" alt="5"></p>
+<p>发生这种现象的一个原因是<strong>Vanishing Gradient Problem</strong>，当network被叠的很深的时候，在靠近input的几个layer，参数对最后loss function的微分会是很小，而在比较靠近output的地方，它的微分值会很大。因此当设定同样的learning rate的时候，会发现靠近input的地方，它的参数update很慢，靠近output的地方，它的参数update是很快的，所以我们会发现在靠近input的参数几乎还是random的时候，output就已经converge了，换句话说，在靠近input的参数还是random的时候，output地方就已经根据这些random的结果，找到了一个local minimum，然后它就converge了，这个时候就会发现参数loss下降的速度变得很慢。<br><img src="/2019/09/15/Tips for Deep Learning/6.png" alt="6"></p>
+<p>为什么会有这个现象发生呢？如果去看backpropagation的式子，会发现用sigmoid function会导致这件事情。但我们现在从直觉上来想为什么这件事情会发生。</p>
+<p>某一个参数$w$对total cost $C$的偏微分$\frac{\partial C}{\partial w}$的意思就是说当把某一个参数做小小的变化的时候，它对cost的影响会是怎样。我们把第一个layer里的某个参数加上$\Delta w$,看看对network的output和它的target之间的loss有什么样的影响。如果$\Delta w$很大，通过sigmoid function的时候，这个output是会变小的。也就是说，改变了某一个参数的weight，对某一个neuron的output的值会有影响。但是这个影响是会衰减的。因为sigmoid function会把正无穷到负无穷大之间的值都压到0到1之间。也就是说，如果input变化很大，通过sigmoid function以后，它output的变化会是很小的，并且每通过一次sigmoid function，变化就衰减一次。network越深，它衰减的次数就越多，直到最后它对output的影响是非常小的，也造成对cost的变化很小，所以在靠近input的那些weight，它对它这个Gradient的值是小的。<br><img src="/2019/09/15/Tips for Deep Learning/7.png" alt="7"></p>
+<p>要怎么解决上面问题呢？改一下activation function，现在比较常用的activation function是<strong>Rectified Linear Unit(ReLU)</strong>,它的图像如下。<br><img src="/2019/09/15/Tips for Deep Learning/8.png" alt="8"></p>
+<p>选用ReLU有以下几个理由：</p>
+<ul>
+<li><strong>Fast to compute</strong><br>跟sigmoid function比起来，它的运算是快很多的（sigmoid里面还有exponential,那个是很慢的）。</li>
+<li><strong>Biological reason</strong><br>ReLU的想法其实是有一些生物上的理由的。</li>
+<li><strong>Infinite sigmoid with different biases</strong><br>ReLU等同于无穷多个sigmoid function叠加的结果。</li>
+<li><strong>Vanishing gradient problem</strong><br>如下图是一个activation function为ReLU的network，ReLU它作用在两个不同的region，一个是当input&gt;0时，input=output，此时activation function是linear的；另一个是input&lt;0,output=0。</li>
+</ul>
+<p><img src="/2019/09/15/Tips for Deep Learning/9.png" alt="9"></p>
+<p>对于output是0的network来说，它其实对整个network一点影响也没有，可以把它从整个network里面拿掉。当把output是0的neuron拿掉，剩下的neuron(input=output)都是linear的，整个network，就是一个很瘦长的linear network。这个时候就不会有activation function递减的问题了。<br><img src="/2019/09/15/Tips for Deep Learning/10.png" alt="10"></p>
+<p>当我们用ReLU是，network变成了一个linear network,这样不是变得很弱吗？起始可以这样解释，这个network在整体来说还是non-linear的，当每一个neuron它operation region是一样的时候，它是linear的，换句话说，只对input做小小的改变，不改变它的operation region，它是一个linear的network，但是如果对input做比较大的改变，改变了neuron的operation region的话，它就变成是non-linear的了。</p>
+<p>还有另外一个问题，ReLU不能微分。在实作上，它除了在x=0处不能微分外，其余的点都是可微的。在实际训练的时候，不可能刚好有点落到不可微分的点上。</p>
+<h2 id="ReLU-variant"><a href="#ReLU-variant" class="headerlink" title="ReLU-variant"></a>ReLU-variant</h2><p>ReLU还用种种的变形。</p>
+<h3 id="Leaky-ReLU"><a href="#Leaky-ReLU" class="headerlink" title="Leaky ReLU"></a>Leaky ReLU</h3><p>原来的ReLU,在输入小于0的时候，输出也是0，这个时候微分是0，这样我们就没法update参数了。 所以我们想让input小于0的时候，output还是有一点点的值。一种ReLU的变形如下，它被称为Leaky ReLU<br><img src="/2019/09/15/Tips for Deep Learning/11.png" alt="11"></p>
+<h3 id="Parametric-ReLU"><a href="#Parametric-ReLU" class="headerlink" title="Parametric ReLU"></a>Parametric ReLU</h3><p>Leaky ReLU在输入小于0的时候，$z$前面的系数被固定为0.01，那可以设成其他值吗？所以就有人提出了Parametric ReLU。如下图，在输入小于0时，$a=\alpha z$，$\alpha$是一个network的参数，它可以透过training data被学出来。甚至每个neuron都可以有不同的$\alpha$值。<br><img src="/2019/09/15/Tips for Deep Learning/12.png" alt="12"></p>
+<h1 id="Maxout"><a href="#Maxout" class="headerlink" title="Maxout"></a>Maxout</h1><p><strong>ReLU is a special cases of Maxout</strong></p>
+<p>在Maxout里面，我们让network去自动学它的activation function，用training data来决定activation function应该长什么样子。</p>
+<p>假如现在有一个2维度输入，它们分别乘上不同的weight得到输出（5，7，-1，1）。不来这些值要通过sigmoid function或ReLU或其他的function得到另一个值，但是现在在Maxout network里面，我们要做的事情是这样：把这些输出group起来，哪些值需要被group起来这件事是事先决定的（图中5、7是一组，-1、1是一组）。在同一个组里面选一个值最大的作为output（这就跟CNN里面的max pooling是一样的，但现在我们不是在image上做max pooling，而是在一个layer上做max pooling）。我们把layer里面本来要放到neuron里面的activation function输入值group起来，只选最大的当作output，这样就不用activation function了，下图中得到的值是7和1。我们可以把group和Max一起看作一个neuron。后续的操作与之相同。注意，在实作上要把几个elements放到一个group里面是我们自己决定的，和network struct一样，这是我们需要调的一个参数。<br><img src="/2019/09/15/Tips for Deep Learning/13.png" alt="13"></p>
+<p>下面说明为什么Maxout可以做到和ReLU一模一样的事情。</p>
+<p>下面有一个ReLU的neuron，显然我们有$z = x\cdot w + b$,$z$和$x$的关系是linear的，$a$和$x$的关系是图中绿色的线。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/14.png" alt="14"></p>
+<p>如果我们用Maxout network，如下图，假设有一组weight是w和b，另一种weight是0和0。现在$z_1$和$x$之间的关系是图中蓝色的线，$z_2$和$x$之间的关系是图中红色的线，那么$a$与$x$的关系就是图中绿色的线。由此可以看出，ReLU是Maxout可以做到的事情（只要设计出正确的参数）。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/15.png" alt="15"></p>
+<p>但是Maxout还可以做出更多的不同的activation function。比如如果上面0和0这组weight改为$w^{\prime}$和$b^{\prime}$，那么$a$与$x$的关系就会发生变化。如下图。这个activaton function长什么样子是由$w^{\prime}$和$b^{\prime}$决定的，所以它是一个<strong>Learnable Activation Function</strong>。每个neuron，根据它不同的weight，可以有不同的activation function。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/16.png" alt="16"></p>
+<p>Learnable activation function有以下性质：</p>
+<ul>
+<li><p>Activation function in maxout network can be any piecewise linear convex function.</p>
+</li>
+<li><p>How many pieces depending on how many elements in a group.</p>
+</li>
+</ul>
+<p><img src="/2019/09/15/Tips for Deep Learning/17.png" alt="17"></p>
+<h2 id="Maxout-Training"><a href="#Maxout-Training" class="headerlink" title="Maxout - Training"></a>Maxout - Training</h2><p>Maxout network里面有max函数，不能微分，那我们要如何训练呢？如下图，红色方框内是比较大的值，较大的值就是Max operation的output。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/18.png" alt="18"></p>
+<p>将没被接到Max的elements去掉，Max operation其实就是linear的。所以，当我们在做Maxout的时候，给定一个input,其实是得到一个比较细长的Network，我们train的其实也是这个比较细长的linear network的参数。<br><img src="/2019/09/15/Tips for Deep Learning/19.png" alt="19"></p>
+<p>那那些没有被train到的elements怎么办？这看起来表面上是一个问题，但实际上不是的。因为当我们给定不同的input的时候，我们得到的$z$的值是不一样的，对应的network structrue也是不一样的。而因为我们有很多笔training data,network structrue不断地变换，最后每一个weight在实际上都会被train到。（其实训练Maxout和Max pooling是一模一样的做法）</p>
+<h1 id="Adaptive-learning-rate"><a href="#Adaptive-learning-rate" class="headerlink" title="Adaptive learning rate"></a>Adaptive learning rate</h1><h2 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h2><p><strong>Adagrad</strong>的做法就是每一个parameter都要有不同的learning rate，这个learning rate是一个固定的值$\eta$除以过去所有tgradient的值的平方和开根号。</p>
+<p>$$w^{t+1} \leftarrow w^t - \frac{\eta}{\sqrt{\sum_{i=0}^t(g^i)^2}}g^t$$</p>
+<p>Adagrad的精神就是如果考虑两个参数$w_1$和$w_2$，如下图，$w_1$在蓝色箭头方向是比较平坦的（gradient比较小），我们就给他比较大的learning rate。反之，在绿色箭头方向比较陡峭，就给他比较小的learning rate。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/20.png" alt="20"></p>
+<p>但是实际上，我们面对的问题可能比adagrad能处理的问题更加复杂。我们之前在做linear regression的时候，我们看到的optimation的loss function是一个convex的形状，但当我们做deep learning的时候，这个loss function可以是任何形状。比如我们的Error Surface可能是下图的形状，这样我们就遇到一个问题：就算是同一个方向上，learning rate也必须能够快速的变动（对于convex function，一个方向是很平坦就一直平坦，很陡峭就一直陡峭）。比如$w_1$改变的方向，在某个区域很平坦，但是另外的区域又突然变得很陡峭。所以真正处理deep learning的问题，用Adagrad可能是不够的，需要有更dynamic地调整learning rate的方法。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/21.png" alt="21"></p>
+<h2 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h2><p><strong>RMSProp</strong>是Adagrad的进阶版，如下图。可以手动调整$\alpha$的值，$\alpha$的值越小，表示我们倾向于相信新的gradient所告诉我们的关于error surface的平滑或陡峭的程度。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/22.png" alt="22"></p>
+<h2 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h2><p>除了learning rate的问题以外，我们在做deep learning的时候，可能会卡在local minimum或saddle point，</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/23.png" alt="23"></p>
+<p>有一个从现实世界得到灵感的方法用来解决local minimum问题，如下图，在真实的世界里面，将一个球从左上角滚下来，由于惯性的关系，它到达Local minimum的地方还是可以继续向前走，最终它可以走到比Local minimum要更好的地方。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/24.png" alt="24"></p>
+<p>我们想要将这个惯性的特性塞到gradient descent里面去。这件事情就叫做<strong>Momentum</strong>。我们先来简单复习以下gradient descent。</p>
+<p>一般的gradient descent，先选一个初始的值$\theta^0$,然后计算它的gradient，然后对gradient的反方向乘上learning rate $\eta$，得到$\theta^1$,然后依次继续进行，一直到gradient接近0的时候停止。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/25.png" alt="25"></p>
+<p>当我们加上<strong>Momentum</strong>,我们每一次移动一个方向，不再是只有考虑gradient，而是现在的gradient加上在前一个时间点移动的方向。下图中$v$用来记录在前一个时间点移动的方向。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/26.png" alt="26"></p>
+<p>可以用另一个方法来理解这件事。$v^i$其实是过去所有算出来的gradient的总和。如下<br><img src="/2019/09/15/Tips for Deep Learning/27.png" alt="27"></p>
+<h1 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h1><p>RMSProp+Momentum就是<strong>Adam</strong></p>
+<p><img src="/2019/09/15/Tips for Deep Learning/28.png" alt="28"></p>
+<hr>
+<p>之前我们所讲的都是在training set的结果上不好的话怎么办，接下来要探讨如果在training data上得到更好的结果，但是在testing data上的结果仍然不好，那有什么可行的方法。下面会介绍3个方法。</p>
+<h1 id="Early-Stopping"><a href="#Early-Stopping" class="headerlink" title="Early Stopping"></a>Early Stopping</h1><p>随着training,如果learning rate调的对的话，Total loss通常会越来越小。但是由于Testing set和Training set它们的distribution并不完全一样，所以可能当training的loss逐渐减少的时候，Testing set的loss却反而上升了。理想上，假如我们知道Testing data上loss的变化，我们应该停在不是training set最小而是Testing set最小的地方。在Training的时候不要一直Training下去，可能要早一点停下来。但实际上我们不知道Testing set,更不知道Testing set的error是什么，所以我们其实会用Validation set来verify这件事情。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/29.png" alt="29"></p>
+<p>这里需要解释一下，上面说得Testing set并不是指真正的Testing set，它指得是已有Label data的Testing set。</p>
+<h1 id="Regularization"><a href="#Regularization" class="headerlink" title="Regularization"></a>Regularization</h1><p>重新定义要去minimized的loss function。下图使用L2来做regularization。在做regularization的时候，我们一般是不会考虑bias这项。因为加regularization的目的是要让我们的function更平滑，而bias与function的平滑程度通常是没有关系的。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/30.png" alt="30"></p>
+<p>计算加了L2 Regularization的loss function的Gradient，对update式子整理如下：</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/31.png" alt="31"></p>
+<p>我们可以发现，在update式子的时候，每次在update之前，都会先将参数乘上$1-\eta\lambda$,learning rate $\eta$通常是一个很小的值，$\lambda$一般也是很小的值，$1-\eta\lambda$就是一个接近1的值。这样，$(1-\eta\lambda)w^t$会让我们的参数越来越接近0。但是这样参数最后不就会通通变为0吗？由于有后面的项$-\eta\frac{\partial L}{\partial w}$，它会与前面的项取得平衡，所以参数不会统统变0。因为在使用L2 Regularization的时候，我们每次都会让weight小一点，所以这种方法也叫<strong>Weight Decay</strong>。</p>
+<p>在Deep learning里面，Regularization的重要性跟其他方法比如SVM比起来并没有那么高。一个可能的原因是，Early Stopping中我们可以决定training什么时候被停下来，因为我们在做neural network的时候通常初始参数时都是从一个接近0的值来开始初始，update的时候就是让参数离0越来越远。而Regularization的目的就是希望参数不要离0太远。让参数不要离0太远加上Regularization所造成的效果跟减少update次数所造成的效果其实可能是很像的。SVM里面没有Early Stopping这件事，一步就走到结果了。</p>
+<p>我们也可以做L1 Regularization。虽然绝对值不能微分，但其实不能微分的点就一个，不用管他就好了。如果真的出现在0这个点的情况，随便给个就就好了。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/32.png" alt="32"></p>
+<p>比较L1和L2会发现，它们同样是让参数变小，但它们做的事情是略有不同的。L1每次减掉的值都是固定的，而L2是每次都乘上一个小于1固定的值。所以对L2来说，只要$w$出现很大的值，这个$w$下降的很快，但是L1则不同。很大的$w$下降的速度和其他很小的$w$是一样的，通过L1的training以后，训练出来的network里面还是有一些很大很大的值。很小的值对L2来说它下降的速度很慢，所以L2训练出来的结果里面会保留很多接近0的值。L1每次都下降一个固定的值，所以在L1里面不会保留很多很小的值。所以使用L1结果就是：训练出来的参数里面有很多接近0的值，但是也有很大的值。而L2训练结果是参数平均都比较小。</p>
+<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><p>在training的时候，每一次我们要update参数之前，都对network里面的每一个Neuron做Sampling，Sampling决定每一个Neuron要不要被丢掉，每一个Neuron有$p%$的几率会被丢掉。一个Neuron被丢掉后，和它相连的weight也失去了作用。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/33.png" alt="33"></p>
+<p>做完sampling以后，network的structre就得比较细长，然后再去train这个比较细长的network。注意，这个sampling是每次update参数之前都要做一次，所以每次update参数的时候，拿来training的那个network structure是不一样。每次都要重新做一次sample。当我们在training的时候使用dropout的时候，performance是会变差的。但dropout要做的事情，就是让training set上的结果变成而在testing data上的结果变好。</p>
+<p>在testing的时候要注意两件事，一是testing时不加dropout，另一个是在testing的时候，假设training时dropout rate是$p%$，在testing的时候，所有weight都要乘(1-p%),</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/34.png" alt="34"></p>
+<p>为什么Dropout有用？直观的解释如下：</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/35.png" alt="35"></p>
+<p>为什么testing的时候要乘(1-p%)，</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/36.png" alt="36"></p>
+<h2 id="Dropout-is-a-kindle-of-ensemble"><a href="#Dropout-is-a-kindle-of-ensemble" class="headerlink" title="Dropout is a kindle of ensemble"></a>Dropout is a kindle of ensemble</h2><p>Dropout是一种终极的ensemble的方法。ensemble的解释如下：</p>
+<p>有一个很大的training set,每次从training set里面只sample一部分data出来。之前讲bias和variance trade off的时候有提到，打靶有两种情况，一种是bias很大，一种是variance很大，所以都打不准。如果有一个很复杂的model,它往往是bias准，但是variance很大。但如果这个复杂的model有很多个，虽然它variance很大，但最后平均起来，结果就很准。今天Ensemble要做的事情，其实就是要利用这个特性。我们train很多个model,把原来的training data里面sample出很多subset，然后train很多model。每个model甚至可以structure不一样，虽然每一个model可能variance很大，如果它们都是很复杂的model,平均起来这个bias就很小。所以真正在test的时候，train了一把model，然后在testing的时候丢一笔training data进来，它通过所有的model,得到一大堆的结果，再把这一大堆结果平均起来，当作我们最后的结果。如果model很复杂的话，这一招往往有用。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/37.png" alt="37"></p>
+<p>为什么说dropout是一个终极的ensemble方法呢？在dropout的时候，拿一个minibatch出来，要update参数的时候，都会做一次sample。假设有M个neuron，每个neuron可以drop或不drop，可能的network的数目有$2^M$个。我们做dropout等于是在train这$2^M$个network,每次都只用一个minibatch的data去train一个network。因为最后update的次数是有限的，可能没有办法把$2^M$个network每个都train一遍，但还是会train很多的参数。做几次update参数，就train几次network，但每个network只用一个batch来train。每个network只用一个batch来train可能会让人很不安，一个batch可能才100笔data，怎么train一个network呢？但没有关系，因为这些不同的network之间的参数是shared。所以虽然一个network只用一个batch来train，但是一个weight可能用很多个batch来train（只要它没有被dropout丢掉）。所以，dropout就是train了一大把的network structure，理论上每一次update参数的时候都train了一个network出来。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/38.png" alt="38"></p>
+<p>Testing的时候，按照ensemble这个方法的逻辑应该就是把那一大把的network通通拿出来，然后把testing data丢到那一把network里面，每一个network都输出一个结果，然后把所有的结果平均起来，就是最终的结果。但是在实作上没办法这么做，因为这一把network是在太多了。dropout最神奇的地方就是，当把一个完整的network不做dropout，但是把它的weight乘上(1-p%)，然后把testing data输进去，得到output，神奇的就是，左边ensemble的结果，和右边的结果是可以approximate的。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/39.png" alt="39"></p>
+<p>为了对上面的结论进行说明，我们来举一个例子。我们来train一个很简单的network，如下图右上角所示，它只有一个neuron，它的activation function是linear的，这里不考虑bias。如果做ensemble的话，每一个input可以被drop或不被drop，所以总共有如下4种structrue（做dropout的时候，不会drop output的neuron，只会drop hidden layer跟input的neuron）。把这4个network的output通通都average起来，最后的结果是$\frac{1}{2}w_1x_1+\frac{1}{2}w_2x_2$。这和将原来network的input都乘上1/2得到的结果一样。</p>
+<p><img src="/2019/09/15/Tips for Deep Learning/40.png" alt="40"></p>
+<p>在上面这个最简单的case里面，用不同的network structure做ensemble这件事情，跟我们把weight multiply一个值而不做ensemble所得到的output其实是一样的。但是，假如activation function不是linear（比如sigmoid function），还会work吗。结论就是不会equivalent，上图左边与右边相等的前提是network要是linear的。这就是dropout一个很神奇的地方，虽然不是equivalent的，但是最后的结果还是会work。所以，根据这个结论，有人提出一个想法：既然dropout在linear的network上，ensemble才会等于前一个weight，所以如果network很接近linear的话，dropout的performance应该会比较好，比如用ReLU或Maxout。并且Dropout确实在用ReLU或Maxout network的时候，performance比较好。</p>
 
           
         
@@ -675,7 +2128,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -723,7 +2176,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -734,7 +2187,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -745,7 +2198,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
